@@ -6,24 +6,27 @@ import {
   useMatch,
   useNavigate,
 } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   RiCloseCircleLine,
   RiHeart2Line,
   RiThumbUpLine,
   RiChat3Line,
   RiShareLine,
+  RiHeartFill,
 } from "react-icons/ri";
 
 import { post_details } from "../data/mock.js";
 import moment from "moment";
+import { userContext } from "../Hooks/userContext.jsx";
 
-const PinDetails = ({ user }) => {
+const PinDetails = () => {
   //Hooks
   const [renderPostDetails, setRenderPostDetails] = useOutletContext();
   const [pin, setPin] = useState(null);
+  const [pinSaved, setSavedPin] = useState(false);
+  const user = useContext(userContext);
   const navigate = useNavigate();
-  const pinsMatch = useMatch("/pins/*");
 
   //Variables
   let date;
@@ -32,12 +35,34 @@ const PinDetails = ({ user }) => {
   useEffect(() => {
     setPin(post_details.find((value) => pinId === value._id));
     setRenderPostDetails(true);
-  }, [pinId, pinsMatch]);
+    setSavedPin(
+      post_details
+        .find((value) => pinId === value._id)
+        .likedBy.some((item) => item._id === user)
+    );
+  }, [pinId]);
 
   if (pin) {
     date = moment.unix(pin._createdAt); // in seconds
   }
-
+  const toggleWishlist = () => {
+    if (pinSaved) {
+      const findIndex = pin.likedBy.findIndex(
+        (element) => element._id === user
+      );
+      post_details
+        .find((value) => pinId === value._id)
+        .likedBy.splice(findIndex, 1);
+      setSavedPin(false);
+      console.log("removed from wishlist");
+    } else {
+      post_details
+        .find((value) => pinId === value._id)
+        .likedBy.push({ _id: `${user}` });
+      setSavedPin(true);
+      console.log("added into wishlist");
+    }
+  };
   // Share post
   async function sharePost() {
     try {
@@ -137,7 +162,19 @@ const PinDetails = ({ user }) => {
                   <RiChat3Line fontSize={24} />
                 </div>
                 <div className="flex items-center justify-start gap-4 pl-3">
-                  <RiHeart2Line fontSize={24} />
+                  {pinSaved ? (
+                    <RiHeartFill
+                      fontSize={24}
+                      color="#ef4444"
+                      onClick={() => toggleWishlist()}
+                    />
+                  ) : (
+                    <RiHeart2Line
+                      fontSize={24}
+                      onClick={() => toggleWishlist()}
+                    />
+                  )}
+
                   <RiShareLine fontSize={24} onClick={sharePost} />
                 </div>
               </div>

@@ -206,12 +206,34 @@ export const post_details = [
         "https://source.unsplash.com/random/300x300?male potraits,male,boy,sigma",
     },
     desc: "Understanding machines is a lot easier than understanding a person, especially a girl.",
-    image:
-      "https://source.unsplash.com/featured",
+    image: "https://source.unsplash.com/featured",
     _createdAt: "1680526354",
     views: "1.2k",
     comments: "0",
     likes: "134",
+    likedBy: [],
+  },
+  {
+    _id:"12msak08xc",
+    pinCreator: {
+      _id: "109idx3a5j",
+      name: "aniket lodh",
+      username: "aniketlodh",
+      profession: "content creator",
+      image:
+        "https://source.unsplash.com/random/300x300?sigma,abstract",
+    },
+    desc: "Not only do I survive but thrive, for I am born to be a Sigma male. Never look back with regret on things that have passed.",
+    image: "https://source.unsplash.com/featured",
+    _createdAt: "1682612185",
+    views: "0",
+    comments: "0",
+    likes: "1",
+    likedBy: [
+      {
+        _id:"0129479cju"
+      }
+    ],
   },
   {
     _id: "0129472195",
@@ -224,12 +246,13 @@ export const post_details = [
         "https://source.unsplash.com/random/300x300?female portraits,female,girl,school girls,short skirt girls",
     },
     desc: "When nothing goes right, go left.",
-    image:
-      "https://source.unsplash.com/featured",
+    image: "https://source.unsplash.com/featured",
     _createdAt: "1674653700",
     views: "192",
     comments: "0",
     likes: "128",
+    likedBy: [],
+
   },
   {
     _id: "12nsad74vs",
@@ -242,12 +265,12 @@ export const post_details = [
         "https://source.unsplash.com/random/300x300? short skirt girls,school girls portrait",
     },
     desc: "I make food so good you'll never do takeout again! TBH, we're pretty much chefs on a daily basis 😋",
-    image:
-      "https://source.unsplash.com/featured",
+    image: "https://source.unsplash.com/featured",
     _createdAt: "1680328418",
     views: "618",
     comments: "0",
     likes: "124",
+    likedBy: [],
   },
   {
     _id: "as0213masd",
@@ -260,12 +283,12 @@ export const post_details = [
         "https://source.unsplash.com/random/300x300?attitude girl portraits,sexy dress girls portraits, group selfies",
     },
     desc: "What I like about photographs is that they capture a moment that's gone forever, impossible to reproduce.",
-    image:
-      "https://source.unsplash.com/featured",
+    image: "https://source.unsplash.com/featured",
     _createdAt: "1680531626",
     views: "38",
     comments: "0",
     likes: "12",
+    likedBy: [],
   },
   {
     _id: "01mla9uths",
@@ -278,12 +301,12 @@ export const post_details = [
         "https://source.unsplash.com/random/300x300?male business portraits,corporate portraits",
     },
     desc: "Change how you're paid, change your life. Solopreneurs will rise because freelancers will become commodities to utilize.",
-    image:
-      "https://source.unsplash.com/featured",
+    image: "https://source.unsplash.com/featured",
     _createdAt: "1680531626",
     views: "38",
     comments: "0",
     likes: "12",
+    likedBy: [],
   },
   {
     _id: "01lamkituq",
@@ -296,12 +319,12 @@ export const post_details = [
         "https://source.unsplash.com/random/300x300?male potraits,male,boy,sigma",
     },
     desc: "I like to photograph others before they know what their best angles are.",
-    image:
-      "https://source.unsplash.com/featured",
+    image: "https://source.unsplash.com/featured",
     _createdAt: "1680531626",
     views: "38",
     comments: "0",
     likes: "12",
+    likedBy: [],
   },
   {
     _id: "1malsdf08ge",
@@ -314,12 +337,12 @@ export const post_details = [
         "https://source.unsplash.com/random/300x300?girl,school girls,short skirt girls",
     },
     desc: "Choose a job you love and you will never have to work a day in your life.",
-    image:
-      "https://source.unsplash.com/featured",
+    image: "https://source.unsplash.com/featured",
     _createdAt: "1680531626",
     views: "38",
     comments: "0",
     likes: "12",
+    likedBy: [],
   },
   {
     _id: "1089fnas23",
@@ -332,12 +355,12 @@ export const post_details = [
         "https://source.unsplash.com/random/300x300?female air hostess,teenage girls,wife,beautify-wife,girl with her boyfriend",
     },
     desc: "Jet-setting around the world, one flight at a time ✨. Always ready for takeoff ✈️💕",
-    image:
-      "https://source.unsplash.com/featured",
+    image: "https://source.unsplash.com/featured",
     _createdAt: "1681479333",
     views: "38",
     comments: "0",
     likes: "12",
+    likedBy: [],
   },
   {
     _id: "lkmaj9284f",
@@ -346,16 +369,15 @@ export const post_details = [
       name: "windsor winnie",
       username: "windsorwinnie",
       profession: "artist",
-      image:
-        "https://source.unsplash.com/random/300x300?artist, group selfies",
+      image: "https://source.unsplash.com/random/300x300?artist, group selfies",
     },
     desc: "A true artist is not one who is inspired, but one who inspires others. An artist is not paid for his labor but for his vision.",
-    image:
-      "https://source.unsplash.com/featured",
+    image: "https://source.unsplash.com/featured",
     _createdAt: "1680531626",
     views: "38",
     comments: "0",
     likes: "12",
+    likedBy: [],
   },
 ];
 
