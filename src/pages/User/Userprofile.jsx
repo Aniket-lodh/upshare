@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { HiOutlineMapPin } from "react-icons/hi2";
 import { RiCalendarTodoFill, RiHeart2Line, RiGridFill } from "react-icons/ri";
 import { Link, Outlet, useParams } from "react-router-dom";
+import LazyImage from "../../components/LazyImage.jsx";
 
 import { user_profile_data } from "../../data/mock.js";
 import { userContext } from "../../Hooks/userContext.jsx";
@@ -34,20 +35,23 @@ const UserProfile = () => {
           <div className="relative w-full">
             {/* cover-image*/}
             <div className="min-h-fit h-230 max-h-240 w-full overflow-hidden background-cover-clip bg-color-shades-accent">
-              <img
-                src={userObj?.cover_image}
-                alt={`${userObj?.username}-cover-picture`}
-                className="object-cover w-full h-full max-h-240"
-              />
+              <div className="object-cover w-full h-full max-h-240">
+                <LazyImage
+                  src={userObj?.cover_image}
+                  alt={`${userObj?.username}-cover-picture`}
+                />
+              </div>
             </div>
             <div className="absolute left-0 bottom-0 w-full px-4 translate-y-1/2 flex flex-col items-start ">
               {/*profile-image*/}
               <div className="w-28 h-28 border-4 border-white rounded-full drop-shadow-lg overflow-hidden bg-color-shades-accent">
-                <img
-                  src={userObj?.image}
-                  alt={`${userObj?.username}-profile-picture`}
-                  className="w-full h-full object-cover drop-shadow-sm "
-                />
+                <div className="w-full h-full object-cover drop-shadow-sm overflow-hidden">
+                  <LazyImage
+                    src={userObj?.image}
+                    alt={`${userObj?.username}-profile-picture`}
+                  />
+                </div>
+                <img />
               </div>
               {/*user-headings*/}
               <div className="flex items-center justify-between w-full">
@@ -186,7 +190,7 @@ const UserProfile = () => {
             </div>
           </div>
           {/* Rendering the outlet */}
-          <Outlet context={[userId]}/>
+          <Outlet context={[userId]} />
         </section>
       ) : (
         // Show redirect to log in and Signup if user not exist

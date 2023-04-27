@@ -5,32 +5,29 @@ import Home from "../pages/Home";
 import Feed from "../pages/Feed";
 import { Loader } from "../helpers/Loader.jsx";
 import PinDetails from "../pages/PinDetails.jsx";
+import SearchAll from "../pages/search/all";
+import SearchUsers from "../pages/search/users";
 
 const UserProfile = React.lazy(() => import("../pages/User/Userprofile"));
 const UserPost = React.lazy(() => import("../pages/User/Post"));
 const Search = React.lazy(() => import("../pages/Search"));
 const Wishlist = React.lazy(() => import("../pages/Wishlist"));
 const Categories = React.lazy(() => import("../pages/Categories"));
-const SearchAll = React.lazy(() => import("../pages/search/all"));
-const SearchUsers = React.lazy(() => import("../pages/search/users"));
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    loader: Loader,
     errorElement: <ErrorBoundary />,
     children: [
       {
         path: "/",
         element: <Feed />,
-        loader: Loader,
         errorElement: <ErrorBoundary />,
         children: [
           {
             path: "pins/:pinId",
             element: <PinDetails />,
-            loader: Loader,
             errorElement: <ErrorBoundary />,
           },
         ],
@@ -42,12 +39,10 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            loader: Loader,
             element: <SearchAll />,
           },
           {
             path: "users",
-            loader: Loader,
             element: <SearchUsers />,
           },
         ],
@@ -58,19 +53,16 @@ const router = createBrowserRouter([
           {
             path: "profile/:userId/*",
             element: <UserProfile />,
-            loader: Loader,
             errorElement: <ErrorBoundary />,
             children: [
               {
                 path: "",
                 element: <UserPost />,
-                loader: Loader,
                 errorElement: <ErrorBoundary />,
               },
               {
                 path: "wishlists",
                 element: <div>User all wishlisted posts</div>,
-                loader: Loader,
                 errorElement: <ErrorBoundary />,
               },
             ],
@@ -84,19 +76,16 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <div>Login component</div>,
-        loader: Loader,
         errorElement: <ErrorBoundary />,
       },
       {
         path: "/wishlist/user/:userId",
         element: <Wishlist />,
-        loader: Loader,
         errorElement: <ErrorBoundary />,
       },
       {
         path: "/categories",
         element: <Categories />,
-        loader: Loader,
         errorElement: <ErrorBoundary />,
       },
     ],

@@ -1,6 +1,7 @@
 import { Link, useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { feed_data } from "../../data/mock";
+import LazyImage from "../../components/LazyImage";
 
 const Post = () => {
   const [userId] = useOutletContext();
@@ -19,13 +20,11 @@ const Post = () => {
             {/* Card image/thumbnail */}
             <Link
               to={`/user/pin/${items._id}`}
-              className="w-full h-full overflow-hidden"
+              className="w-full h-full overflow-hidden block"
             >
-              <img
-                src={items.image}
-                alt="user-created-pic"
-                className="w-full h-full object-cover"
-              />
+              <div id={items._id} className="w-full h-full object-cover min-w-120 min-h-140">
+                <LazyImage src={items.image} />
+              </div>
             </Link>
           </div>
         ))}
