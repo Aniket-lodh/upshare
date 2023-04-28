@@ -18,7 +18,7 @@ const Navbar = () => {
 
     return (
         <>
-            <header className="w-screen bg-white fixed h-fit z-10 top-0 left-0 ">
+            <header className="w-screen bg-white sticky h-fit z-10 top-0 left-0 ">
                 <nav className="w-full flex items-center justify-between px-5 py-4 ">
                     {!searchMatch ? (
                             <>
@@ -48,7 +48,6 @@ const Navbar = () => {
                         )}
                 </nav>
             </header>
-            {/*<div className="px-5 py-4 bg-transparent w-full"> &nbsp;</div>*/}
 
             <Sidebar user={user} toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar}/>
         </>

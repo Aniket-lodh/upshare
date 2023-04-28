@@ -5,7 +5,7 @@ import LazyImage from "./LazyImage";
 const Pins = ({ pin, setRenderChildren }) => {
   return (
     <>
-      <div className="flex-auto min-w-150 max-w-160 h-fit rounded-lg bg-color-bg-accent overflow-hidden">
+      <div className="grid self-center justify-self-center flex-auto min-w-150 max-w-160 h-fit rounded-lg bg-color-bg-accent overflow-hidden">
         <div className="w-full max-h-230 flex flex-col gap-1.5 items-start justify-start bg-gradient-to-tr from-neutral-300/30 via-color-bg-accent py-2 px-2">
           {/*Pin-creator uploaded image*/}
           <div className="flex min-w-full min-h-140 rounded-md overflow-hidden">
