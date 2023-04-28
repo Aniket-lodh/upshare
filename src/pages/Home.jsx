@@ -7,13 +7,12 @@ import { userContext } from "../Hooks/userContext.jsx";
 const Home = () => {
   // hooks
   const user = localStorage.getItem("user");
-  const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname]);
+  }, []);
   return (
     <userContext.Provider value={user}>
-      <main className="w-screen h-screen relative pb-2 bg-red-500 flex flex-col items-start justify-start overflow-x-hidden">
+      <main className="w-screen max-w-screen h-screen relative pb-2 bg-red-500 flex flex-col items-start justify-start overflow-x-hidden overflow-y-auto">
         <Navbar />
         <section className="flex-auto w-full">
           <Outlet />
