@@ -8,10 +8,8 @@ import {userContext} from "../Hooks/userContext.jsx";
 const Sidebar = React.lazy(() => import("./Sidebar.jsx"));
 
 
-const Navbar = () => {
+const Navbar = ({toggleSidebar, setToggleSidebar}) => {
     //Hooks
-    const [toggleSidebar, setToggleSidebar] = useState(false);
-    const user = useContext(userContext);
     const searchMatch = useMatch("/search/*");
     const navigate = useNavigate();
 
@@ -19,12 +17,12 @@ const Navbar = () => {
     return (
         <>
             <header className="w-screen bg-white sticky h-fit z-10 top-0 left-0 ">
-                <nav className="w-full flex items-center justify-between px-5 py-4 ">
+                <nav className="w-full flex items-center justify-between p-5 py-4 ">
                     {!searchMatch ? (
                             <>
                                 <div className="flex gap-2 items-center">
                                     {/*Menu Icon*/}
-                                    <FcMenu fontSize={24} className="text-color-font-tertiary cursor-pointer"
+                                    <FcMenu fontSize={24} className="lg:hidden text-color-font-tertiary cursor-pointer"
                                             onClick={() => setToggleSidebar(!toggleSidebar)}/>
                                     {/*App logo*/}
                                     <Link to={"/"} className="text-xl font-bold text-color-font-primary cursor-pointer">Up<span
@@ -49,7 +47,6 @@ const Navbar = () => {
                 </nav>
             </header>
 
-            <Sidebar user={user} toggleSidebar={toggleSidebar} setToggleSidebar={setToggleSidebar}/>
         </>
     )
 }

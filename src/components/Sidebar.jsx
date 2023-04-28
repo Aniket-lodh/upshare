@@ -36,9 +36,9 @@ const Sidebar = ({user, toggleSidebar, setToggleSidebar}) => {
 
     return (
         <aside
-            className={`z-20 transition-all ease-in-out h-screen w-screen fixed top-0 -left-full bg-transparent flex  ${toggleSidebar && "!left-0"}`}>
+            className={`flex lg:inline-block h-screen w-screen lg:w-auto fixed lg:relative top-0 -left-full bg-transparent   ${toggleSidebar && "!left-0"} lg:left-0 z-20 transition-all ease-in-out`}>
             {/*Left Sidebar*/}
-            <section ref={closeSidebarOnOutsideClick} className="w-56 bg-white flex flex-col items-center">
+            <section ref={closeSidebarOnOutsideClick} className="w-56 h-full bg-white flex flex-col items-center">
                 <div className="relative w-full bg-color-bg-accent h-44">
                     <IoIosCloseCircleOutline
                         className={`block opacity-0  absolute right-3 top-2 cursor-pointer transition ease-in-out delay-75 ${toggleSidebar && "opacity-100"}`}
@@ -106,7 +106,7 @@ const Sidebar = ({user, toggleSidebar, setToggleSidebar}) => {
             </section>
             {/*Right Background shadow*/}
             <div
-                className={`h-screen opacity-0 transition-opacity ease-in-out delay-200 flex-1 bg-color-shades-secondary overscroll-none ${toggleSidebar && "opacity-40"}`}>
+                className={`h-screen lg:hidden opacity-0 transition-opacity ease-in-out delay-200 flex-1 bg-color-shades-secondary overscroll-none ${toggleSidebar && "opacity-40"}`}>
                 &nbsp;
             </div>
 
