@@ -33,7 +33,7 @@ const Feed = () => {
       <section
         className={`${
           renderChildren ? "left-0" : "left-full"
-        } fixed top-0 bg-white w-full z-30 transition-all h-full overflow-y-auto`}
+        } fixed top-0 bg-white w-screen h-screen z-30 transition-all overflow-y-auto`}
       >
         <Outlet context={[renderChildren, setRenderChildren]} />
       </section>

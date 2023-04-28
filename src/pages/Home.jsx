@@ -13,12 +13,9 @@ const Home = () => {
   return (
     <userContext.Provider value={user}>
       <Navbar />
-      <section className="flex-auto w-full">
-          <Outlet />
-        </section>
-      {/* <main className="w-screen max-w-screen h-screen relative pb-2 bg-red-500 flex flex-col items-start justify-start overflow-x-hidden">
-        
-      </main> */}
+      <main className="flex-auto w-full pb-2">
+        <Outlet />
+      </main>
     </userContext.Provider>
   );
 };
