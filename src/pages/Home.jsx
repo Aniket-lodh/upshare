@@ -12,14 +12,13 @@ const Home = () => {
   }, []);
   return (
     <userContext.Provider value={user}>
-      <main className="w-screen max-w-screen h-screen relative pb-2 bg-red-500 flex flex-col items-start justify-start overflow-x-hidden overflow-y-auto">
-        <Navbar />
-        <section className="flex-auto w-full">
+      <Navbar />
+      <section className="flex-auto w-full">
           <Outlet />
         </section>
-      </main>
-
-     
+      {/* <main className="w-screen max-w-screen h-screen relative pb-2 bg-red-500 flex flex-col items-start justify-start overflow-x-hidden">
+        
+      </main> */}
     </userContext.Provider>
   );
 };
