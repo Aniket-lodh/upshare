@@ -16,7 +16,7 @@ const Navbar = ({toggleSidebar, setToggleSidebar}) => {
 
     return (
         <>
-            <header className="w-screen bg-white sticky h-fit z-10 top-0 left-0 ">
+            <header className="w-screen bg-white sticky lg:fixed h-60 z-10 top-0">
                 <nav className="w-full flex items-center justify-between p-5 py-4 ">
                     {!searchMatch ? (
                             <>

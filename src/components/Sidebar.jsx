@@ -36,9 +36,9 @@ const Sidebar = ({user, toggleSidebar, setToggleSidebar}) => {
 
     return (
         <aside
-            className={`flex lg:inline-block h-screen w-screen lg:w-auto fixed lg:relative top-0 -left-full bg-transparent   ${toggleSidebar && "!left-0"} lg:left-0 z-20 transition-all ease-in-out`}>
+            className={`flex lg:inline-block h-screen lg:mt-[calc(60px)] w-screen lg:w-[calc(100%-75%)] fixed top-0 -left-full lg:left-0 ${toggleSidebar && "!left-0"} z-20 lg:z-0 transition-all ease-in-out bg-transparent lg:border-r`}>
             {/*Left Sidebar*/}
-            <section ref={closeSidebarOnOutsideClick} className="w-56 h-full bg-white flex flex-col items-center">
+            <section ref={closeSidebarOnOutsideClick} className="w-56 lg:w-full h-full bg-white flex flex-col items-center">
                 <div className="relative w-full bg-color-bg-accent h-44">
                     <IoIosCloseCircleOutline
                         className={`block opacity-0  absolute right-3 top-2 cursor-pointer transition ease-in-out delay-75 ${toggleSidebar && "opacity-100"}`}

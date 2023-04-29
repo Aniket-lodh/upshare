@@ -18,11 +18,9 @@ const Feed = () => {
 
   return (
     <>
-      {/* Just an empty div */}
-      {/* <div className="mt-2"></div> */}
 
       {/* Pin Cards */}
-      <div className="grid auto-cols-auto grid-cols-2 sm:grid-cols-3  auto-rows-auto gap-y-3 px-1">
+      <div className="grid gap-y-3 px-1 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:overflow-y-visible ">
         {feed_data.length > 0 &&
           feed_data.map((item, index) => (
             <Pins

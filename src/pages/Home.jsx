@@ -18,13 +18,13 @@ const Home = () => {
         toggleSidebar={toggleSidebar}
         setToggleSidebar={setToggleSidebar}
       />
-      <div className="flex items-start justify-start">
+      <div className="lg:mt-[calc(60px)]">
         <Sidebar
           user={user}
           toggleSidebar={toggleSidebar}
           setToggleSidebar={setToggleSidebar}
         />
-        <main className="flex-auto w-full lg:w-auto pb-2">
+        <main className="flex-auto w-full lg:w-auto pb-2  lg:pl-[calc(100%-75%)]">
           <Outlet />
         </main>
       </div>
