@@ -18,9 +18,8 @@ const Feed = () => {
 
   return (
     <>
-
       {/* Pin Cards */}
-      <div className="grid gap-y-3 px-1 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:overflow-y-visible ">
+      <div className="grid gap-y-3 px-1 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:overflow-y-auto ">
         {feed_data.length > 0 &&
           feed_data.map((item, index) => (
             <Pins
@@ -34,10 +33,12 @@ const Feed = () => {
       {/*Loading the PinDetails section*/}
       <section
         className={`${
-          renderChildren ? "left-0" : "left-full"
-        } fixed top-0 bg-white w-screen h-screen z-30 transition-all`}
+          renderChildren ? "left-0 lg:top-0" : "left-full  lg:top-full"
+        } flex justify-center top-0 lg:left-0 fixed bg-white w-screen h-screen z-30 transition-all overflow-y-auto lg:bg-gray-500/50`}
       >
-        <Outlet context={[renderChildren, setRenderChildren]} />
+        <div className="w-auto h-full bg-white lg:w-[calc(100%-50%)]">
+          <Outlet context={[renderChildren, setRenderChildren]} />
+        </div>
       </section>
 
       {/*Create a new Pin button*/}
@@ -52,7 +53,6 @@ const Feed = () => {
         </button>
       </div>
     </>
-
   );
 };
 export default Feed;

@@ -5,7 +5,7 @@ import { Link, Outlet, useParams } from "react-router-dom";
 import LazyImage from "../../components/LazyImage.jsx";
 
 import { user_profile_data } from "../../data/mock.js";
-import { userContext } from "../../Hooks/userContext.jsx";
+import  UserContext  from "../../store/userContext.jsx";
 
 const UserProfile = () => {
   // Variable
@@ -16,7 +16,7 @@ const UserProfile = () => {
 
   // Hooks
   const { userId } = useParams();
-  const user = useContext(userContext);
+  const {user} = useContext(UserContext);
   const [activeTabText, setActiveTavText] = useState("all-pins");
   const [userObj, setUserObj] = useState(null);
 

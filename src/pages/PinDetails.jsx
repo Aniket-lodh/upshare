@@ -1,9 +1,7 @@
 import {
   Link,
-  Outlet,
   useOutletContext,
   useParams,
-  useMatch,
   useNavigate,
 } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
@@ -18,14 +16,14 @@ import {
 
 import { post_details } from "../data/mock.js";
 import moment from "moment";
-import { userContext } from "../Hooks/userContext.jsx";
+import UserContext from "../store/userContext.jsx";
 
 const PinDetails = () => {
   //Hooks
   const [renderPostDetails, setRenderPostDetails] = useOutletContext();
   const [pin, setPin] = useState(null);
   const [pinSaved, setSavedPin] = useState(false);
-  const user = useContext(userContext);
+  const user = useContext(UserContext);
   const navigate = useNavigate();
 
   //Variables
@@ -79,7 +77,7 @@ const PinDetails = () => {
   return (
     <>
       {
-        <div className="px-2 pt-3.5">
+        <div className="px-2 py-3.5 bg-white">
           <div className="border border-color-border-primary rounded-lg pb-4 overflow-hidden">
             {/*Post creator headings*/}
             <div className="relative w-full flex items-center justify-between px-4 py-2 bg-color-bg-tertiary">
@@ -181,7 +179,7 @@ const PinDetails = () => {
             </div>
           </div>
           {/*Temp comments section*/}
-          <div className="w-full my-4 flex flex-col items-center justify-center">
+          <div className="w-full mt-4 flex flex-col items-center justify-center">
             <h2 className="font-bold text-base text-color-font-primary">
               No comments
             </h2>

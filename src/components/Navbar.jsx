@@ -1,8 +1,7 @@
 import {FcMenu} from "react-icons/fc";
 import {RiSearchLine, RiArrowLeftLine,RiSearch2Line} from "react-icons/ri";
-import React, {useContext, useState} from "react";
+import React from "react";
 import {Link, useMatch, useNavigate} from "react-router-dom";
-import {userContext} from "../Hooks/userContext.jsx";
 
 
 const Sidebar = React.lazy(() => import("./Sidebar.jsx"));

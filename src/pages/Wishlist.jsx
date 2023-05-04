@@ -1,18 +1,8 @@
-import { useContext, useEffect } from "react";
-import { post_details } from "../data/mock";
-import { userContext } from "../Hooks/userContext";
 
 const Wishlist = () => {
-  const user = useContext(userContext);
-//   Not Implemented yet
-//   useEffect(() => {
-//     post_details.forEach((items) =>
-//       console.log(items.likedBy.filter((item) => item._id === user))
-//     );
-//   }, []);
   return (
-    <section className="w-screen px-4 py-4 relative">
-      <div className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-full h-fit flex flex-col items-center justify-center gap-4">
+    <section className="px-4 py-4 flex-1 relative">
+      <div className=" w-full h-fit flex flex-col items-center justify-center gap-4">
         <div className="flex flex-col items-center justify-center">
           <h1 className="font-bold tracking-wide text-xl text-color-font-primary text-center">
             Wishlist is empty!
