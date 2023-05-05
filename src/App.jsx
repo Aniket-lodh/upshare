@@ -6,7 +6,7 @@ import { Loader } from "./helpers/Loader.jsx";
 import { UserContextProvider } from "./store/userContext";
 
 function App() {
-  localStorage.clear()
+  localStorage.removeItem("user")
   // Set user Data
   localStorage.setItem(
     "user",
@@ -21,7 +21,7 @@ function App() {
       },
     })
   );
-  
+
   return (
     <UserContextProvider>
       <Suspense fallback={<Loader />}>
