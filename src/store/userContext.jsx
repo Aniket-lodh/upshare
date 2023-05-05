@@ -10,9 +10,10 @@ const demoUser = {
     location: "los angeles,ca",
   },
 };
-const userInfoFromStorage = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : localStorage.setItem("user",JSON.stringify(demoUser)); //Make it null for data fetching from backend
+localStorage.clear('user')
+const userInfoFromStorage = localStorage.getItem("curUser")
+  ? JSON.parse(localStorage.getItem("curUser"))
+  : localStorage.setItem("curUser",JSON.stringify(demoUser)); //Make it null for data fetching from backend
 
 const UserContext = createContext({
   user: userInfoFromStorage,
@@ -24,12 +25,12 @@ export function UserContextProvider(props) {
   const [currentUser, setCurrentUser] = useState(userInfoFromStorage);
   function addUserHandler(userData) {
     setCurrentUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("curUser", JSON.stringify(userData));
   }
 
   function removeUserHandler() {
     setCurrentUser(null);
-    localStorage.removeItem("user");
+    localStorage.removeItem("curUser");
   }
 
   const context = {
