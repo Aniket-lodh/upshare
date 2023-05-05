@@ -10,7 +10,6 @@ const demoUser = {
     location: "los angeles,ca",
   },
 };
-localStorage.clear('user')
 const userInfoFromStorage = localStorage.getItem("curUser")
   ? JSON.parse(localStorage.getItem("curUser"))
   : localStorage.setItem("curUser",JSON.stringify(demoUser)); //Make it null for data fetching from backend
