@@ -1,8 +1,18 @@
 import { createContext, useState } from "react";
 
+const demoUser = {
+  status: "success",
+  data: {
+    _id: "109idx3a5j",
+    name: "aniket lodh",
+    email: "aniketlodh@gmail.co",
+    photo: "user-avatar.jpg",
+    location: "los angeles,ca",
+  },
+};
 const userInfoFromStorage = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
-  : null;
+  : localStorage.setItem("user",JSON.stringify(demoUser)); //Make it null for data fetching from backend
 
 const UserContext = createContext({
   user: userInfoFromStorage,
@@ -12,7 +22,7 @@ const UserContext = createContext({
 
 export function UserContextProvider(props) {
   const [currentUser, setCurrentUser] = useState(userInfoFromStorage);
-
+  console.log(userInfoFromStorage);
   function addUserHandler(userData) {
     setCurrentUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
