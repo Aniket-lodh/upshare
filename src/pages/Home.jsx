@@ -1,14 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import Navbar from "../components/Navbar.jsx";
 import Sidebar from "../components/Sidebar.jsx";
-import UserContext from "../store/userContext.jsx";
 
 const Home = () => {
   // hooks
   const [toggleSidebar, setToggleSidebar] = useState(false);
-  const { user } = useContext(UserContext);
   return (
     <>
       <Navbar
@@ -17,7 +15,6 @@ const Home = () => {
       />
       <div className="flex lg:mt-[calc(60px)]">
         <Sidebar
-          user={user}
           toggleSidebar={toggleSidebar}
           setToggleSidebar={setToggleSidebar}
         />

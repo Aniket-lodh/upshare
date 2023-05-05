@@ -22,7 +22,6 @@ const UserContext = createContext({
 
 export function UserContextProvider(props) {
   const [currentUser, setCurrentUser] = useState(userInfoFromStorage);
-  console.log(userInfoFromStorage);
   function addUserHandler(userData) {
     setCurrentUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));

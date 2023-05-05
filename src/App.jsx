@@ -6,7 +6,6 @@ import { Loader } from "./helpers/Loader.jsx";
 import { UserContextProvider } from "./store/userContext";
 
 function App() {
-  localStorage.clear();
   return (
     <UserContextProvider>
       <Suspense fallback={<Loader />}>
