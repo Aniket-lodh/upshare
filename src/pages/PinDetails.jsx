@@ -23,9 +23,8 @@ const PinDetails = () => {
   const [renderPostDetails, setRenderPostDetails] = useOutletContext();
   const [pin, setPin] = useState(null);
   const [pinSaved, setSavedPin] = useState(false);
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
-
   //Variables
   let date;
   const { pinId } = useParams();
@@ -36,7 +35,7 @@ const PinDetails = () => {
     setSavedPin(
       post_details
         .find((value) => pinId === value._id)
-        .likedBy.some((item) => item._id === user)
+        .likedBy.some((item) => item._id === user.data._id)
     );
   }, [pinId]);
 
@@ -46,7 +45,7 @@ const PinDetails = () => {
   const toggleWishlist = () => {
     if (pinSaved) {
       const findIndex = pin.likedBy.findIndex(
-        (element) => element._id === user
+        (element) => element._id === user.data._id
       );
       post_details
         .find((value) => pinId === value._id)
@@ -56,7 +55,7 @@ const PinDetails = () => {
     } else {
       post_details
         .find((value) => pinId === value._id)
-        .likedBy.push({ _id: `${user}` });
+        .likedBy.push({ _id: `${user.data._id}` });
       setSavedPin(true);
       console.log("added into wishlist");
     }
@@ -165,15 +164,21 @@ const PinDetails = () => {
                       fontSize={24}
                       color="#ef4444"
                       onClick={() => toggleWishlist()}
+                      className=" cursor-pointer"
                     />
                   ) : (
                     <RiHeart2Line
                       fontSize={24}
                       onClick={() => toggleWishlist()}
+                      className=" cursor-pointer"
                     />
                   )}
 
-                  <RiShareLine fontSize={24} onClick={sharePost} />
+                  <RiShareLine
+                    fontSize={24}
+                    onClick={sharePost}
+                    className=" cursor-pointer"
+                  />
                 </div>
               </div>
             </div>

@@ -6,6 +6,7 @@ import { Loader } from "./helpers/Loader.jsx";
 import { UserContextProvider } from "./store/userContext";
 
 function App() {
+  localStorage.clear()
   // Set user Data
   localStorage.setItem(
     "user",
