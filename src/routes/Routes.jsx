@@ -13,7 +13,7 @@ const UserPost = React.lazy(() => import("../pages/User/Post"));
 const Search = React.lazy(() => import("../pages/Search"));
 const Wishlist = React.lazy(() => import("../pages/Wishlist"));
 const Categories = React.lazy(() => import("../pages/Categories"));
-
+const Login = React.lazy(() => import("../pages/User/Login"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -74,11 +74,6 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/login",
-        element: <div>Login component</div>,
-        errorElement: <ErrorBoundary />,
-      },
-      {
         path: "/wishlist/user/:userId",
         element: <Wishlist />,
         errorElement: <ErrorBoundary />,
@@ -89,6 +84,16 @@ const router = createBrowserRouter([
         errorElement: <ErrorBoundary />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/signup",
+    element: <div>Sign Up</div>,
+    errorElement: <ErrorBoundary />,
   },
 ]);
 
