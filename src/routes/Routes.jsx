@@ -2,10 +2,11 @@ import React from "react";
 import { createBrowserRouter, useRouteError } from "react-router-dom";
 
 import PinDetails from "../pages/PinDetails.jsx";
+import SearchAll from "../pages/search/All.jsx";
+import SearchUsers from "../pages/search/Users.jsx";
+
 const Home = React.lazy(() => import("../pages/Home"));
 const Feed = React.lazy(() => import("../pages/Feed"));
-const SearchUsers = React.lazy(() => import("../pages/search/Users.jsx"));
-const SearchAll = React.lazy(() => import("../pages/search/All.jsx"));
 
 const UserProfile = React.lazy(() => import("../pages/User/Userprofile"));
 const UserPost = React.lazy(() => import("../pages/User/Post"));
