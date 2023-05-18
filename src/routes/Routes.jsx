@@ -4,11 +4,11 @@ import { createBrowserRouter, useRouteError } from "react-router-dom";
 import PinDetails from "../pages/PinDetails.jsx";
 const Home = React.lazy(() => import("../pages/Home"));
 const Feed = React.lazy(() => import("../pages/Feed"));
+const SearchUsers = React.lazy(() => import("../pages/search/Users.jsx"));
+const SearchAll = React.lazy(() => import("../pages/search/All.jsx"));
 
 const UserProfile = React.lazy(() => import("../pages/User/Userprofile"));
 const UserPost = React.lazy(() => import("../pages/User/Post"));
-const SearchUsers = React.lazy(() => import("../pages/search/Users"));
-const SearchAll = React.lazy(() => import("../pages/search/All"));
 const Search = React.lazy(() => import("../pages/Search"));
 
 const Wishlist = React.lazy(() => import("../pages/Wishlist"));
