@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 
-import Navbar from "../components/Navbar.jsx";
-import Sidebar from "../components/Sidebar.jsx";
-
+const Navbar = React.lazy(() => import("../components/Navbar.jsx"));
+const Sidebar = React.lazy(() => import("../components/Sidebar.jsx"));
 const Home = () => {
   // hooks
   const [toggleSidebar, setToggleSidebar] = useState(false);

@@ -1,18 +1,8 @@
 import { createContext, useState } from "react";
 
-const demoUser = {
-  status: "success",
-  data: {
-    _id: "109idx3a5j",
-    name: "aniket lodh",
-    email: "aniketlodh@gmail.co",
-    photo: "user-avatar.jpg",
-    location: "los angeles,ca",
-  },
-};
 const userInfoFromStorage = localStorage.getItem("curUser")
   ? JSON.parse(localStorage.getItem("curUser"))
-  : localStorage.setItem("curUser",JSON.stringify(demoUser)); //Make it null for data fetching from backend
+  : null; //Make it null for data fetching from backend
 
 const UserContext = createContext({
   user: userInfoFromStorage,

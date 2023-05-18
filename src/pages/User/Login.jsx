@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.svg";
 import loginTemp from "../../assets/images/login-temp.svg";
 import { loginWithPasscode } from "../../api/userProfile";
 import { Spinner } from "../../helpers/Loader";
+import UserContext from "../../store/userContext";
 
 const Login = () => {
   const [inputs, setInputs] = useState({ email: "", passcode: "" });
   const [isLoading, SetLoading] = useState(false);
+  const userCtx=useContext(UserContext)
   const navigate = useNavigate();
+
+
   const handleOnchange = async function (inpt) {
     const { name, value } = inpt;
 
@@ -26,6 +30,7 @@ const Login = () => {
     
     if (user.status === 200) {
       console.log(user);
+      userCtx.addUser(user);
       navigate("/", { replace: true });
     } else {
       console.log(user);

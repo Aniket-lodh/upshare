@@ -2,14 +2,17 @@ import { useContext } from "react";
 
 import { HiOutlineHome } from "react-icons/hi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { RiHeart2Line, RiChat1Line } from "react-icons/ri";
+import { RiHeart2Line, RiChat1Line, RiEyeCloseLine } from "react-icons/ri";
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import UserContext from "../store/userContext.jsx";
 
-import fetchUser from "../Hooks/fetchUser.js";
 
 const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
+  //Hooks
+  const closeSidebarOnOutsideClick = useRef(null);
+  const [ActiveUser, setActiveUser] = useState(null);
+
   const { user } = useContext(UserContext);
 
   //Variables
@@ -18,14 +21,10 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
   const notActiveNavStyle =
     "flex items-start gap-2 text-sm font-bold text-color-font-tertiary hover:text-color-font-secondary transition-all ease-in-out capitalize";
 
-  //Hooks
-  const [userObj, setUserObj] = useState(undefined);
-  const closeSidebarOnOutsideClick = useRef(null);
-
   //Setting user data
   useEffect(() => {
-    setUserObj(fetchUser(user));
-  }, []);
+    setActiveUser(user?.data);
+  }, [user]);
 
   useEffect(() => {
     const HandleOutsideClickListener = (e) => {
@@ -64,34 +63,52 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
           />
           {/*user cover picture*/}
           <div className="w-full h-full overflow-hidden">
-            <img
-              src={userObj?.cover_image}
-              className="w-full h-full object-cover"
-              alt={`${userObj?.username}-cover-picture`}
-            />
+            {user.cover_photo && (
+              <img
+                src={ActiveUser?.cover_photo}
+                className="w-full h-full object-cover"
+                alt={`${ActiveUser?.username}-cover-picture`}
+              />
+            )}
           </div>
           {/*user profile avatar*/}
           <div className="absolute -bottom-12 left-3 flex flex-col items-start justify-start gap-1">
-            <div className="w-20 h-20 border-4 border-white rounded-full bg-red-500 drop-shadow-lg overflow-hidden">
-              <img
-                src={userObj?.image}
-                alt={`${userObj?.username}-profile`}
-                className="w-full h-full object-cover"
-              />
+            <div className="w-20 h-20 border-4 border-white rounded-full bg-blue-100 flex items-center justify-center  drop-shadow-lg overflow-hidden">
+              {user ? (
+                <img
+                  src={ActiveUser?.profilephoto}
+                  alt={`${ActiveUser?.username}-profile`}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <RiEyeCloseLine fontSize={24} />
+              )}
             </div>
-            <NavLink
-              to={`/user/profile/${userObj?._id}`}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-color-primary-blue-accent"
-                  : "text-color-font-primary hover:text-color-primary-blue-accent"
-              }
-              onClick={() => setToggleSidebar(false)}
-            >
-              <span className="font-medium ml-1 font-fira transition-all capitalize">
-                {userObj?.name}
-              </span>
-            </NavLink>
+            {user ? (
+              <NavLink
+                to={`/user/profile/${ActiveUser?._id}`}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-color-primary-blue-accent"
+                    : "text-color-font-primary hover:text-color-primary-blue-accent"
+                }
+                onClick={() => setToggleSidebar(false)}
+              >
+                <span className="font-medium ml-1 font-fira transition-all capitalize">
+                  {ActiveUser?.name}
+                </span>
+              </NavLink>
+            ) : (
+              <div className="font-fira transition-all capitalize text-transparent bg-clip-text bg-gradient-to-br from-color-primary-blue to-indigo-700">
+                <NavLink to={"/login"}>
+                  <span>log in</span>
+                </NavLink>
+                <span> / </span>
+                <NavLink to={"/signup"}>
+                  <span>sign up</span>
+                </NavLink>
+              </div>
+            )}
           </div>
         </div>
 

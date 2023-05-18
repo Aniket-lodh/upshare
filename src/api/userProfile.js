@@ -15,9 +15,33 @@ export const loginWithPasscode = async function (inputs) {
         // redirect: "follow",
       }
     );
-    if (resp.status === 200) {
+    if (resp.data.code === 200) {
       const user = await getMe();
       return user;
+    }
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
+export const SignupWithPasscode = async function (inputs) {
+  try {
+    const resp = await axios.post(
+      `${import.meta.env.VITE_SERVER}/users/signup`,
+      inputs,
+      { withCredentials: true },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    if (resp.data.code === 201) {
+      const user = await getMe();
+      return user;
+    } else {
+      return resp.data;
     }
   } catch (err) {
     return err.response.data;
@@ -39,7 +63,6 @@ const getMe = async () => {
       }
     );
     if (profile && profile.status === 200) {
-      localStorage.setItem("curUser", JSON.stringify(profile.data.data));
       return profile.data;
     }
   } catch (error) {

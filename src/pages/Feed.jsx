@@ -1,9 +1,9 @@
-import { feed_data } from "../data/mock.js";
-import { AiOutlinePlus } from "react-icons/ai";
 import { useEffect, useState } from "react";
+import { Outlet, useMatch } from "react-router-dom";
+import { AiOutlinePlus } from "react-icons/ai";
+import { feed_data } from "../data/mock.js";
 
 import Pins from "../components/Pins";
-import { Outlet, useMatch } from "react-router-dom";
 
 const Feed = () => {
   //hooks
