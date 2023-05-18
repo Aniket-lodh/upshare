@@ -2,8 +2,8 @@ import React from "react";
 import { createBrowserRouter, useRouteError } from "react-router-dom";
 
 import PinDetails from "../pages/PinDetails.jsx";
-import SearchAll from "../pages/search/All.jsx";
-import SearchUsers from "../pages/search/Users.jsx";
+// import SearchAll from "../pages/search/All.jsx";
+// import SearchUsers from "../pages/search/Users.jsx";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const Feed = React.lazy(() => import("../pages/Feed"));
