@@ -39,16 +39,16 @@ const router = createBrowserRouter([
         path: "/search",
         element: <Search />,
         errorElement: <ErrorBoundary />,
-        children: [
-          {
-            path: "",
-            element: <SearchAll />,
-          },
-          {
-            path: "users",
-            element: <SearchUsers />,
-          },
-        ],
+        // children: [
+        //   {
+        //     path: "",
+        //     element: <SearchAll />,
+        //   },
+        //   {
+        //     path: "users",
+        //     element: <SearchUsers />,
+        //   },
+        // ],
       },
       {
         path: "/user",
