@@ -7,8 +7,8 @@ const Feed = React.lazy(() => import("../pages/Feed"));
 
 const UserProfile = React.lazy(() => import("../pages/User/Userprofile"));
 const UserPost = React.lazy(() => import("../pages/User/Post"));
-const SearchUsers = React.lazy(() => import("../pages/search/users"));
-const SearchAll = React.lazy(() => import("../pages/Search/all"));
+const SearchUsers = React.lazy(() => import("../pages/search/users.jsx"));
+const SearchAll = React.lazy(() => import("../pages/Search/all.jsx"));
 const Search = React.lazy(() => import("../pages/Search"));
 
 const Wishlist = React.lazy(() => import("../pages/Wishlist"));
