@@ -1,19 +1,21 @@
 import React from "react";
 import { createBrowserRouter, useRouteError } from "react-router-dom";
 
-import Home from "../pages/Home";
-import Feed from "../pages/Feed";
-import { Loader } from "../helpers/Loader.jsx";
 import PinDetails from "../pages/PinDetails.jsx";
-import SearchAll from "../pages/search/all";
-import SearchUsers from "../pages/search/users";
+const Home = React.lazy(() => import("../pages/Home"));
+const Feed = React.lazy(() => import("../pages/Feed"));
 
 const UserProfile = React.lazy(() => import("../pages/User/Userprofile"));
 const UserPost = React.lazy(() => import("../pages/User/Post"));
+const SearchUsers = React.lazy(() => import("../pages/search/users"));
+const SearchAll = React.lazy(() => import("../pages/Search/all"));
 const Search = React.lazy(() => import("../pages/Search"));
+
 const Wishlist = React.lazy(() => import("../pages/Wishlist"));
 const Categories = React.lazy(() => import("../pages/Categories"));
 const Login = React.lazy(() => import("../pages/User/Login"));
+const Signup = React.lazy(() => import("../pages/User/Signup"));
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -92,7 +94,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <div>Sign Up</div>,
+    element: <Signup />,
     errorElement: <ErrorBoundary />,
   },
 ]);
