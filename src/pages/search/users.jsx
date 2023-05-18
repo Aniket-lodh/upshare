@@ -1,4 +1,5 @@
-const SearchUsers = () => {
+import React from "react";
+const Users = () => {
   return (
     <section className="w-full h-fit px-5 py-4 flex flex-col items-start justify-start gap-3">
       <div className="flex flex-nowrap items-start justify-start gap-2  w-full h-fit">
@@ -44,4 +45,4 @@ const SearchUsers = () => {
   );
 };
 
-export default SearchUsers;
+export default Users;
