@@ -63,7 +63,7 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
           />
           {/*user cover picture*/}
           <div className="w-full h-full overflow-hidden">
-            {user.cover_photo && (
+            {user?.cover_photo && (
               <img
                 src={ActiveUser?.cover_photo}
                 className="w-full h-full object-cover"
