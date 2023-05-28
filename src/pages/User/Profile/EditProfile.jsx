@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   HiOutlineGlobeAlt,
   HiOutlineCamera,
   HiUserCircle,
 } from "react-icons/hi";
-import { UpdateProfile } from "../../../api/userProfile";
+import { UpdateProfile, UploadImages, getMe } from "../../../api/userProfile";
 import { Spinner } from "../../../helpers/Loader";
+import UserContext from "../../../store/userContext";
 
 const EditProfile = () => {
   const [isLoading, SetLoading] = useState(false);
   const navigate = useNavigate();
+  const userCtx = useContext(UserContext);
   const userFiles = new FormData();
 
   const [userInputs, setuserInputs] = useState({
@@ -42,12 +44,20 @@ const EditProfile = () => {
   const HandleOnSubmit = async (e) => {
     e.preventDefault();
     SetLoading(true);
-    const updatedProfile = await UpdateProfile(userInputs, userFiles);
+
+    if (userFiles) {
+      const resp = await UploadImages(userFiles);
+    }
+    const updatedProfile = await UpdateProfile(userInputs);
+
     if (updatedProfile.code === 200) {
+      const curUpdatedUser = await getMe();
+      userCtx.addUser(curUpdatedUser);
       navigate(-1);
     } else {
-      console.log(user);
+      console.log(updatedProfile);
     }
+    SetLoading(false);
   };
 
   return (
@@ -165,6 +175,7 @@ const EditProfile = () => {
                         id="coverphoto"
                         name="coverphoto"
                         className="sr-only"
+                        accept=".jpg,.png,.jpeg"
                         onChange={(e) => HandleOnChange(e.target)}
                       />
                     </label>

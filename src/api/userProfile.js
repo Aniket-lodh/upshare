@@ -48,10 +48,10 @@ export const SignupWithPasscode = async function (inputs) {
   }
 };
 
-export const UpdateProfile = async function (userInputs, userFiles) {
+export const UpdateProfile = async function (userInputs) {
   try {
     const resp = await axios.patch(
-      "http://localhost:2408/users/profile/edit",
+      `${import.meta.env.VITE_SERVER}/users/profile/edit`,
       userInputs,
       { withCredentials: true },
       {
@@ -62,7 +62,6 @@ export const UpdateProfile = async function (userInputs, userFiles) {
       }
     );
     if (resp.data.code === 200) {
-      const resp = await UploadImages(userFiles);
       return resp.data;
     }
     return resp;
@@ -71,10 +70,10 @@ export const UpdateProfile = async function (userInputs, userFiles) {
   }
 };
 
-const UploadImages = async (userFiles) => {
+export const UploadImages = async (userFiles) => {
   try {
     const resp = await axios.patch(
-      "http://localhost:2408/users/profile/upload",
+      `${import.meta.env.VITE_SERVER}/users/profile/upload`,
       userFiles,
       { withCredentials: true },
       {
@@ -84,13 +83,14 @@ const UploadImages = async (userFiles) => {
         },
       }
     );
+    if (resp.data.code === 200) return resp.data;
     return resp;
   } catch (err) {
     return err.response;
   }
 };
 
-const getMe = async () => {
+export const getMe = async () => {
   try {
     const profile = await axios.get(
       `${import.meta.env.VITE_SERVER}/users/profile/me`,
