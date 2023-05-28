@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { HiOutlineMapPin } from "react-icons/hi2";
 import { RiCalendarTodoFill, RiHeart2Line, RiGridFill } from "react-icons/ri";
 import { Link, Outlet, useParams } from "react-router-dom";
-import LazyImage from "../../components/LazyImage.jsx";
-
-import { user_profile_data } from "../../data/mock.js";
-import  UserContext  from "../../store/userContext.jsx";
+import LazyImage from "../../../components/LazyImage.jsx";
+import { UpdateProfile, getProfile } from "../../../api/userProfile.js";
+import { user_profile_data } from "../../../data/mock.js";
+import UserContext from "../../../store/userContext.jsx";
+import axios from "axios";
 
 const UserProfile = () => {
   // Variable
@@ -16,14 +17,23 @@ const UserProfile = () => {
 
   // Hooks
   const { userId } = useParams();
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [activeTabText, setActiveTavText] = useState("all-pins");
   const [userObj, setUserObj] = useState(null);
 
   // Load User Data
   useEffect(() => {
     //storing user data
-    setUserObj(user_profile_data.find((value) => value._id === userId));
+    async function fetchUser() {
+      const user = await getProfile(userId);
+      console.log(user);
+      if (user.status === 200) {
+        setUserObj(user.data);
+      } else {
+        console.log(user);
+      }
+    }
+    fetchUser();
   }, [userId]);
 
   return (
@@ -37,7 +47,7 @@ const UserProfile = () => {
             <div className="min-h-fit h-230 max-h-240 w-full overflow-hidden background-cover-clip bg-color-shades-accent">
               <div className="object-cover w-full h-full max-h-240">
                 <LazyImage
-                  src={userObj?.cover_image}
+                  src={userObj?.coverphoto}
                   alt={`${userObj?.username}-cover-picture`}
                 />
               </div>
@@ -47,7 +57,7 @@ const UserProfile = () => {
               <div className="w-28 h-28 border-4 border-white rounded-full drop-shadow-lg overflow-hidden bg-color-shades-accent">
                 <div className="w-full h-full object-cover drop-shadow-sm overflow-hidden">
                   <LazyImage
-                    src={userObj?.image}
+                    src={userObj?.profilephoto}
                     alt={`${userObj?.username}-profile-picture`}
                   />
                 </div>
@@ -72,20 +82,19 @@ const UserProfile = () => {
                 </div>
                 {/*CTA buttons*/}
                 <div className="max-w-125 font-fira font-normal flex flex-col items-end justify-end gap-2">
-                  {userObj?._id === user && (
-                    <button
+                  {userObj?._id === user.data._id && (
+                    <Link
+                      to={"edit"}
                       role="button"
                       title="edit profile"
                       className="capitalize bg-color-primary-blue px-3 py-2 rounded text-white text-sm transition hover:bg-color-primary-blue-accent"
                     >
                       Edit Profile
-                    </button>
+                    </Link>
                   )}
-                  {userObj?._id !== user &&
-                    userObj?.followers.length >= 0 &&
-                    user ===
-                      userObj?.followers.find((value) => value?._id === user)
-                        ?._id && (
+
+                  {/* {userObj?._id !== user.data._id &&
+                    userObj?.followers.includes({ _id: user.data._id }) && (
                       <button
                         role="button"
                         title="edit profile"
@@ -94,11 +103,8 @@ const UserProfile = () => {
                         Following
                       </button>
                     )}
-                  {userObj?._id !== user &&
-                    userObj?.followers.length >= 0 &&
-                    user !==
-                      userObj?.followers.find((value) => value?._id === user)
-                        ?._id && (
+                  {userObj?._id !== user.data._id &&
+                    !userObj?.followers.includes({ _id: user.data._id }) && (
                       <button
                         role="button"
                         title="edit profile"
@@ -106,7 +112,7 @@ const UserProfile = () => {
                       >
                         Follow
                       </button>
-                    )}
+                    )} */}
                   <div className="w-full capitalize text-xs text-color-font-tertiary font-medium flex items-start justify-end gap-1">
                     <HiOutlineMapPin className="inline" fontSize={15} />
                     <p className=" truncate ">{userObj?.location}</p>
@@ -119,24 +125,24 @@ const UserProfile = () => {
           <div className="mt-28 flex items-center justify-center flex-col gap-4">
             {/*User bio*/}
             <div className="pl-5 pr-4 flex items-center justify-center flex-col gap-4">
-              <p className="break-words tracking-tight overflow-hidden font-normal text-sm text-color-font-secondary">
+              <p className="break-words text-left tracking-tight overflow-hidden font-normal text-sm text-color-font-secondary">
                 {userObj?.bio}
               </p>
               {/*User Followers and other details*/}
               <div className="font-fira font-semibold  text-color-font-primary bg-color-bg-accent flex items-center justify-center w-full py-5 rounded-md divide-x">
                 {/*user-likes*/}
                 <div className="max-w-110 flex flex-col items-center justify-center cursor-pointer px-4 capitalize">
-                  <h2 className="text-xl">{userObj?.likes.length}</h2>
+                  <h2 className="text-xl">{userObj?.likes?.length}</h2>
                   <p className="text-sm font-normal">likes</p>
                 </div>
                 {/*user-followers*/}
                 <div className="max-w-110  flex flex-col items-center justify-center cursor-pointer px-4 capitalize">
-                  <h2 className="text-xl">{userObj?.followers.length}</h2>
+                  <h2 className="text-xl">{userObj?.followers?.length}</h2>
                   <p className="text-sm font-normal">Followers</p>
                 </div>
                 {/*user-following*/}
                 <div className="max-w-110 flex flex-col items-center justify-center cursor-pointer px-4 capitalize">
-                  <h2 className="text-xl">{userObj?.following.length}</h2>
+                  <h2 className="text-xl">{userObj?.following?.length}</h2>
                   <p className="text-sm font-normal">Following</p>
                 </div>
               </div>

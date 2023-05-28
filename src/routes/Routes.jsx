@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter, useRouteError } from "react-router-dom";
 
 import PinDetails from "../pages/PinDetails.jsx";
+import EditProfile from "../pages/User/Profile/EditProfile.jsx";
 
 // import SearchAll from "../pages/search/All.jsx";
 // import SearchUsers from "../pages/search/Users.jsx";
@@ -10,7 +11,9 @@ import PinDetails from "../pages/PinDetails.jsx";
 const Home = React.lazy(() => import("../pages/Home"));
 const Feed = React.lazy(() => import("../pages/Feed"));
 
-const UserProfile = React.lazy(() => import("../pages/User/Userprofile"));
+const UserProfile = React.lazy(() =>
+  import("../pages/User/Profile/Userprofile.jsx")
+);
 const UserPost = React.lazy(() => import("../pages/User/Post"));
 const Search = React.lazy(() => import("../pages/Search"));
 
@@ -56,22 +59,34 @@ const router = createBrowserRouter([
         path: "/user",
         children: [
           {
-            path: "profile/:userId/*",
+            path: "profile/:userId",
             element: <UserProfile />,
             errorElement: <ErrorBoundary />,
-            children: [
-              {
-                path: "",
-                element: <UserPost />,
-                errorElement: <ErrorBoundary />,
-              },
-              {
-                path: "wishlists",
-                element: <div>User all wishlisted posts</div>,
-                errorElement: <ErrorBoundary />,
-              },
-            ],
           },
+          {
+            path: "profile/:userId/edit",
+            element: <EditProfile />,
+            errorElement: <ErrorBoundary />,
+          },
+          // TODO:FIX  Routing of proper user
+          // {
+          //   path: "profile",
+          //   errorElement: <ErrorBoundary />,
+          //   children: [
+          //     {
+          //       path: "me",
+          //       errorElement: <ErrorBoundary />,
+
+          //       element: <div>Logged In Profile</div>,
+          //     },
+          //     {
+          //       path: ":userId",
+          //       errorElement: <ErrorBoundary />,
+
+          //       element: <div>User Id profile</div>,
+          //     },
+          //   ],
+          // },
           {
             path: "pin/:pinId",
             element: <div>Pin Id</div>,

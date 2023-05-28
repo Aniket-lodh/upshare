@@ -48,6 +48,48 @@ export const SignupWithPasscode = async function (inputs) {
   }
 };
 
+export const UpdateProfile = async function (userInputs, userFiles) {
+  try {
+    const resp = await axios.patch(
+      "http://localhost:2408/users/profile/edit",
+      userInputs,
+      { withCredentials: true },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Accept: "multipart/form-data",
+        },
+      }
+    );
+    if (resp.data.code === 200) {
+      const resp = await UploadImages(userFiles);
+      return resp.data;
+    }
+    return resp;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+const UploadImages = async (userFiles) => {
+  try {
+    const resp = await axios.patch(
+      "http://localhost:2408/users/profile/upload",
+      userFiles,
+      { withCredentials: true },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Accept: "multipart/form-data",
+        },
+      }
+    );
+    return resp;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 const getMe = async () => {
   try {
     const profile = await axios.get(
@@ -67,5 +109,24 @@ const getMe = async () => {
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getProfile = async (userId) => {
+  try {
+    const profile = await axios.get(
+      `${import.meta.env.VITE_SERVER}/users/profile/${userId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    if (profile && profile.status === 200) {
+      return profile.data;
+    }
+  } catch (error) {
+    return error;
   }
 };
