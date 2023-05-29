@@ -26,7 +26,7 @@ const UserProfile = () => {
     //storing user data
     async function fetchUser() {
       const user = await getProfile(userId);
-      console.log(user);
+      // console.log(user);
       if (user.status === 200) {
         setUserObj(user.data);
       } else {

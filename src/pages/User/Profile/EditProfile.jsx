@@ -45,13 +45,16 @@ const EditProfile = () => {
     e.preventDefault();
     SetLoading(true);
 
+    // TODO: FIX SOME action is getting stuck
     if (userFiles) {
       const resp = await UploadImages(userFiles);
+      console.log(resp);
     }
     const updatedProfile = await UpdateProfile(userInputs);
 
     if (updatedProfile.code === 200) {
       const curUpdatedUser = await getMe();
+      console.log(curUpdatedUser);
       userCtx.addUser(curUpdatedUser);
       navigate(-1);
     } else {
