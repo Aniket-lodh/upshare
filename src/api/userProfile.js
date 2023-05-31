@@ -130,3 +130,45 @@ export const getProfile = async (userId) => {
     return error;
   }
 };
+
+export const followUser = async function (id) {
+  try {
+    const resp = await axios.post(
+      `${import.meta.env.VITE_SERVER}/users/profile/follow/${id}`,
+      {},
+      {
+        withCredentials: true,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    if (resp.status === 200 && resp.data.code === 200) return resp.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
+export const unFollowUser = async function (id) {
+  try {
+    const resp = await axios.post(
+      `${import.meta.env.VITE_SERVER}/users/profile/unfollow/${id}`,
+      {},
+      {
+        withCredentials: true,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+    if (resp.status === 200 && resp.data.code === 200) return resp.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};

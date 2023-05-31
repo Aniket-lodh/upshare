@@ -15,6 +15,7 @@ const EditProfile = () => {
   const userCtx = useContext(UserContext);
   const userFiles = new FormData();
 
+  // TODO: Send only the fields that was actually edited in the form
   const [userInputs, setuserInputs] = useState({
     username: "",
     bio: "",
@@ -45,8 +46,7 @@ const EditProfile = () => {
     e.preventDefault();
     SetLoading(true);
 
-    // TODO: FIX SOME action is getting stuck
-    if (userFiles) {
+    if (!!!userFiles.entries().next().done) { // Check Form is empty or not
       const resp = await UploadImages(userFiles);
       console.log(resp);
     }

@@ -1,12 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-import { HiOutlineMapPin } from "react-icons/hi2";
-import { RiCalendarTodoFill, RiHeart2Line, RiGridFill } from "react-icons/ri";
+import { HiOutlineMapPin, HiUserCircle } from "react-icons/hi2";
+import { MdOutlineCancel } from "react-icons/md";
+import {
+  RiCalendarTodoFill,
+  RiHeart2Line,
+  RiGridFill,
+  RiEdit2Line,
+} from "react-icons/ri";
 import { Link, Outlet, useParams } from "react-router-dom";
 import LazyImage from "../../../components/LazyImage.jsx";
-import { UpdateProfile, getProfile } from "../../../api/userProfile.js";
-import { user_profile_data } from "../../../data/mock.js";
+import {
+  followUser,
+  unFollowUser,
+  getProfile,
+} from "../../../api/userProfile.js";
 import UserContext from "../../../store/userContext.jsx";
-import axios from "axios";
+import { Spinner } from "../../../helpers/Loader.jsx";
 
 const UserProfile = () => {
   // Variable
@@ -19,23 +28,39 @@ const UserProfile = () => {
   const { userId } = useParams();
   const { user } = useContext(UserContext);
   const [activeTabText, setActiveTavText] = useState("all-pins");
+  const [EditModalState, setEditModalState] = useState(false);
   const [userObj, setUserObj] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Load User Data
+  async function fetchUser() {
+    const user = await getProfile(userId);
+    // console.log(user);
+    if (user.status === 200) {
+      setUserObj(user.data);
+    } else {
+      console.log(user);
+    }
+  }
+
   useEffect(() => {
     //storing user data
-    async function fetchUser() {
-      const user = await getProfile(userId);
-      // console.log(user);
-      if (user.status === 200) {
-        setUserObj(user.data);
-      } else {
-        console.log(user);
-      }
-    }
     fetchUser();
   }, [userId]);
 
+  const HandleFollowClick = async () => {
+    setIsLoading(true);
+    const resp = await followUser(userObj._id);
+    await fetchUser();
+    setIsLoading(false);
+    console.log(resp);
+  };
+  const HandleUnFollowClick = async () => {
+    setIsLoading(true);
+    const resp = await unFollowUser(userObj._id);
+    await fetchUser();
+    setIsLoading(false);
+    console.log(resp);
+  };
   return (
     <>
       {user ? (
@@ -46,22 +71,38 @@ const UserProfile = () => {
             {/* cover-image*/}
             <div className="min-h-fit h-230 max-h-240 w-full overflow-hidden background-cover-clip bg-color-shades-accent">
               <div className="object-cover w-full h-full max-h-240">
-                <LazyImage
-                  src={userObj?.coverphoto}
-                  alt={`${userObj?.username}-cover-picture`}
-                />
+                {userObj && userObj.coverphoto ? (
+                  <LazyImage
+                    src={userObj?.coverphoto}
+                    alt={`${userObj?.username}-cover-picture`}
+                  />
+                ) : (
+                  <div></div>
+                )}
               </div>
             </div>
             <div className="absolute left-0 bottom-0 w-full px-4 translate-y-1/2 flex flex-col items-start ">
               {/*profile-image*/}
-              <div className="w-28 h-28 border-4 border-white rounded-full drop-shadow-lg overflow-hidden bg-color-shades-accent">
-                <div className="w-full h-full object-cover drop-shadow-sm overflow-hidden">
-                  <LazyImage
-                    src={userObj?.profilephoto}
-                    alt={`${userObj?.username}-profile-picture`}
-                  />
+              <div className="relative w-28 h-28 border-4 border-white rounded-full drop-shadow-lg bg-color-shades-accent">
+                <div className="w-full h-full flex items-center justify-center object-cover drop-shadow-sm overflow-hidden rounded-full ">
+                  {userObj && userObj.profilephoto ? (
+                    <LazyImage
+                      src={userObj?.profilephoto}
+                      alt={`${userObj?.username}-profile-picture`}
+                    />
+                  ) : (
+                    <HiUserCircle fontSize={120} className="text-gray-300" />
+                  )}
                 </div>
-                <img />
+                {userObj && userObj._id === user.data._id && (
+                  <span className="absolute bottom-0 right-0 bg-white p-1.5 rounded-full">
+                    <RiEdit2Line
+                      fontSize={14}
+                      className="text-color-primary-blue"
+                      onClick={() => setEditModalState(true)}
+                    />
+                  </span>
+                )}
               </div>
               {/*user-headings*/}
               <div className="flex items-center justify-between w-full">
@@ -92,27 +133,31 @@ const UserProfile = () => {
                       Edit Profile
                     </Link>
                   )}
-
-                  {/* {userObj?._id !== user.data._id &&
-                    userObj?.followers.includes({ _id: user.data._id }) && (
+                  {userObj &&
+                    userObj._id !== user.data._id &&
+                    userObj.followers.indexOf(user.data._id) < 0 && (
                       <button
                         role="button"
                         title="edit profile"
+                        onClick={() => HandleFollowClick()}
                         className="capitalize bg-color-primary-blue px-3 py-2 rounded text-white text-sm transition hover:bg-color-primary-blue-accent"
                       >
-                        Following
+                        {isLoading ? <Spinner /> : "Follow"}
                       </button>
                     )}
-                  {userObj?._id !== user.data._id &&
-                    !userObj?.followers.includes({ _id: user.data._id }) && (
+                  {userObj &&
+                    userObj._id !== user.data._id &&
+                    userObj.followers.indexOf(user.data._id) >= 0 && (
                       <button
                         role="button"
                         title="edit profile"
+                        onClick={() => HandleUnFollowClick()}
                         className="capitalize bg-color-primary-blue px-3 py-2 rounded text-white text-sm transition hover:bg-color-primary-blue-accent"
                       >
-                        Follow
+                        {isLoading ? <Spinner /> : "Following"}
                       </button>
-                    )} */}
+                    )}
+
                   <div className="w-full capitalize text-xs text-color-font-tertiary font-medium flex items-start justify-end gap-1">
                     <HiOutlineMapPin className="inline" fontSize={15} />
                     <p className=" truncate ">{userObj?.location}</p>
@@ -195,6 +240,91 @@ const UserProfile = () => {
               </div>
             </div>
           </div>
+          {/* Change Profile Pic modal */}
+          {EditModalState && (
+            <div
+              className="relative z-10"
+              aria-labelledby="modal-title"
+              role="dialog"
+              aria-modal="true"
+            >
+              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+              <div className="fixed inset-0 z-10 overflow-y-auto">
+                <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                  <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <span
+                      onClick={() => setEditModalState(false)}
+                      className="absolute right-4 top-4 hover:text-red-500 transition-all cursor-pointer"
+                    >
+                      <MdOutlineCancel fontSize={18} />
+                    </span>
+                    <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                      <div className="sm:flex sm:items-start">
+                        <div className="mx-auto flex h-28 w-28 flex-shrink-0 items-center justify-center rounded-full overflow-hidden bg-color-bg-primary sm:mx-0">
+                          {userObj && userObj.profilephoto ? (
+                            <LazyImage
+                              src={userObj?.profilephoto}
+                              alt={`${userObj?.username}-profile-picture`}
+                            />
+                          ) : (
+                            <HiUserCircle
+                              fontSize={120}
+                              className="text-gray-300"
+                            />
+                          )}
+                        </div>
+                        <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                          <h3
+                            className="text-base font-semibold leading-6 text-gray-900"
+                            id="modal-title"
+                          >
+                            Change profile picture
+                          </h3>
+
+                          <div className="mt-2">
+                            <p className="text-sm text-gray-500">
+                              Once you change your profile picture, it will be
+                              visible to everyone across our platform.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                      <label
+                        role="button"
+                        htmlFor="changeprofileviacamera"
+                        className="inline-flex w-full justify-center rounded-md bg-color-primary-blue px-3 py-2 text-sm font-semibold text-white shadow-sm  sm:ml-3 sm:w-auto"
+                      >
+                        Take photo
+                      </label>
+                      <input
+                        id="changeprofileviacamera"
+                        type="file"
+                        accept=".jpg, .png, .jpeg"
+                        capture="user"
+                        className="hidden"
+                      />
+                      <label
+                        role="button"
+                        htmlFor="changeprofileviafile"
+                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                      >
+                        Choose from device
+                      </label>
+                      <input
+                        type="file"
+                        id="changeprofileviafile"
+                        accept=".jpg, .png, .jpeg"
+                        className="hidden"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {/* Rendering the outlet */}
           <Outlet context={[userId]} />
         </section>
