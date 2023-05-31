@@ -33,7 +33,7 @@ const Login = () => {
       navigate("/", { replace: true });
     } else {
       console.log(user);
-      alert(user);
+      alert(user.errors);
     }
   };
 
