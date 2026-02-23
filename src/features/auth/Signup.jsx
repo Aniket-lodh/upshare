@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Spinner } from "../../helpers/Loader";
 import { SignupWithPasscode } from "../../api/userProfile";
 import UserContext from "../../store/userContext";
+import { useToast } from "../../components/Toast.jsx";
 
 const Signup = () => {
   const [inputs, setInputs] = useState({
@@ -13,8 +14,10 @@ const Signup = () => {
     passcodeConfirm: "",
   });
   const [loading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
+  const showToast = useToast();
 
   const handleOnchange = async function (inpt) {
     const { name, value } = inpt;
@@ -28,19 +31,18 @@ const Signup = () => {
   const HandleOnSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const user = await SignupWithPasscode(inputs);
-    if (
-      user &&
-      (user.code === 200 ||
-        user.code === 201 ||
-        user.data ||
-        user._id ||
-        !user.message)
-    ) {
+    setError(null);
+    try {
+      const user = await SignupWithPasscode(inputs);
       userCtx.addUser(user);
+      showToast("Signup successful", "success");
       navigate("/", { replace: true });
+    } catch (err) {
+      setError(err.message);
+      showToast(err.message, "error");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -95,6 +97,9 @@ const Signup = () => {
             </div>
 
             <div className="mx-auto max-w-xs">
+              {error && (
+                <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+              )}
               <form onSubmit={(e) => HandleOnSubmit(e)}>
                 <input
                   className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"

@@ -5,12 +5,15 @@ import loginTemp from "../../assets/images/login-temp.svg";
 import { loginWithPasscode } from "../../api/userProfile";
 import { Spinner } from "../../helpers/Loader";
 import UserContext from "../../store/userContext";
+import { useToast } from "../../components/Toast.jsx";
 
 const Login = () => {
   const [inputs, setInputs] = useState({ email: "", passcode: "" });
   const [isLoading, SetLoading] = useState(false);
+  const [error, setError] = useState(null);
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
+  const showToast = useToast();
 
   const handleOnchange = async function (inpt) {
     const { name, value } = inpt;
@@ -24,12 +27,17 @@ const Login = () => {
   const HandleOnSubmit = async (e) => {
     e.preventDefault();
     SetLoading(true);
-    const user = await loginWithPasscode(inputs);
-    SetLoading(false);
-
-    if (user && (user.code === 200 || user.data || user._id || !user.message)) {
+    setError(null);
+    try {
+      const user = await loginWithPasscode(inputs);
       userCtx.addUser(user);
+      showToast("Login successful", "success");
       navigate("/", { replace: true });
+    } catch (err) {
+      setError(err.message);
+      showToast(err.message, "error");
+    } finally {
+      SetLoading(false);
     }
   };
 
@@ -54,6 +62,9 @@ const Login = () => {
             Log in
           </h2>
           <div className="mt-12">
+            {error && (
+              <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+            )}
             <form onSubmit={(e) => HandleOnSubmit(e)}>
               <div>
                 <div className="text-sm font-bold text-gray-700 tracking-wide">

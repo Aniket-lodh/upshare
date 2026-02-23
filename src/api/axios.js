@@ -23,4 +23,14 @@ api.interceptors.response.use(
   }
 );
 
+if (import.meta.env.DEV) {
+  api.interceptors.response.use(
+    (res) => res,
+    (err) => {
+      console.error("API ERROR:", err.response?.data || err.message);
+      return Promise.reject(err);
+    }
+  );
+}
+
 export default api;

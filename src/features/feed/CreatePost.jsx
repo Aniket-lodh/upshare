@@ -41,9 +41,10 @@ const CreatePost = () => {
       setError(null);
       const formData = new FormData();
       formData.append("image", image);
-      formData.append("desc", caption.trim());
+      formData.append("caption", caption.trim());
       if (tags.trim()) {
-        formData.append("tags", tags.trim());
+        const tagsArray = tags.split(",").map((t) => t.trim());
+        formData.append("tags", JSON.stringify(tagsArray));
       }
       const result = await createPost(formData);
       showToast("Post created successfully!");
