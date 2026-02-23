@@ -29,11 +29,16 @@ const Signup = () => {
     e.preventDefault();
     setIsLoading(true);
     const user = await SignupWithPasscode(inputs);
-    if (user && user.status === 200) {
+    if (
+      user &&
+      (user.code === 200 ||
+        user.code === 201 ||
+        user.data ||
+        user._id ||
+        !user.message)
+    ) {
       userCtx.addUser(user);
       navigate("/", { replace: true });
-    } else {
-      console.log(user);
     }
     setIsLoading(false);
   };
@@ -55,9 +60,7 @@ const Signup = () => {
             <div className="flex flex-col items-center">
               <button
                 onClick={() => {
-                  alert(
-                    "I admire your curisity! But this feature is not implemented yet! \nFear not, we heard you💖"
-                  );
+                  // Google OAuth not implemented yet
                 }}
                 className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
               >

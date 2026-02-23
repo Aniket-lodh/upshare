@@ -1,12 +1,25 @@
 import { FcMenu } from "react-icons/fc";
-import { RiSearchLine, RiArrowLeftLine, RiSearch2Line } from "react-icons/ri";
-import React from "react";
+import {
+  RiSearchLine,
+  RiArrowLeftLine,
+  RiSearch2Line,
+  RiLogoutBoxRLine,
+} from "react-icons/ri";
+import { AiOutlinePlus } from "react-icons/ai";
+import React, { useContext } from "react";
 import { Link, useMatch, useNavigate } from "react-router-dom";
+import UserContext from "../store/userContext.jsx";
 
 const Navbar = ({ toggleSidebar, setToggleSidebar }) => {
   //Hooks
   const searchMatch = useMatch("/search/*");
   const navigate = useNavigate();
+  const { user, removeUser } = useContext(UserContext);
+
+  const handleLogout = () => {
+    removeUser();
+    navigate("/login", { replace: true });
+  };
 
   return (
     <>
@@ -29,13 +42,35 @@ const Navbar = ({ toggleSidebar, setToggleSidebar }) => {
                   Up<span className="text-color-primary-blue">Share</span>
                 </Link>
               </div>
-              {/*search icon*/}
-              <Link to={"/search"} onClick={() => {}}>
-                <RiSearchLine
-                  fontSize={22}
-                  className="text-color-font-tertiary cursor-pointer"
-                />
-              </Link>
+              <div className="flex items-center gap-3">
+                <Link to="/search">
+                  <RiSearchLine
+                    fontSize={22}
+                    className="text-color-font-tertiary cursor-pointer"
+                  />
+                </Link>
+                {/* Create button */}
+                {user && (
+                  <Link
+                    to="/create"
+                    title="Create Post"
+                    className="text-color-font-tertiary hover:text-color-primary-blue transition-colors"
+                  >
+                    <AiOutlinePlus fontSize={22} />
+                  </Link>
+                )}
+                {/*logout button*/}
+                {user && (
+                  <button
+                    type="button"
+                    title="Logout"
+                    onClick={handleLogout}
+                    className="text-color-font-tertiary hover:text-color-danger transition-colors cursor-pointer"
+                  >
+                    <RiLogoutBoxRLine fontSize={22} />
+                  </button>
+                )}
+              </div>
             </>
           ) : (
             <>
@@ -55,6 +90,17 @@ const Navbar = ({ toggleSidebar, setToggleSidebar }) => {
                   placeholder="Search..."
                 />
               </div>
+              {/*logout button on search view*/}
+              {user && (
+                <button
+                  type="button"
+                  title="Logout"
+                  onClick={handleLogout}
+                  className="ml-2 text-color-font-tertiary hover:text-color-danger transition-colors cursor-pointer"
+                >
+                  <RiLogoutBoxRLine fontSize={22} />
+                </button>
+              )}
             </>
           )}
         </nav>

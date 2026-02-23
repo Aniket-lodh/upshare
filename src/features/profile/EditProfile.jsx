@@ -1,21 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   HiOutlineGlobeAlt,
   HiOutlineCamera,
   HiUserCircle,
 } from "react-icons/hi";
-import { UpdateProfile, UploadImages, getMe } from "../../../api/userProfile";
-import { Spinner } from "../../../helpers/Loader";
-import UserContext from "../../../store/userContext";
+import { UpdateProfile, UploadImages, getMe } from "../../api/userProfile";
+import { Spinner } from "../../helpers/Loader";
+import UserContext from "../../store/userContext";
+import { useToast } from "../../components/Toast.jsx";
 
 const EditProfile = () => {
   const [isLoading, SetLoading] = useState(false);
+  const [prefilling, setPrefilling] = useState(true);
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
+  const showToast = useToast();
   const userFiles = new FormData();
 
-  // TODO: Send only the fields that was actually edited in the form
   const [userInputs, setuserInputs] = useState({
     username: "",
     bio: "",
@@ -28,6 +30,36 @@ const EditProfile = () => {
     country: "",
     state: "",
   });
+
+  // Prefill form with existing user data
+  useEffect(() => {
+    const prefillData = async () => {
+      try {
+        const data = await getMe();
+        const profile = data?.data || data;
+        if (profile) {
+          setuserInputs((prev) => ({
+            ...prev,
+            username: profile.username || "",
+            bio: profile.bio || "",
+            name: profile.name || "",
+            website: profile.website || "",
+            email: profile.email || "",
+            phone: profile.phone || "",
+            gender: profile.gender || "",
+            profession: profile.profession || "",
+            country: profile.country || "",
+            state: profile.state || "",
+          }));
+        }
+      } catch (err) {
+        // Prefill failed silently — user can still fill manually
+      } finally {
+        setPrefilling(false);
+      }
+    };
+    prefillData();
+  }, []);
 
   const HandleOnChange = async function (inpt) {
     const { name, value, files } = inpt;
@@ -46,19 +78,22 @@ const EditProfile = () => {
     e.preventDefault();
     SetLoading(true);
 
-    if (!!!userFiles.entries().next().done) { // Check Form is empty or not
-      const resp = await UploadImages(userFiles);
-      console.log(resp);
-    }
-    const updatedProfile = await UpdateProfile(userInputs);
+    try {
+      if (!!!userFiles.entries().next().done) {
+        await UploadImages(userFiles);
+      }
+      const updatedProfile = await UpdateProfile(userInputs);
 
-    if (updatedProfile.code === 200) {
-      const curUpdatedUser = await getMe();
-      console.log(curUpdatedUser);
-      userCtx.addUser(curUpdatedUser);
-      navigate(-1);
-    } else {
-      console.log(updatedProfile);
+      if (updatedProfile.code === 200) {
+        const curUpdatedUser = await getMe();
+        userCtx.addUser(curUpdatedUser);
+        showToast("Profile updated successfully!");
+        navigate(-1);
+      } else {
+        showToast("Failed to update profile.", "error");
+      }
+    } catch (err) {
+      showToast("Something went wrong.", "error");
     }
     SetLoading(false);
   };

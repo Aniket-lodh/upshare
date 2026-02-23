@@ -1,75 +1,73 @@
-import { search_result_data } from "../data/mock.js";
-import { useState } from "react";
-
-import { RiUser3Fill, RiGridFill } from "react-icons/ri";
-import { Link, Outlet, useMatch } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { RiSearchLine, RiCompassDiscoverLine } from "react-icons/ri";
 
 const Search = () => {
-  // Variable
-  const ActiveTabStyles =
-    "h-1 bg-color-primary-blue opacity-1 w-14 rounded-tl-lg rounded-tr-lg transition-all";
-  const NotActiveTabStyles =
-    "h-0 bg-white opacity-0 w-14 rounded-tl-lg rounded-tr-lg transition-all";
-  
-    // Hooks
-  const [activeTabText, setActiveTabText] = useState("all-pins");
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const inputRef = useRef(null);
 
+  // Debounce search input (300ms)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query.trim());
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  // Placeholder: will integrate search API
+  useEffect(() => {
+    if (debouncedQuery) {
+      // TODO: call search API here
+    }
+  }, [debouncedQuery]);
+
+  // Auto-focus input on mount
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   return (
-    <section className="w-full h-fit">
-      <div className="select-none w-full h-10 pt-2 border-b flex items-end justify-center gap-8 bg-white">
-        <div className="flex flex-col items-center justify-center gap-0.5 transition-all">
-          <Link
-            to={"/search"}
-            type="button"
-            title="all-pins"
-            className="block pb-0.5"
-            onClick={(e) => {
-              setActiveTabText(e.target.title);
-            }}
-          >
-            <RiGridFill
-              fontSize={20}
-              className={`${
-                activeTabText === "all-pins" && "!text-color-font-primary"
-              } pointer-events-none text-color-font-secondary`}
-            />
-          </Link>
-          <div
-            className={`${
-              activeTabText === "all-pins"
-                ? ActiveTabStyles
-                : NotActiveTabStyles
-            }`}
-          ></div>
-        </div>
-        <div className="flex flex-col items-center justify-center gap-0.5 transition-all">
-          <Link
-            to={"users"}
-            type="button"
-            title="users"
-            className="block pb-0.5"
-            onClick={(e) => {
-              setActiveTabText(e.target.title);
-            }}
-          >
-            <RiUser3Fill
-              fontSize={20}
-              className={`${
-                activeTabText === "users" && "!text-color-font-primary"
-              } pointer-events-none text-color-font-secondary`}
-            />
-          </Link>
-          <div
-            className={`${
-              activeTabText === "users" ? ActiveTabStyles : NotActiveTabStyles
-            }`}
-          ></div>
-        </div>
+    <div className="px-4 py-6">
+      {/* Search input */}
+      <div className="flex items-center gap-2 px-3 py-2 bg-color-bg-tertiary rounded-lg">
+        <RiSearchLine fontSize={20} className="text-color-font-tertiary" />
+        <input
+          ref={inputRef}
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search pins, people..."
+          className="w-full bg-transparent focus:outline-none text-color-font-primary"
+        />
       </div>
-      {/* Renders the Outlet */}
-      <Outlet />
-    </section>
+
+      {/* Results area */}
+      <div className="mt-8 flex flex-col items-center justify-center min-h-[40vh] gap-3">
+        {!debouncedQuery ? (
+          <>
+            <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center">
+              <RiSearchLine fontSize={24} className="text-color-primary-blue" />
+            </div>
+            <p className="text-color-font-tertiary text-sm">
+              Start typing to search
+            </p>
+          </>
+        ) : (
+          <>
+            <div className="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center">
+              <RiCompassDiscoverLine fontSize={24} className="text-gray-400" />
+            </div>
+            <h3 className="text-base font-semibold text-color-font-primary">
+              No results found
+            </h3>
+            <p className="text-color-font-tertiary text-sm text-center max-w-xs">
+              Try different keywords or browse the feed.
+            </p>
+          </>
+        )}
+      </div>
+    </div>
   );
 };
+
 export default Search;

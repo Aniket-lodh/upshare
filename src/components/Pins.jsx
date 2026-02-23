@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import LazyImage from "./LazyImage";
 
-const Pins = ({ pin, setRenderChildren }) => {
+const Pins = React.memo(({ pin, setRenderChildren }) => {
   return (
     <>
       <div className="grid self-center justify-self-center flex-auto min-w-150 max-w-160 h-fit rounded-lg bg-color-bg-accent overflow-hidden">
@@ -11,7 +11,7 @@ const Pins = ({ pin, setRenderChildren }) => {
           <div className="flex min-w-full min-h-140 rounded-md overflow-hidden">
             <Link
               to={`/pins/${pin?._id}`}
-              onClick={(e) => setRenderChildren(true)}
+              onClick={() => setRenderChildren(true)}
               className="block w-full flex-auto"
             >
               <div className="rounded-md w-full h-full">
@@ -40,5 +40,8 @@ const Pins = ({ pin, setRenderChildren }) => {
       </div>
     </>
   );
-};
+});
+
+Pins.displayName = "Pins";
+
 export default Pins;

@@ -1,26 +1,20 @@
 import React from "react";
-import { createBrowserRouter, useRouteError } from "react-router-dom";
+import { createBrowserRouter, useRouteError, Link } from "react-router-dom";
 
-import PinDetails from "../pages/PinDetails.jsx";
-import EditProfile from "../pages/User/Profile/EditProfile.jsx";
-
-// import SearchAll from "../pages/search/All.jsx";
-// import SearchUsers from "../pages/search/Users.jsx";
-// TODO: //FIX searchAll and searchUser import
+import PinDetails from "../features/feed/PinDetails.jsx";
+import CreatePost from "../features/feed/CreatePost.jsx";
+import EditProfile from "../features/profile/EditProfile.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
+import NotFound from "../components/NotFound.jsx";
 
 const Home = React.lazy(() => import("../pages/Home"));
-const Feed = React.lazy(() => import("../pages/Feed"));
-
+const Feed = React.lazy(() => import("../features/feed/Feed"));
 const UserProfile = React.lazy(() =>
-  import("../pages/User/Profile/Userprofile.jsx")
+  import("../features/profile/UserProfile.jsx")
 );
-const UserPost = React.lazy(() => import("../pages/User/Post"));
 const Search = React.lazy(() => import("../pages/Search"));
-
-const Wishlist = React.lazy(() => import("../pages/Wishlist"));
-const Categories = React.lazy(() => import("../pages/Categories"));
-const Login = React.lazy(() => import("../pages/User/Login"));
-const Signup = React.lazy(() => import("../pages/User/Signup"));
+const Login = React.lazy(() => import("../features/auth/Login"));
+const Signup = React.lazy(() => import("../features/auth/Signup"));
 
 const router = createBrowserRouter([
   {
@@ -44,16 +38,15 @@ const router = createBrowserRouter([
         path: "/search",
         element: <Search />,
         errorElement: <ErrorBoundary />,
-        // children: [
-        //   {
-        //     path: "",
-        //     element: <SearchAll />,
-        //   },
-        //   {
-        //     path: "users",
-        //     element: <SearchUsers />,
-        //   },
-        // ],
+      },
+      {
+        path: "/create",
+        element: (
+          <ProtectedRoute>
+            <CreatePost />
+          </ProtectedRoute>
+        ),
+        errorElement: <ErrorBoundary />,
       },
       {
         path: "/user",
@@ -65,43 +58,14 @@ const router = createBrowserRouter([
           },
           {
             path: "profile/:userId/edit",
-            element: <EditProfile />,
+            element: (
+              <ProtectedRoute>
+                <EditProfile />
+              </ProtectedRoute>
+            ),
             errorElement: <ErrorBoundary />,
           },
-          // TODO:FIX  Routing of proper user
-          // {
-          //   path: "profile",
-          //   errorElement: <ErrorBoundary />,
-          //   children: [
-          //     {
-          //       path: "me",
-          //       errorElement: <ErrorBoundary />,
-
-          //       element: <div>Logged In Profile</div>,
-          //     },
-          //     {
-          //       path: ":userId",
-          //       errorElement: <ErrorBoundary />,
-
-          //       element: <div>User Id profile</div>,
-          //     },
-          //   ],
-          // },
-          {
-            path: "pin/:pinId",
-            element: <div>Pin Id</div>,
-          },
         ],
-      },
-      {
-        path: "/wishlist/user/:userId",
-        element: <Wishlist />,
-        errorElement: <ErrorBoundary />,
-      },
-      {
-        path: "/categories",
-        element: <Categories />,
-        errorElement: <ErrorBoundary />,
       },
     ],
   },
@@ -115,13 +79,31 @@ const router = createBrowserRouter([
     element: <Signup />,
     errorElement: <ErrorBoundary />,
   },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 function ErrorBoundary() {
-  let error = useRouteError();
-  console.error(error);
-  // Uncaught ReferenceError: path is not defined
-  return <div>Dang!</div>;
+  const error = useRouteError();
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4">
+      <h1 className="text-4xl font-bold text-gray-800 mb-2">
+        Something went wrong
+      </h1>
+      <p className="text-gray-500 mb-6 text-center max-w-md">
+        {error?.statusText || error?.message || "An unexpected error occurred."}
+      </p>
+      <Link
+        to="/"
+        className="px-6 py-2.5 rounded-lg bg-color-primary-blue text-white font-medium hover:opacity-90 transition-opacity"
+      >
+        Go Home
+      </Link>
+    </div>
+  );
 }
 
 export default router;

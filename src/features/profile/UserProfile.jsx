@@ -8,14 +8,11 @@ import {
   RiEdit2Line,
 } from "react-icons/ri";
 import { Link, Outlet, useParams } from "react-router-dom";
-import LazyImage from "../../../components/LazyImage.jsx";
-import {
-  followUser,
-  unFollowUser,
-  getProfile,
-} from "../../../api/userProfile.js";
-import UserContext from "../../../store/userContext.jsx";
-import { Spinner } from "../../../helpers/Loader.jsx";
+import { Helmet } from "react-helmet-async";
+import LazyImage from "../../components/LazyImage.jsx";
+import { followUser, unFollowUser, getProfile } from "../../api/userProfile.js";
+import UserContext from "../../store/userContext.jsx";
+import { Spinner } from "../../helpers/Loader.jsx";
 
 const UserProfile = () => {
   // Variable
@@ -34,11 +31,8 @@ const UserProfile = () => {
 
   async function fetchUser() {
     const user = await getProfile(userId);
-    // console.log(user);
-    if (user.status === 200) {
-      setUserObj(user.data);
-    } else {
-      console.log(user);
+    if (user && (user.code === 200 || user.data || user._id)) {
+      setUserObj(user.data || user);
     }
   }
 
@@ -49,24 +43,26 @@ const UserProfile = () => {
 
   const HandleFollowClick = async () => {
     setIsLoading(true);
-    const resp = await followUser(userObj._id);
+    await followUser(userObj._id);
     await fetchUser();
     setIsLoading(false);
-    console.log(resp);
   };
   const HandleUnFollowClick = async () => {
     setIsLoading(true);
-    const resp = await unFollowUser(userObj._id);
+    await unFollowUser(userObj._id);
     await fetchUser();
     setIsLoading(false);
-    console.log(resp);
   };
   return (
     <>
       {user ? (
         // Show appropriate user information
         <section className="h-full">
-          {/*user cover image and profile section*/}
+          <Helmet>
+            <title>
+              {userObj?.name || userObj?.username || "Profile"} — UpShare
+            </title>
+          </Helmet>
           <div className="relative w-full">
             {/* cover-image*/}
             <div className="min-h-fit h-230 max-h-240 w-full overflow-hidden background-cover-clip bg-color-shades-accent">
