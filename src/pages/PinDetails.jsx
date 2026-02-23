@@ -13,7 +13,7 @@ import {
   RiShareLine,
   RiHeartFill,
 } from "react-icons/ri";
-
+ 
 import { post_details } from "../data/mock.js";
 import moment from "moment";
 import UserContext from "../store/userContext.jsx";

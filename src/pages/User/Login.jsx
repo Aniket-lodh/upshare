@@ -26,14 +26,13 @@ const Login = () => {
     SetLoading(true);
     const user = await loginWithPasscode(inputs);
     SetLoading(false);
-
+     
     if (user.status === 200) {
       console.log(user);
       userCtx.addUser(user);
       navigate("/", { replace: true });
     } else {
       console.log(user);
-      alert(user.errors);
     }
   };
 

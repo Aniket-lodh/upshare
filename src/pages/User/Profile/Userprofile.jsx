@@ -264,8 +264,8 @@ const UserProfile = () => {
                         <div className="mx-auto flex h-28 w-28 flex-shrink-0 items-center justify-center rounded-full overflow-hidden bg-color-bg-primary sm:mx-0">
                           {userObj && userObj.profilephoto ? (
                             <LazyImage
-                              src={userObj?.profilephoto}
-                              alt={`${userObj?.username}-profile-picture`}
+                              src={userObj.profilephoto}
+                              alt={`${userObj.username}-profile-picture`}
                             />
                           ) : (
                             <HiUserCircle

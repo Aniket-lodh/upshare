@@ -74,9 +74,9 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
           {/*user profile avatar*/}
           <div className="absolute -bottom-12 left-3 flex flex-col items-start justify-start gap-1">
             <div className="w-20 h-20 border-4 border-white rounded-full bg-blue-100 flex items-center justify-center  drop-shadow-lg overflow-hidden">
-              {user ? (
+              {ActiveUser && ActiveUser.profilephoto? (
                 <img
-                  src={ActiveUser?.profilephoto}
+                  src={ActiveUser.profilephoto}
                   alt={`${ActiveUser?.username}-profile`}
                   className="w-full h-full object-cover"
                 />
