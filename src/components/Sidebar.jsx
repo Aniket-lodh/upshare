@@ -7,7 +7,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import UserContext from "../store/userContext.jsx";
 
-
 const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
   //Hooks
   const closeSidebarOnOutsideClick = useRef(null);
@@ -74,7 +73,7 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
           {/*user profile avatar*/}
           <div className="absolute -bottom-12 left-3 flex flex-col items-start justify-start gap-1">
             <div className="w-20 h-20 border-4 border-white rounded-full bg-blue-100 flex items-center justify-center  drop-shadow-lg overflow-hidden">
-              {ActiveUser && ActiveUser.profilephoto? (
+              {ActiveUser && ActiveUser.profilephoto ? (
                 <img
                   src={ActiveUser.profilephoto}
                   alt={`${ActiveUser?.username}-profile`}
@@ -124,7 +123,7 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
             <HiOutlineHome fontSize={18} /> <span>Home</span>
           </NavLink>
           <NavLink
-            to={"/wishlist/user/:user-id"}
+            to={ActiveUser?._id ? `/wishlist/user/${ActiveUser._id}` : "/login"}
             className={({ isActive }) =>
               isActive ? ActiveNavStyle : notActiveNavStyle
             }
