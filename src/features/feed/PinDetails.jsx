@@ -4,7 +4,7 @@ import {
   useParams,
   useNavigate,
 } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   RiCloseCircleLine,
   RiHeart2Line,
@@ -24,6 +24,7 @@ import {
 import UserContext from "../../store/userContext.jsx";
 import { SkeletonPostDetail } from "../../components/SkeletonCard.jsx";
 import { useToast } from "../../components/Toast.jsx";
+import ErrorState from "../../components/ErrorState.jsx";
 
 const PinDetails = () => {
   const [renderPostDetails, setRenderPostDetails] = useOutletContext();
@@ -32,34 +33,43 @@ const PinDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(false);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const { pinId } = useParams();
   const showToast = useToast();
+  const abortRef = useRef(null);
 
-  // Fetch post data from API
+  // Fetch post data from API with AbortController
   useEffect(() => {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     const fetchPost = async () => {
       try {
         setLoading(true);
         setError(null);
         setRenderPostDetails(true);
-        const data = await getPostById(pinId);
+        const data = await getPostById(pinId, controller.signal);
         const postData = data?.data || data;
         setPin(postData);
-        if (postData && user?.data?._id) {
-          const liked = (postData.likedBy || []).some(
-            (item) => (item._id || item) === user.data._id
+        if (postData && user?._id) {
+          const liked = (postData.likes || []).some(
+            (item) => (item._id || item) === user._id
           );
           setSavedPin(liked);
         }
       } catch (err) {
+        if (err.name === "CanceledError" || controller.signal.aborted) return;
         setError(err?.message || "Failed to load post.");
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
     };
     fetchPost();
+
+    return () => controller.abort();
   }, [pinId]);
 
   // Native relative-time formatter
@@ -82,9 +92,10 @@ const PinDetails = () => {
     return rtf.format(0, "second");
   };
 
-  // Toggle like/unlike with auth guard + optimistic update
+  // Toggle like/unlike with auth guard + loading guard + optimistic update
   const toggleWishlist = async () => {
-    if (!user?.data?._id) {
+    if (likeLoading) return;
+    if (!user?._id) {
       navigate("/login");
       return;
     }
@@ -92,6 +103,7 @@ const PinDetails = () => {
 
     const wasSaved = pinSaved;
     setSavedPin(!wasSaved);
+    setLikeLoading(true);
     try {
       if (wasSaved) {
         await unlikePost(pinId);
@@ -101,6 +113,8 @@ const PinDetails = () => {
     } catch (err) {
       setSavedPin(wasSaved);
       showToast("Like action failed.", "error");
+    } finally {
+      setLikeLoading(false);
     }
   };
 
@@ -124,8 +138,8 @@ const PinDetails = () => {
   async function sharePost() {
     try {
       await navigator.share({
-        title: pin?.pinCreator?.name,
-        text: pin?.desc,
+        title: pin?.author?.name,
+        text: pin?.caption,
         url: window.location.href,
       });
     } catch {
@@ -133,10 +147,7 @@ const PinDetails = () => {
     }
   }
 
-  const isOwner =
-    user?.data?._id &&
-    pin?.pinCreator?._id &&
-    user.data._id === pin.pinCreator._id;
+  const isOwner = user?._id && pin?.author?._id && user._id === pin.author._id;
 
   if (loading) {
     return <SkeletonPostDetail />;
@@ -144,18 +155,15 @@ const PinDetails = () => {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] px-4 gap-3">
-        <p className="text-red-500 text-sm">{error}</p>
-        <button
-          onClick={() => {
-            navigate("/");
-            setRenderPostDetails(false);
-          }}
-          className="text-color-primary-blue text-sm font-medium"
-        >
-          Go back
-        </button>
-      </div>
+      <ErrorState
+        title="Post not found"
+        description={error}
+        actionText="Go Back"
+        onAction={() => {
+          navigate("/");
+          setRenderPostDetails(false);
+        }}
+      />
     );
   }
 
@@ -168,20 +176,20 @@ const PinDetails = () => {
           {/* Post creator headings */}
           <div className="relative w-full flex items-center justify-between px-4 py-2 bg-color-bg-tertiary">
             <Link
-              to={`/user/profile/${pin?.pinCreator?._id}`}
+              to={`/user/profile/${pin?.author?._id}`}
               className="flex gap-1.5 items-end justify-center"
             >
               <img
-                src={`${pin?.pinCreator?.image}`}
+                src={`${pin?.author?.profilephoto}`}
                 className="w-9 h-9 rounded-full object-contain"
-                alt={`${pin?.pinCreator?.username || "user"}-profile-picture`}
+                alt={`${pin?.author?.username || "user"}-profile-picture`}
               />
               <div className="flex flex-col items-start justify-start">
                 <h2 className="capitalize text-color-font-primary">
-                  {pin?.pinCreator?.name}
+                  {pin?.author?.name}
                 </h2>
                 <small className="font-fira font-light text-color-font-tertiary tracking-wide text-xs">
-                  @{pin?.pinCreator?.username}
+                  @{pin?.author?.username}
                 </small>
               </div>
             </Link>
@@ -219,34 +227,38 @@ const PinDetails = () => {
           {/* Post content */}
           <div className="px-4 h-full">
             <p className="mt-3 break-words text-color-font-secondary font-normal text-base">
-              {pin?.desc}
+              {pin?.caption}
             </p>
             {pin?.image && (
               <div className="w-full h-fit mt-3 overflow-hidden">
                 <img
                   src={pin.image}
                   className="w-full h-fit object-contain rounded-lg"
-                  alt={`${
-                    pin?.pinCreator?.username || "user"
-                  }-uploaded-picture`}
+                  alt={`${pin?.author?.username || "user"}-uploaded-picture`}
                 />
               </div>
             )}
             {/* Post metadata */}
             <div className="mt-3 font-normal flex flex-col w-full gap-2 items-start justify-start text-color-font-secondary font-fira text-sm">
               <p>
-                {pin?._createdAt && (
+                {pin?.createdAt && (
                   <>
-                    {`${timeAgo(pin._createdAt)} •`}
+                    {`${timeAgo(pin.createdAt)} •`}
                     <span className="font-semibold"> {pin?.views || 0} </span>
                     views
                   </>
                 )}
               </p>
               <p>
-                <span className="font-semibold"> {pin?.likes || 0} </span>
+                <span className="font-semibold">
+                  {" "}
+                  {pin?.likes?.length || 0}{" "}
+                </span>
                 likes •
-                <span className="font-semibold"> {pin?.comments || 0} </span>
+                <span className="font-semibold">
+                  {" "}
+                  {pin?.comments?.length || 0}{" "}
+                </span>
                 comments
               </p>
             </div>
@@ -262,13 +274,17 @@ const PinDetails = () => {
                     fontSize={24}
                     color="#ef4444"
                     onClick={toggleWishlist}
-                    className="cursor-pointer"
+                    className={`cursor-pointer ${
+                      likeLoading ? "opacity-50 pointer-events-none" : ""
+                    }`}
                   />
                 ) : (
                   <RiHeart2Line
                     fontSize={24}
                     onClick={toggleWishlist}
-                    className="cursor-pointer"
+                    className={`cursor-pointer ${
+                      likeLoading ? "opacity-50 pointer-events-none" : ""
+                    }`}
                   />
                 )}
                 <RiShareLine

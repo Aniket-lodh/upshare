@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Outlet, useMatch, useLocation } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiImageAddLine } from "react-icons/ri";
@@ -8,6 +8,7 @@ import { getFeed } from "../../api/post.js";
 import Pins from "../../components/Pins";
 import SkeletonCard from "../../components/SkeletonCard.jsx";
 import { Spinner } from "../../helpers/Loader.jsx";
+import ErrorState from "../../components/ErrorState.jsx";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
@@ -19,6 +20,7 @@ const Feed = () => {
   const [renderChildren, setRenderChildren] = useState(false);
   const checkHomeRoute = useMatch("/");
   const location = useLocation();
+  const abortRef = useRef(null);
 
   useEffect(() => {
     if (checkHomeRoute) {
@@ -26,24 +28,32 @@ const Feed = () => {
     }
   }, [checkHomeRoute]);
 
-  // Fetch feed from API
+  // Fetch feed from API with AbortController
   useEffect(() => {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
     const fetchFeed = async () => {
       try {
         setLoading(true);
         setError(null);
-        const data = await getFeed(1);
-        const items = data?.data || data?.posts || [];
+        const data = await getFeed(1, controller.signal);
+        if (controller.signal.aborted) return;
+        const items = Array.isArray(data) ? data : [];
         setPosts(items);
         setHasMore(items.length >= 10);
         setPage(1);
       } catch (err) {
+        if (err.name === "CanceledError" || controller.signal.aborted) return;
         setError(err?.message || "Failed to load feed.");
       } finally {
-        setLoading(false);
+        if (!controller.signal.aborted) setLoading(false);
       }
     };
     fetchFeed();
+
+    return () => controller.abort();
   }, []);
 
   // Load more pages
@@ -53,7 +63,7 @@ const Feed = () => {
       setLoadingMore(true);
       const nextPage = page + 1;
       const data = await getFeed(nextPage);
-      const items = data?.data || data?.posts || [];
+      const items = Array.isArray(data) ? data : [];
       setPosts((prev) => [...prev, ...items]);
       setPage(nextPage);
       setHasMore(items.length >= 10);
@@ -90,9 +100,12 @@ const Feed = () => {
           ))}
         </div>
       ) : error ? (
-        <div className="flex items-center justify-center min-h-[60vh] px-4">
-          <p className="text-center text-red-500 text-sm">{error}</p>
-        </div>
+        <ErrorState
+          title="Failed to load feed"
+          description={error}
+          actionText="Retry"
+          onAction={() => window.location.reload()}
+        />
       ) : posts.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 gap-4">
           <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center">

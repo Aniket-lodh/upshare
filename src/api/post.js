@@ -9,17 +9,19 @@ export const createPost = async (formData) => {
   });
 };
 
-export const getFeed = async (page = 1) => {
+export const getFeed = async (page = 1, signal) => {
   return await apiRequest({
     method: "GET",
     url: `/posts/feed?page=${page}`,
+    signal,
   });
 };
 
-export const getPostById = async (id) => {
+export const getPostById = async (id, signal) => {
   return await apiRequest({
     method: "GET",
     url: `/posts/${id}`,
+    signal,
   });
 };
 

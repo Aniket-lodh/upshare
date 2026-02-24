@@ -28,11 +28,39 @@ api.interceptors.response.use(
   }
 );
 
-if (import.meta.env.DEV) {
+// Dev API console inspector — controlled via VITE_DEBUG_API flag
+if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_API === "true") {
+  api.interceptors.request.use((config) => {
+    console.groupCollapsed(
+      `%c[API] ${config.method?.toUpperCase()} ${config.url}`,
+      "color: #6366f1; font-weight: bold"
+    );
+    if (config.data) console.log("Payload:", config.data);
+    console.groupEnd();
+    return config;
+  });
+
   api.interceptors.response.use(
-    (res) => res,
+    (res) => {
+      console.groupCollapsed(
+        `%c[API] ✓ ${res.status} ${res.config.method?.toUpperCase()} ${
+          res.config.url
+        }`,
+        "color: #22c55e; font-weight: bold"
+      );
+      console.log("Response:", res.data);
+      console.groupEnd();
+      return res;
+    },
     (err) => {
-      console.error("API ERROR:", err.response?.data || err.message);
+      console.groupCollapsed(
+        `%c[API] ✗ ${
+          err.response?.status || "NETWORK"
+        } ${err.config?.method?.toUpperCase()} ${err.config?.url}`,
+        "color: #ef4444; font-weight: bold"
+      );
+      console.error("Error:", err.response?.data || err.message);
+      console.groupEnd();
       return Promise.reject(err);
     }
   );
