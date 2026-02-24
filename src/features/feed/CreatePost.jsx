@@ -72,7 +72,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6">
+    <div className="max-w-lg mx-auto px-4 py-6 pb-20 lg:pb-6">
       <Helmet>
         <title>Create Post — UpShare</title>
       </Helmet>

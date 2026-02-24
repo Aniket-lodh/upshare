@@ -6,7 +6,7 @@ const Pins = React.memo(({ pin, setRenderChildren }) => {
   return (
     <>
       {/* Step 1 — Card depth hierarchy with hover lift */}
-      <div className="grid self-center justify-self-center flex-auto min-w-150 max-w-160 h-fit rounded-xl bg-white shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md hover:-translate-y-[2px]">
+      <div className="flex-auto w-full max-w-sm mx-auto h-fit rounded-xl bg-white shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md hover:-translate-y-[2px]">
         <div className="w-full flex flex-col items-start justify-start">
           {/* Step 2 — Consistent aspect ratio image */}
           <div className="w-full overflow-hidden">

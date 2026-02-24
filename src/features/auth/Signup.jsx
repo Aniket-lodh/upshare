@@ -56,7 +56,7 @@ const Signup = () => {
             </h1>
           </div>
         </div>
-        <div className="mt-6 flex flex-col items-center">
+        <div className="mt-6 flex flex-col items-center pb-20 lg:pb-0">
           <h1 className="text-2xl xl:text-3xl font-extrabold">Sign up</h1>
           <div className="w-full flex-1 mt-8">
             <div className="flex flex-col items-center">

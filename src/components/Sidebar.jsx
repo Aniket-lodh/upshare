@@ -14,9 +14,9 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
 
   //Variables
   const ActiveNavStyle =
-    "flex items-center gap-3 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg px-3 py-2 transition-colors duration-150 capitalize";
+    "flex items-center gap-3 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg px-3 min-h-[44px] transition-colors duration-150 capitalize active:bg-blue-100";
   const notActiveNavStyle =
-    "flex items-center gap-3 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-lg px-3 py-2 transition-colors duration-150 capitalize";
+    "flex items-center gap-3 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-lg px-3 min-h-[44px] transition-colors duration-150 capitalize active:bg-gray-200";
 
   //Setting user data
   useEffect(() => {
@@ -51,13 +51,15 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
       >
         {/* TODO://Maybe try moving the user profile details from the sidebar to top right side of navbar for larger devices */}
         <div className="relative w-full bg-color-bg-accent h-44">
-          <IoIosCloseCircleOutline
-            className={`block opacity-0  absolute right-3 top-2 cursor-pointer transition ease-in-out delay-75 ${
+          <button
+            type="button"
+            onClick={() => setToggleSidebar(false)}
+            className={`opacity-0 absolute right-2 top-2 cursor-pointer transition ease-in-out p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-gray-200 ${
               toggleSidebar && "opacity-100"
             }`}
-            fontSize={24}
-            onClick={() => setToggleSidebar(false)}
-          />
+          >
+            <IoIosCloseCircleOutline fontSize={24} />
+          </button>
           {/*user cover picture*/}
           <div className="w-full h-full overflow-hidden">
             {user?.cover_photo && (

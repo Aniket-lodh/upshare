@@ -53,7 +53,7 @@ const Navbar = ({ toggleSidebar, setToggleSidebar }) => {
                 {/*Menu Icon*/}
                 <FcMenu
                   fontSize={24}
-                  className="lg:hidden text-color-font-tertiary cursor-pointer transition-colors duration-150 hover:text-gray-700"
+                  className="lg:hidden text-color-font-tertiary cursor-pointer transition-colors duration-150 hover:text-gray-700 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center active:bg-gray-200 rounded-lg"
                   onClick={() => setToggleSidebar(!toggleSidebar)}
                 />
                 {/*App logo*/}
@@ -67,23 +67,23 @@ const Navbar = ({ toggleSidebar, setToggleSidebar }) => {
               <div className="flex items-center gap-3">
                 <Link
                   to="/search"
-                  className={`p-1.5 rounded-lg transition-colors duration-150 ${
+                  className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg transition-colors duration-150 ${
                     isSearchActive
                       ? "text-blue-600 bg-blue-50"
-                      : "text-color-font-tertiary hover:text-blue-600 hover:bg-gray-100"
+                      : "text-color-font-tertiary hover:text-blue-600 hover:bg-gray-100 active:bg-gray-200"
                   }`}
                 >
-                  <RiSearchLine fontSize={22} className="cursor-pointer" />
+                  <RiSearchLine fontSize={22} />
                 </Link>
                 {/* Create button */}
                 {user && (
                   <Link
                     to="/create"
                     title="Create Post"
-                    className={`p-1.5 rounded-lg transition-colors duration-150 ${
+                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg transition-colors duration-150 ${
                       isCreateActive
                         ? "text-blue-600 bg-blue-50"
-                        : "text-color-font-tertiary hover:text-blue-600 hover:bg-gray-100"
+                        : "text-color-font-tertiary hover:text-blue-600 hover:bg-gray-100 active:bg-gray-200"
                     }`}
                   >
                     <AiOutlinePlus fontSize={22} />
@@ -95,7 +95,7 @@ const Navbar = ({ toggleSidebar, setToggleSidebar }) => {
                     type="button"
                     title="Logout"
                     onClick={handleLogout}
-                    className="p-1.5 rounded-lg text-color-font-tertiary hover:text-red-600 hover:bg-red-50 transition-colors duration-150 cursor-pointer"
+                    className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-color-font-tertiary hover:text-red-600 hover:bg-red-50 active:bg-red-100 transition-colors duration-150 cursor-pointer"
                   >
                     <RiLogoutBoxRLine fontSize={22} />
                   </button>
@@ -104,11 +104,13 @@ const Navbar = ({ toggleSidebar, setToggleSidebar }) => {
             </>
           ) : (
             <>
-              <RiArrowLeftLine
-                fontSize={24}
+              <button
+                type="button"
                 onClick={() => navigate("/")}
-                className="text-color-font-tertiary cursor-pointer transition-colors duration-150 hover:text-blue-600"
-              />
+                className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-color-font-tertiary cursor-pointer transition-colors duration-150 hover:text-blue-600 active:bg-gray-200"
+              >
+                <RiArrowLeftLine fontSize={24} />
+              </button>
               <div className="ml-2 flex items-center justify-start flex-1 px-2 py-1 bg-color-bg-tertiary rounded-md">
                 <RiSearch2Line
                   fontSize={20}
@@ -126,7 +128,7 @@ const Navbar = ({ toggleSidebar, setToggleSidebar }) => {
                   type="button"
                   title="Logout"
                   onClick={handleLogout}
-                  className="ml-2 p-1.5 rounded-lg text-color-font-tertiary hover:text-red-600 hover:bg-red-50 transition-colors duration-150 cursor-pointer"
+                  className="ml-2 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg text-color-font-tertiary hover:text-red-600 hover:bg-red-50 active:bg-red-100 transition-colors duration-150 cursor-pointer"
                 >
                   <RiLogoutBoxRLine fontSize={22} />
                 </button>

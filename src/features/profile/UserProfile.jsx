@@ -6,6 +6,7 @@ import {
   RiHeart2Line,
   RiGridFill,
   RiEdit2Line,
+  RiImageAddLine,
 } from "react-icons/ri";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -240,6 +241,37 @@ const UserProfile = () => {
               </div>
             </div>
           </div>
+          {/* Empty posts placeholder — Step 4 */}
+          <div className="mt-6 flex flex-col items-center justify-center text-center py-12">
+            <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-4">
+              <RiImageAddLine className="text-3xl text-gray-300" />
+            </div>
+            {user?._id === userId ? (
+              <>
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  No posts yet
+                </h3>
+                <p className="text-gray-500 text-sm max-w-xs mb-4">
+                  Share your first post and start building your collection.
+                </p>
+                <Link
+                  to="/create"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-5 py-2.5 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                >
+                  Create a Post
+                </Link>
+              </>
+            ) : (
+              <>
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  Nothing here yet
+                </h3>
+                <p className="text-gray-500 text-sm max-w-xs">
+                  {userObj?.name || "This user"} hasn't shared any posts yet.
+                </p>
+              </>
+            )}
+          </div>
           {/* Change Profile Pic modal */}
           {EditModalState && (
             <div
@@ -248,7 +280,7 @@ const UserProfile = () => {
               role="dialog"
               aria-modal="true"
             >
-              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+              <div className="fixed inset-0 bg-black/40 transition-opacity"></div>
 
               <div className="fixed inset-0 z-10 overflow-y-auto">
                 <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
@@ -295,7 +327,7 @@ const UserProfile = () => {
                       <label
                         role="button"
                         htmlFor="changeprofileviadevice"
-                        className="inline-flex w-full justify-center rounded-md bg-color-primary-blue px-3 py-2 text-sm font-semibold text-white shadow-sm  sm:ml-3 sm:w-auto"
+                        className="inline-flex w-full justify-center rounded-lg bg-blue-600 hover:bg-blue-700 px-4 py-2 text-sm font-medium text-white transition-all duration-150 active:scale-[0.98] sm:ml-3 sm:w-auto"
                       >
                         Choose from device
                       </label>
@@ -310,7 +342,7 @@ const UserProfile = () => {
                         role="button"
                         type="button"
                         onClick={() => setEditModalState(false)}
-                        className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                        className="mt-3 inline-flex w-full justify-center rounded-lg bg-gray-100 hover:bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 transition-all duration-150 active:scale-[0.98] sm:mt-0 sm:w-auto"
                       >
                         Cancel
                       </button>

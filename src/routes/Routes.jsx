@@ -98,16 +98,21 @@ function ErrorBoundary() {
   const error = useRouteError();
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4">
-      <h1 className="text-4xl font-bold text-gray-800 mb-2">
+    <div className="flex flex-col items-center justify-center text-center min-h-screen bg-white px-4">
+      <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mb-4">
+        <span className="text-3xl">⚠️</span>
+      </div>
+      <h1 className="text-xl font-semibold text-gray-900 mb-2">
         Something went wrong
       </h1>
-      <p className="text-gray-500 mb-6 text-center max-w-md">
-        {error?.statusText || error?.message || "An unexpected error occurred."}
+      <p className="text-gray-500 text-sm mb-6 max-w-sm">
+        {error?.statusText ||
+          error?.message ||
+          "An unexpected error occurred. Please try again."}
       </p>
       <Link
         to="/"
-        className="px-6 py-2.5 rounded-lg bg-color-primary-blue text-white font-medium hover:opacity-90 transition-opacity"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-5 py-2.5 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
       >
         Go Home
       </Link>

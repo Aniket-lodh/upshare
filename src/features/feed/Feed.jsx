@@ -108,29 +108,26 @@ const Feed = () => {
             onAction={() => window.location.reload()}
           />
         ) : posts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 gap-4">
-            <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center">
-              <RiImageAddLine
-                fontSize={28}
-                className="text-color-primary-blue"
-              />
+          <div className="flex flex-col items-center justify-center text-center min-h-[60vh] px-4">
+            <div className="w-20 h-20 rounded-full bg-blue-50 flex items-center justify-center mb-4">
+              <RiImageAddLine className="text-4xl text-blue-400" />
             </div>
-            <h2 className="text-lg font-semibold text-color-font-primary">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">
               No posts yet
             </h2>
-            <p className="text-center text-color-font-tertiary text-sm max-w-xs">
-              Be the first to share something with the community!
+            <p className="text-gray-500 text-sm max-w-sm">
+              Be the first to share something inspiring with the community.
             </p>
             <Link
               to="/create"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+              className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-5 py-2.5 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
             >
               Create Your First Post
             </Link>
           </div>
         ) : (
           <>
-            <div className="grid gap-6 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:overflow-y-auto">
+            <div className="grid gap-6 py-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:overflow-y-auto">
               {posts.map((item) => (
                 <Pins
                   key={item._id}

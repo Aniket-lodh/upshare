@@ -204,7 +204,7 @@ const PinDetails = () => {
                   type="button"
                   onClick={handleDelete}
                   disabled={deleting}
-                  className="bg-red-600 hover:bg-red-700 text-white rounded-lg px-2 py-1 transition-all duration-150 active:scale-[0.98] disabled:opacity-50"
+                  className="min-h-[44px] min-w-[44px] flex items-center justify-center bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-lg transition-all duration-150 active:scale-[0.98] disabled:opacity-50"
                 >
                   <RiDeleteBin6Line fontSize={17} />
                 </button>
@@ -217,7 +217,7 @@ const PinDetails = () => {
                   navigate("/");
                   setRenderPostDetails(false);
                 }}
-                className="p-1 rounded-full bg-white"
+                className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-white active:bg-gray-100 transition-colors"
               >
                 <RiCloseCircleLine
                   className="select-none pointer-events-none"
@@ -267,33 +267,59 @@ const PinDetails = () => {
             </div>
             {/* Post interactions */}
             <div className="pt-2 mt-3 flex items-center justify-between text-color-font-secondary border-t">
-              <div className="flex items-center justify-start gap-4 pl-3">
-                <RiThumbUpLine fontSize={24} />
-                <RiChat3Line fontSize={24} />
+              <div className="flex items-center justify-start gap-1 pl-2">
+                <button
+                  type="button"
+                  className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-gray-100 transition-colors"
+                >
+                  <RiThumbUpLine fontSize={24} />
+                </button>
+                <button
+                  type="button"
+                  className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-gray-100 transition-colors"
+                >
+                  <RiChat3Line fontSize={24} />
+                </button>
               </div>
-              <div className="flex items-center justify-start gap-4 pl-3">
+              <div className="flex items-center justify-start gap-1 pr-2">
                 {pinSaved ? (
-                  <RiHeartFill
-                    fontSize={24}
+                  <button
+                    type="button"
                     onClick={toggleWishlist}
-                    className={`cursor-pointer text-red-500 transition-all duration-150 ${
-                      likedAnimating ? "scale-110" : "scale-100"
-                    } ${likeLoading ? "opacity-50 pointer-events-none" : ""}`}
-                  />
+                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-red-50 transition-all duration-150 ${
+                      likeLoading ? "opacity-50 pointer-events-none" : ""
+                    }`}
+                  >
+                    <RiHeartFill
+                      fontSize={24}
+                      className={`text-red-500 transition-transform duration-150 ${
+                        likedAnimating ? "scale-110" : "scale-100"
+                      }`}
+                    />
+                  </button>
                 ) : (
-                  <RiHeart2Line
-                    fontSize={24}
+                  <button
+                    type="button"
                     onClick={toggleWishlist}
-                    className={`cursor-pointer text-gray-600 hover:text-red-500 transition-all duration-150 ${
-                      likedAnimating ? "scale-110" : "scale-100"
-                    } ${likeLoading ? "opacity-50 pointer-events-none" : ""}`}
-                  />
+                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-red-50 transition-all duration-150 ${
+                      likeLoading ? "opacity-50 pointer-events-none" : ""
+                    }`}
+                  >
+                    <RiHeart2Line
+                      fontSize={24}
+                      className={`text-gray-600 hover:text-red-500 transition-all duration-150 ${
+                        likedAnimating ? "scale-110" : "scale-100"
+                      }`}
+                    />
+                  </button>
                 )}
-                <RiShareLine
-                  fontSize={24}
+                <button
+                  type="button"
                   onClick={sharePost}
-                  className="cursor-pointer"
-                />
+                  className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-gray-100 transition-colors cursor-pointer"
+                >
+                  <RiShareLine fontSize={24} />
+                </button>
               </div>
             </div>
           </div>

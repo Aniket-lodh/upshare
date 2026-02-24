@@ -2,25 +2,23 @@ import { RiErrorWarningLine } from "react-icons/ri";
 
 const ErrorState = ({
   title = "Something went wrong",
-  description = "",
-  actionText = "Go Back",
+  description = "An unexpected error occurred. Please try again.",
+  actionText = "Try Again",
   onAction,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[50vh] px-4 gap-3">
-      <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center">
-        <RiErrorWarningLine fontSize={28} className="text-red-500" />
+    <div className="flex flex-col items-center justify-center text-center min-h-[50vh] px-4">
+      <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mb-4">
+        <RiErrorWarningLine className="text-3xl text-red-400" />
       </div>
-      <h2 className="text-lg font-semibold text-color-font-primary">{title}</h2>
+      <h2 className="text-xl font-semibold text-gray-900 mb-2">{title}</h2>
       {description && (
-        <p className="text-color-font-tertiary text-sm text-center max-w-xs">
-          {description}
-        </p>
+        <p className="text-gray-500 text-sm max-w-sm mb-1">{description}</p>
       )}
       {onAction && (
         <button
           onClick={onAction}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+          className="mt-5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded-lg px-5 py-2.5 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
         >
           {actionText}
         </button>
