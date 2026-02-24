@@ -64,7 +64,7 @@ const Signup = () => {
                 onClick={() => {
                   // Google OAuth not implemented yet
                 }}
-                className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-100 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
+                className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 flex items-center justify-center transition focus:outline-none"
               >
                 <div className="bg-white p-2 rounded-full">
                   <svg className="w-4" viewBox="0 0 533.5 544.3">
@@ -138,7 +138,7 @@ const Signup = () => {
                   onChange={(e) => handleOnchange(e.target)}
                 />
                 <button
-                  className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  className="mt-5 tracking-wide font-semibold bg-blue-600 text-white w-full py-4 rounded-lg hover:bg-blue-700 transition flex items-center justify-center focus:outline-none"
                   type="submit"
                 >
                   {loading ? (

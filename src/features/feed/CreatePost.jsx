@@ -161,9 +161,9 @@ const CreatePost = () => {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-2.5 rounded-lg font-medium text-white transition-opacity ${
+          className={`w-full py-2.5 rounded-lg font-medium text-white transition ${
             !loading
-              ? "bg-color-primary-blue hover:opacity-90 cursor-pointer"
+              ? "bg-blue-600 hover:bg-blue-700 cursor-pointer"
               : "bg-gray-300 cursor-not-allowed"
           }`}
         >

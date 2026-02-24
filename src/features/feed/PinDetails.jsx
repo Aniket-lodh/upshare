@@ -172,7 +172,7 @@ const PinDetails = () => {
   return (
     <>
       <div className="px-2 py-3.5 bg-white">
-        <div className="border border-color-border-primary rounded-lg pb-4 overflow-hidden">
+        <div className="rounded-xl bg-white shadow-sm border border-gray-200 pb-4 overflow-hidden">
           {/* Post creator headings */}
           <div className="relative w-full flex items-center justify-between px-4 py-2 bg-color-bg-tertiary">
             <Link
@@ -201,7 +201,7 @@ const PinDetails = () => {
                   type="button"
                   onClick={handleDelete}
                   disabled={deleting}
-                  className="p-1 rounded-full bg-white text-red-500 hover:bg-red-50 transition-colors disabled:opacity-50"
+                  className="bg-red-600 hover:bg-red-700 text-white rounded-lg px-2 py-1 transition disabled:opacity-50"
                 >
                   <RiDeleteBin6Line fontSize={17} />
                 </button>

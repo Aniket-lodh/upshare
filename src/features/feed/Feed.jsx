@@ -93,61 +93,66 @@ const Feed = () => {
       </Helmet>
 
       {/* Feed content */}
-      {loading ? (
-        <div className="grid gap-y-3 px-1 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <SkeletonCard key={i} />
-          ))}
-        </div>
-      ) : error ? (
-        <ErrorState
-          title="Failed to load feed"
-          description={error}
-          actionText="Retry"
-          onAction={() => window.location.reload()}
-        />
-      ) : posts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 gap-4">
-          <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center">
-            <RiImageAddLine fontSize={28} className="text-color-primary-blue" />
-          </div>
-          <h2 className="text-lg font-semibold text-color-font-primary">
-            No posts yet
-          </h2>
-          <p className="text-center text-color-font-tertiary text-sm max-w-xs">
-            Be the first to share something with the community!
-          </p>
-          <Link
-            to="/create"
-            className="px-5 py-2.5 rounded-lg bg-color-primary-blue text-white text-sm font-medium hover:opacity-90 transition-opacity"
-          >
-            Create Your First Post
-          </Link>
-        </div>
-      ) : (
-        <>
-          <div className="grid gap-y-3 px-1 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:overflow-y-auto">
-            {posts.map((item) => (
-              <Pins
-                key={item._id}
-                pin={item}
-                setRenderChildren={setRenderChildren}
-              />
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+        {loading ? (
+          <div className="grid gap-y-3 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <SkeletonCard key={i} />
             ))}
           </div>
-          {hasMore && (
-            <div className="flex justify-center py-4">
-              <button
-                onClick={loadMore}
-                disabled={loadingMore}
-                className="px-6 py-2 rounded-lg bg-color-primary-blue text-white text-sm font-medium hover:opacity-90 transition-opacity disabled:bg-gray-300 disabled:cursor-not-allowed"
-              >
-                {loadingMore ? <Spinner /> : "Load More"}
-              </button>
+        ) : error ? (
+          <ErrorState
+            title="Failed to load feed"
+            description={error}
+            actionText="Retry"
+            onAction={() => window.location.reload()}
+          />
+        ) : posts.length === 0 ? (
+          <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 gap-4">
+            <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center">
+              <RiImageAddLine
+                fontSize={28}
+                className="text-color-primary-blue"
+              />
             </div>
-          )}
-        </>
-      )}
+            <h2 className="text-lg font-semibold text-color-font-primary">
+              No posts yet
+            </h2>
+            <p className="text-center text-color-font-tertiary text-sm max-w-xs">
+              Be the first to share something with the community!
+            </p>
+            <Link
+              to="/create"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition"
+            >
+              Create Your First Post
+            </Link>
+          </div>
+        ) : (
+          <>
+            <div className="grid gap-y-3 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:overflow-y-auto">
+              {posts.map((item) => (
+                <Pins
+                  key={item._id}
+                  pin={item}
+                  setRenderChildren={setRenderChildren}
+                />
+              ))}
+            </div>
+            {hasMore && (
+              <div className="flex justify-center py-4">
+                <button
+                  onClick={loadMore}
+                  disabled={loadingMore}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  {loadingMore ? <Spinner /> : "Load More"}
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
 
       {/* PinDetails overlay */}
       <section

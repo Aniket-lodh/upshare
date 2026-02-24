@@ -128,7 +128,7 @@ const UserProfile = () => {
                       to={"edit"}
                       role="button"
                       title="edit profile"
-                      className="capitalize bg-color-primary-blue px-3 py-2 rounded text-white text-sm transition hover:bg-color-primary-blue-accent"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition"
                     >
                       Edit Profile
                     </Link>
@@ -140,7 +140,7 @@ const UserProfile = () => {
                         role="button"
                         title="edit profile"
                         onClick={() => HandleFollowClick()}
-                        className="capitalize bg-color-primary-blue px-3 py-2 rounded text-white text-sm transition hover:bg-color-primary-blue-accent"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition"
                       >
                         {isLoading ? <Spinner /> : "Follow"}
                       </button>
@@ -152,7 +152,7 @@ const UserProfile = () => {
                         role="button"
                         title="edit profile"
                         onClick={() => HandleUnFollowClick()}
-                        className="capitalize bg-color-primary-blue px-3 py-2 rounded text-white text-sm transition hover:bg-color-primary-blue-accent"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition"
                       >
                         {isLoading ? <Spinner /> : "Following"}
                       </button>
@@ -167,14 +167,14 @@ const UserProfile = () => {
             </div>
           </div>
           {/*user bio and other details*/}
-          <div className="mt-28 flex items-center justify-center flex-col gap-4">
+          <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 mt-28 flex items-center justify-center flex-col gap-4">
             {/*User bio*/}
             <div className="pl-5 pr-4 flex items-center justify-center flex-col gap-4">
               <p className="break-words text-left tracking-tight overflow-hidden font-normal text-sm text-color-font-secondary">
                 {userObj?.bio}
               </p>
               {/*User Followers and other details*/}
-              <div className="font-fira font-semibold  text-color-font-primary bg-color-bg-accent flex items-center justify-center w-full py-5 rounded-md divide-x">
+              <div className="font-fira font-semibold text-color-font-primary bg-white rounded-xl shadow-sm border border-gray-200 flex items-center justify-center w-full py-5 divide-x">
                 {/*user-likes*/}
                 <div className="max-w-110 flex flex-col items-center justify-center cursor-pointer px-4 capitalize">
                   <h2 className="text-xl">{userObj?.likes?.length}</h2>
@@ -338,7 +338,7 @@ const UserProfile = () => {
               in<span className="text-color-primary-blue font-bold">?</span>
               <Link
                 to={"/login"}
-                className="bg-color-primary-blue hover:bg-color-primary-blue-accent px-5 py-2 mt-3 text-white font-semibold text-xl rounded-md"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 mt-3 transition"
               >
                 Login
               </Link>
@@ -355,7 +355,7 @@ const UserProfile = () => {
               <br />
               <Link
                 to={"/signup"}
-                className="bg-color-primary-blue hover:bg-color-primary-blue-accent px-5 py-2 mt-3 text-white font-semibold text-xl rounded-md"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 mt-3 transition"
               >
                 Signup
               </Link>
