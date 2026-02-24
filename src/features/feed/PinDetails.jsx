@@ -229,11 +229,11 @@ const PinDetails = () => {
 
           {/* Post content */}
           <div className="px-4 h-full">
-            <p className="mt-3 break-words text-color-font-secondary font-normal text-base">
+            <p className="mt-4 break-words text-color-font-secondary font-normal text-base">
               {pin?.caption}
             </p>
             {pin?.image && (
-              <div className="w-full h-fit mt-3 overflow-hidden">
+              <div className="w-full h-fit mt-4 overflow-hidden">
                 <img
                   src={pin.image}
                   className="w-full h-fit object-contain rounded-lg"
@@ -242,7 +242,7 @@ const PinDetails = () => {
               </div>
             )}
             {/* Post metadata */}
-            <div className="mt-3 font-normal flex flex-col w-full gap-2 items-start justify-start text-color-font-secondary font-fira text-sm">
+            <div className="mt-4 font-normal flex flex-col w-full gap-2 items-start justify-start text-color-font-secondary font-fira text-sm">
               <p>
                 {pin?.createdAt && (
                   <>
@@ -266,7 +266,7 @@ const PinDetails = () => {
               </p>
             </div>
             {/* Post interactions */}
-            <div className="pt-2 mt-3 flex items-center justify-between text-color-font-secondary border-t">
+            <div className="pt-2 mt-4 flex items-center justify-between text-color-font-secondary border-t">
               <div className="flex items-center justify-start gap-1 pl-2">
                 <button
                   type="button"

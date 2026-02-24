@@ -18,9 +18,9 @@ import { Spinner } from "../../helpers/Loader.jsx";
 const UserProfile = () => {
   // Variable
   const ActiveTabStyles =
-    "h-1 bg-color-primary-blue opacity-1 w-14 rounded-tl-lg rounded-tr-lg transition-all";
+    "h-1 bg-color-primary-blue opacity-1 w-14 rounded-t-lg transition-all";
   const NotActiveTabStyles =
-    "h-0 bg-white opacity-0 w-14 rounded-tl-lg rounded-tr-lg transition-all";
+    "h-0 bg-white opacity-0 w-14 rounded-t-lg transition-all";
 
   // Hooks
   const { userId } = useParams();
@@ -117,7 +117,7 @@ const UserProfile = () => {
                   <p className="capitalize font-normal text-sm text-color-font-primary mt-0.5 border-b border-color-border-primary inline">
                     {userObj?.profession}
                   </p>
-                  <p className="font-normal text-xs text-color-font-tertiary mt-2 flex items-start gap-1">
+                  <p className="font-normal text-xs text-color-font-tertiary mt-2 flex items-start gap-2">
                     <RiCalendarTodoFill className="inline" fontSize={15} />
                     Joined on {userObj?._createdAt}
                   </p>
@@ -159,7 +159,7 @@ const UserProfile = () => {
                       </button>
                     )}
 
-                  <div className="w-full capitalize text-xs text-color-font-tertiary font-medium flex items-start justify-end gap-1">
+                  <div className="w-full capitalize text-xs text-color-font-tertiary font-medium flex items-start justify-end gap-2">
                     <HiOutlineMapPin className="inline" fontSize={15} />
                     <p className=" truncate ">{userObj?.location}</p>
                   </div>
@@ -248,7 +248,7 @@ const UserProfile = () => {
             </div>
             {user?._id === userId ? (
               <>
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
                   No posts yet
                 </h3>
                 <p className="text-gray-500 text-sm max-w-xs mb-4">
@@ -263,7 +263,7 @@ const UserProfile = () => {
               </>
             ) : (
               <>
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
                   Nothing here yet
                 </h3>
                 <p className="text-gray-500 text-sm max-w-xs">
@@ -284,14 +284,14 @@ const UserProfile = () => {
 
               <div className="fixed inset-0 z-10 overflow-y-auto">
                 <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-                  <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                  <div className="relative transform overflow-hidden rounded-xl bg-white text-left shadow-lg transition-all sm:my-8 sm:w-full sm:max-w-lg">
                     <span
                       onClick={() => setEditModalState(false)}
                       className="absolute right-4 top-4 hover:text-red-500 transition-all cursor-pointer"
                     >
                       <MdOutlineCancel fontSize={18} />
                     </span>
-                    <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                    <div className="bg-white px-4 pb-4 pt-6 sm:p-6 sm:pb-4">
                       <div className="sm:flex sm:items-start">
                         <div className="mx-auto flex h-28 w-28 flex-shrink-0 items-center justify-center rounded-full overflow-hidden bg-color-bg-primary sm:mx-0">
                           {userObj && userObj.profilephoto ? (
@@ -306,7 +306,7 @@ const UserProfile = () => {
                             />
                           )}
                         </div>
-                        <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                        <div className="mt-4 text-center sm:ml-4 sm:mt-0 sm:text-left">
                           <h3
                             className="text-base font-semibold leading-6 text-gray-900"
                             id="modal-title"
@@ -323,7 +323,7 @@ const UserProfile = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                    <div className="bg-gray-50 px-4 py-4 sm:flex sm:flex-row-reverse sm:px-6">
                       <label
                         role="button"
                         htmlFor="changeprofileviadevice"
@@ -342,7 +342,7 @@ const UserProfile = () => {
                         role="button"
                         type="button"
                         onClick={() => setEditModalState(false)}
-                        className="mt-3 inline-flex w-full justify-center rounded-lg bg-gray-100 hover:bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 transition-all duration-150 active:scale-[0.98] sm:mt-0 sm:w-auto"
+                        className="mt-4 inline-flex w-full justify-center rounded-lg bg-gray-100 hover:bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 transition-all duration-150 active:scale-[0.98] sm:mt-0 sm:w-auto"
                       >
                         Cancel
                       </button>
@@ -370,12 +370,12 @@ const UserProfile = () => {
               in<span className="text-color-primary-blue font-bold">?</span>
               <Link
                 to={"/login"}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 mt-3 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 mt-4 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
               >
                 Login
               </Link>
             </div>
-            <p className="mt-3 font-bold text-lg text-color-font-tertiary">
+            <p className="mt-4 font-bold text-lg text-color-font-tertiary">
               or
             </p>
             <div className={"font-semibold text-2xl"}>
@@ -387,7 +387,7 @@ const UserProfile = () => {
               <br />
               <Link
                 to={"/signup"}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 mt-3 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 mt-4 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
               >
                 Signup
               </Link>

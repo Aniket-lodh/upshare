@@ -58,10 +58,10 @@ const Search = () => {
         {!debouncedQuery ? (
           /* State 1: No query — inviting discovery */
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-4">
-              <RiSearch2Line className="text-3xl text-blue-400" />
+            <div className="w-20 h-20 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
+              <RiSearch2Line className="text-5xl text-blue-400" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Discover something new
             </h3>
             <p className="text-gray-500 text-sm max-w-xs">
@@ -71,7 +71,7 @@ const Search = () => {
         ) : searching ? (
           /* State 2: Searching — neutral activity, not failure */
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-4">
+            <div className="w-20 h-20 rounded-xl bg-gray-50 flex items-center justify-center mb-4">
               <Spinner />
             </div>
             <p className="text-gray-500 text-sm">
@@ -81,10 +81,10 @@ const Search = () => {
         ) : (
           /* State 3: No results — encouraging, not discouraging */
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-4">
-              <RiCompassDiscoverLine className="text-3xl text-gray-400" />
+            <div className="w-20 h-20 rounded-xl bg-gray-50 flex items-center justify-center mb-4">
+              <RiCompassDiscoverLine className="text-5xl text-gray-400" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
               No results found
             </h3>
             <p className="text-gray-500 text-sm max-w-xs">

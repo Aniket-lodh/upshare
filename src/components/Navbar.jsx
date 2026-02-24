@@ -111,7 +111,7 @@ const Navbar = ({ toggleSidebar, setToggleSidebar }) => {
               >
                 <RiArrowLeftLine fontSize={24} />
               </button>
-              <div className="ml-2 flex items-center justify-start flex-1 px-2 py-1 bg-color-bg-tertiary rounded-md">
+              <div className="ml-2 flex items-center justify-start flex-1 px-2 py-1 bg-color-bg-tertiary rounded-md border border-transparent focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-400/20 transition-all">
                 <RiSearch2Line
                   fontSize={20}
                   className="text-color-font-tertiary"

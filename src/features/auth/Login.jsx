@@ -44,19 +44,19 @@ const Login = () => {
   return (
     <div className="lg:flex">
       <div className="lg:w-1/2 xl:max-w-screen-sm">
-        <div className="py-12 bg-indigo-100 lg:bg-white flex justify-center lg:justify-start lg:px-12">
+        <div className="py-12 bg-blue-50 lg:bg-white flex justify-center lg:justify-start lg:px-12">
           <div className="cursor-pointer flex items-center">
             <div>
-              <img src={logo} className=" !stroke-cyan-500" alt="logo" />
+              <img src={logo} className=" !stroke-blue-500" alt="logo" />
             </div>
-            <div className="text-2xl text-indigo-800 tracking-wide ml-2 font-semibold">
+            <div className="text-2xl text-blue-800 tracking-wide ml-2 font-semibold">
               Upshare
             </div>
           </div>
         </div>
         <div className="mt-10 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl pb-20 lg:pb-0">
           <h2
-            className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl
+            className="text-center text-4xl text-blue-900 font-display font-semibold lg:text-left xl:text-5xl
             xl:text-bold"
           >
             Log in
@@ -111,7 +111,7 @@ const Login = () => {
                 <button
                   className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg p-4 w-full transition-all duration-150
                         active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
-                        shadow-lg"
+                        shadow-sm"
                   type="submit"
                 >
                   {isLoading ? (
@@ -128,7 +128,7 @@ const Login = () => {
               Don't have an account ?
               <Link
                 to={"/signup"}
-                className="cursor-pointer text-indigo-600 hover:text-indigo-800"
+                className="cursor-pointer text-blue-600 hover:text-blue-800"
               >
                 Sign up
               </Link>
@@ -136,7 +136,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="hidden lg:flex items-center justify-center bg-indigo-100 flex-1 h-screen">
+      <div className="hidden lg:flex items-center justify-center bg-blue-50 flex-1 h-screen">
         <div className="max-w-xs transform duration-200 hover:scale-110 cursor-pointer">
           <img src={loginTemp} alt="template-login" className="w-5/6 mx-auto" />
         </div>

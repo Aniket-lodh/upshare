@@ -109,7 +109,7 @@ const EditProfile = () => {
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Profile
           </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
+          <p className="mt-2 text-sm leading-6 text-gray-600">
             This information will be displayed publicly so be careful what you
             share.
           </p>
@@ -123,7 +123,7 @@ const EditProfile = () => {
                 Username
               </label>
               <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-400 sm:max-w-md">
+                <div className="flex rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-400 sm:max-w-md">
                   <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
                     upshare.com/
                   </span>
@@ -134,7 +134,7 @@ const EditProfile = () => {
                     placeholder="janesmith"
                     value={userInputs.username}
                     onChange={(e) => HandleOnChange(e.target)}
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 sm:text-sm sm:leading-6"
+                    className="block flex-1 border-0 bg-transparent py-2 pl-2 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
@@ -155,10 +155,10 @@ const EditProfile = () => {
                   maxLength={"150"}
                   value={userInputs.bio}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block h-28 w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
+                  className="block h-28 w-full px-4 rounded-lg border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
-              <p className="mt-3 text-sm leading-6 text-gray-600">
+              <p className="mt-4 text-sm leading-6 text-gray-600">
                 Write a few sentences that describes you the best.
               </p>
             </div>
@@ -181,7 +181,7 @@ const EditProfile = () => {
                   name="profilephoto"
                   accept=".jpg,.png,.jpeg"
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset  focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-400 active:ring-2 active:ring-blue-400  ring-gray-300 hover:bg-gray-50"
+                  className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset  focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-400 active:ring-2 active:ring-blue-400  ring-gray-300 hover:bg-gray-50"
                 />
               </div>
             </div>
@@ -205,7 +205,7 @@ const EditProfile = () => {
                   <div className="mt-4 flex text-sm leading-6 text-gray-600">
                     <label
                       htmlFor="coverphoto"
-                      className="relative cursor-pointer rounded-md font-semibold text-blue-600      hover:text-blue-500"
+                      className="relative cursor-pointer rounded-lg font-semibold text-blue-600      hover:text-blue-500"
                     >
                       <span>Upload a file</span>
                       <input
@@ -232,7 +232,7 @@ const EditProfile = () => {
           <h2 className="text-base font-semibold leading-7 text-gray-900">
             Personal Information
           </h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
+          <p className="mt-2 text-sm leading-6 text-gray-600">
             Use a permanent address where you can receive mail.
           </p>
 
@@ -251,7 +251,7 @@ const EditProfile = () => {
                   id="name"
                   value={userInputs.name}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-lg border-0 px-2 py-2 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -263,7 +263,7 @@ const EditProfile = () => {
               >
                 Website (Optional)
               </label>
-              <div className="mt-2 py-0.5 pr-0.5 flex rounded-md bg-white ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-400 sm:max-w-md">
+              <div className="mt-2 py-0.5 pr-0.5 flex rounded-lg bg-white ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-400 sm:max-w-md">
                 <span className="flex text-center  select-none items-center pl-3 text-gray-500 sm:text-sm">
                   <HiOutlineGlobeAlt className="w-5 h-5 mr-0.5" /> /
                 </span>
@@ -273,7 +273,7 @@ const EditProfile = () => {
                   id="website"
                   value={userInputs.website}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 sm:text-sm sm:leading-6"
+                  className="block flex-1 border-0 bg-transparent py-2 pl-2 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-0 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -292,7 +292,7 @@ const EditProfile = () => {
                   type="email"
                   value={userInputs.email}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-lg border-0 px-2 py-2 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -313,7 +313,7 @@ const EditProfile = () => {
                   maxLength="10"
                   value={userInputs.phone}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-lg border-0 px-2 py-2 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -331,7 +331,7 @@ const EditProfile = () => {
                   name="gender"
                   value={userInputs.gender ? userInputs.gender : "select"}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-2 text-gray-900 outline-none shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-lg border-0 px-2 py-2 text-gray-900 outline-none shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -357,7 +357,7 @@ const EditProfile = () => {
                   name="profession"
                   value={userInputs.profession}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-lg border-0 px-2 py-2 text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -375,7 +375,7 @@ const EditProfile = () => {
                   name="country"
                   value={userInputs.country ? userInputs.country : "select"}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-2 text-gray-900 outline-none shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-lg border-0 px-2 py-2 text-gray-900 outline-none shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="United States">United States</option>
                   <option value="Canada">Canada</option>
@@ -401,7 +401,7 @@ const EditProfile = () => {
                   name="state"
                   value={userInputs.state}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-lg border-0 px-2 py-2 text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>

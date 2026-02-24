@@ -20,7 +20,7 @@ const SkeletonCard = () => {
 export const SkeletonPostDetail = () => {
   return (
     <div className="px-2 py-3.5 animate-pulse">
-      <div className="border border-color-border-primary rounded-lg pb-4 overflow-hidden">
+      <div className="border border-color-border-primary rounded-xl pb-4 overflow-hidden">
         {/* Header */}
         <div className="flex items-center gap-1.5 px-4 py-2 bg-color-bg-tertiary">
           <div className="w-9 h-9 rounded-full bg-gray-200" />
@@ -33,7 +33,7 @@ export const SkeletonPostDetail = () => {
         <div className="px-4 mt-3 space-y-3">
           <div className="h-3 w-full rounded bg-gray-200" />
           <div className="h-3 w-3/4 rounded bg-gray-200" />
-          <div className="w-full h-48 rounded-lg bg-gray-200" />
+          <div className="w-full h-48 rounded-xl bg-gray-200" />
           <div className="h-3 w-1/3 rounded bg-gray-200" />
         </div>
       </div>

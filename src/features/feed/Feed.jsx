@@ -109,8 +109,8 @@ const Feed = () => {
           />
         ) : posts.length === 0 ? (
           <div className="flex flex-col items-center justify-center text-center min-h-[60vh] px-4">
-            <div className="w-20 h-20 rounded-full bg-blue-50 flex items-center justify-center mb-4">
-              <RiImageAddLine className="text-4xl text-blue-400" />
+            <div className="w-20 h-20 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
+              <RiImageAddLine className="text-5xl text-blue-400" />
             </div>
             <h2 className="text-xl font-semibold text-gray-900 mb-2">
               No posts yet
