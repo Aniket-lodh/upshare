@@ -12,21 +12,13 @@ function AuthValidator({ children }) {
   const { addUser, removeUser, setAuthLoading } = useUser();
   const showToast = useToast();
 
-  // Deterministic boot validation
+  // Deterministic boot validation — cookie is the source of truth
   useEffect(() => {
     let isMounted = true;
 
     const validateSession = async () => {
       try {
-        const stored = localStorage.getItem("curUser");
-
-        if (!stored) {
-          if (isMounted) setAuthLoading(false);
-          return;
-        }
-
         const user = await getMe();
-
         if (isMounted) addUser(user);
       } catch {
         if (isMounted) removeUser();
