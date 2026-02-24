@@ -20,7 +20,7 @@ const ErrorState = ({
       {onAction && (
         <button
           onClick={onAction}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
         >
           {actionText}
         </button>

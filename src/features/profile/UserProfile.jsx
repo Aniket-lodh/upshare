@@ -128,7 +128,7 @@ const UserProfile = () => {
                       to={"edit"}
                       role="button"
                       title="edit profile"
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                     >
                       Edit Profile
                     </Link>
@@ -140,7 +140,7 @@ const UserProfile = () => {
                         role="button"
                         title="edit profile"
                         onClick={() => HandleFollowClick()}
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                       >
                         {isLoading ? <Spinner /> : "Follow"}
                       </button>
@@ -152,7 +152,7 @@ const UserProfile = () => {
                         role="button"
                         title="edit profile"
                         onClick={() => HandleUnFollowClick()}
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition"
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                       >
                         {isLoading ? <Spinner /> : "Following"}
                       </button>
@@ -338,7 +338,7 @@ const UserProfile = () => {
               in<span className="text-color-primary-blue font-bold">?</span>
               <Link
                 to={"/login"}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 mt-3 transition"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 mt-3 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
               >
                 Login
               </Link>
@@ -355,7 +355,7 @@ const UserProfile = () => {
               <br />
               <Link
                 to={"/signup"}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 mt-3 transition"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 mt-3 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
               >
                 Signup
               </Link>

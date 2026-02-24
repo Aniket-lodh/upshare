@@ -17,7 +17,7 @@ export function ToastProvider({ children }) {
       {children}
       {toast && (
         <div
-          className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 rounded-lg text-white text-sm font-medium shadow-lg transition-all animate-slide-up ${
+          className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 rounded-lg text-white text-sm font-medium shadow-lg animate-toast ${
             toast.type === "error" ? "bg-red-500" : "bg-green-500"
           }`}
         >

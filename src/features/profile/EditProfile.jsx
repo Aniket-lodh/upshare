@@ -123,7 +123,7 @@ const EditProfile = () => {
                 Username
               </label>
               <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-400 sm:max-w-md">
                   <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
                     upshare.com/
                   </span>
@@ -155,7 +155,7 @@ const EditProfile = () => {
                   maxLength={"150"}
                   value={userInputs.bio}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block h-28 w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block h-28 w-full px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
               <p className="mt-3 text-sm leading-6 text-gray-600">
@@ -181,7 +181,7 @@ const EditProfile = () => {
                   name="profilephoto"
                   accept=".jpg,.png,.jpeg"
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset  focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 active:ring-2 active:ring-indigo-600  ring-gray-300 hover:bg-gray-50"
+                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset  focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-400 active:ring-2 active:ring-blue-400  ring-gray-300 hover:bg-gray-50"
                 />
               </div>
             </div>
@@ -205,7 +205,7 @@ const EditProfile = () => {
                   <div className="mt-4 flex text-sm leading-6 text-gray-600">
                     <label
                       htmlFor="coverphoto"
-                      className="relative cursor-pointer rounded-md font-semibold text-indigo-600      hover:text-indigo-500"
+                      className="relative cursor-pointer rounded-md font-semibold text-blue-600      hover:text-blue-500"
                     >
                       <span>Upload a file</span>
                       <input
@@ -251,7 +251,7 @@ const EditProfile = () => {
                   id="name"
                   value={userInputs.name}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -263,7 +263,7 @@ const EditProfile = () => {
               >
                 Website (Optional)
               </label>
-              <div className="mt-2 py-0.5 pr-0.5 flex rounded-md bg-white ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+              <div className="mt-2 py-0.5 pr-0.5 flex rounded-md bg-white ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-400 sm:max-w-md">
                 <span className="flex text-center  select-none items-center pl-3 text-gray-500 sm:text-sm">
                   <HiOutlineGlobeAlt className="w-5 h-5 mr-0.5" /> /
                 </span>
@@ -292,7 +292,7 @@ const EditProfile = () => {
                   type="email"
                   value={userInputs.email}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -313,7 +313,7 @@ const EditProfile = () => {
                   maxLength="10"
                   value={userInputs.phone}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -331,7 +331,7 @@ const EditProfile = () => {
                   name="gender"
                   value={userInputs.gender ? userInputs.gender : "select"}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-2 text-gray-900 outline-none shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-2 py-2 text-gray-900 outline-none shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -357,7 +357,7 @@ const EditProfile = () => {
                   name="profession"
                   value={userInputs.profession}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 outline-none ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -375,7 +375,7 @@ const EditProfile = () => {
                   name="country"
                   value={userInputs.country ? userInputs.country : "select"}
                   onChange={(e) => HandleOnChange(e.target)}
-                  className="block w-full rounded-md border-0 px-2 py-2 text-gray-900 outline-none shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-2 py-2 text-gray-900 outline-none shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-blue-400 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="United States">United States</option>
                   <option value="Canada">Canada</option>
@@ -413,13 +413,13 @@ const EditProfile = () => {
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg px-4 py-2 transition"
+          className="bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
         >
           {isLoading ? <Spinner /> : "Save"}
         </button>

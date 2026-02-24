@@ -64,7 +64,7 @@ const Signup = () => {
                 onClick={() => {
                   // Google OAuth not implemented yet
                 }}
-                className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 flex items-center justify-center transition focus:outline-none"
+                className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 flex items-center justify-center transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
               >
                 <div className="bg-white p-2 rounded-full">
                   <svg className="w-4" viewBox="0 0 533.5 544.3">
@@ -102,7 +102,7 @@ const Signup = () => {
               )}
               <form onSubmit={(e) => HandleOnSubmit(e)}>
                 <input
-                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-white transition"
                   type="text"
                   name="name"
                   value={inputs.name}
@@ -111,7 +111,7 @@ const Signup = () => {
                   onChange={(e) => handleOnchange(e.target)}
                 />
                 <input
-                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-white transition mt-5"
                   type="email"
                   name="email"
                   value={inputs.email}
@@ -120,7 +120,7 @@ const Signup = () => {
                   onChange={(e) => handleOnchange(e.target)}
                 />
                 <input
-                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-white transition mt-5"
                   type="password"
                   name="passcode"
                   value={inputs.passcode}
@@ -129,7 +129,7 @@ const Signup = () => {
                   onChange={(e) => handleOnchange(e.target)}
                 />
                 <input
-                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 focus:bg-white transition mt-5"
                   type="password"
                   name="passcodeConfirm"
                   value={inputs.passcodeConfirm}
@@ -138,7 +138,7 @@ const Signup = () => {
                   onChange={(e) => handleOnchange(e.target)}
                 />
                 <button
-                  className="mt-5 tracking-wide font-semibold bg-blue-600 text-white w-full py-4 rounded-lg hover:bg-blue-700 transition flex items-center justify-center focus:outline-none"
+                  className="mt-5 tracking-wide font-semibold bg-blue-600 text-white w-full py-4 rounded-lg hover:bg-blue-700 transition-all duration-150 active:scale-[0.98] flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                   type="submit"
                 >
                   {loading ? (

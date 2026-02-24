@@ -132,7 +132,7 @@ const CreatePost = () => {
             onChange={(e) => setCaption(e.target.value)}
             placeholder="Write a caption..."
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-color-primary-blue resize-none text-color-font-primary"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition resize-none text-color-font-primary"
           />
         </div>
 
@@ -150,7 +150,7 @@ const CreatePost = () => {
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             placeholder="e.g. travel, photography, food"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-color-primary-blue text-color-font-primary"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition text-color-font-primary"
           />
         </div>
 
@@ -161,9 +161,9 @@ const CreatePost = () => {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-2.5 rounded-lg font-medium text-white transition ${
+          className={`w-full py-2.5 rounded-lg font-medium text-white transition-all duration-150 ${
             !loading
-              ? "bg-blue-600 hover:bg-blue-700 cursor-pointer"
+              ? "bg-blue-600 hover:bg-blue-700 cursor-pointer active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
               : "bg-gray-300 cursor-not-allowed"
           }`}
         >

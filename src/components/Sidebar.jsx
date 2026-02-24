@@ -14,9 +14,9 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
 
   //Variables
   const ActiveNavStyle =
-    "flex items-start gap-2 text-sm font-bold text-color-primary-blue hover:text-color-primary-blue-accent transition-colors ease-in-out capitalize";
+    "flex items-center gap-3 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg px-3 py-2 transition-colors duration-150 capitalize";
   const notActiveNavStyle =
-    "flex items-start gap-2 text-sm font-bold text-color-font-tertiary hover:text-color-font-secondary transition-all ease-in-out capitalize";
+    "flex items-center gap-3 text-sm font-medium text-gray-500 hover:bg-gray-100 rounded-lg px-3 py-2 transition-colors duration-150 capitalize";
 
   //Setting user data
   useEffect(() => {
@@ -86,17 +86,17 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
                 to={`/user/profile/${ActiveUser?._id}`}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-color-primary-blue-accent"
-                    : "text-color-font-primary hover:text-color-primary-blue-accent"
+                    ? "text-blue-600"
+                    : "text-color-font-primary hover:text-blue-600 transition-colors duration-150"
                 }
                 onClick={() => setToggleSidebar(false)}
               >
-                <span className="font-medium ml-1 font-fira transition-all capitalize">
+                <span className="font-medium ml-1 font-fira capitalize">
                   {ActiveUser?.name}
                 </span>
               </NavLink>
             ) : (
-              <div className="font-fira transition-all capitalize text-transparent bg-clip-text bg-gradient-to-br from-color-primary-blue to-indigo-700">
+              <div className="font-fira transition-all capitalize text-transparent bg-clip-text bg-gradient-to-br from-blue-600 to-blue-800">
                 <NavLink to={"/login"}>
                   <span>log in</span>
                 </NavLink>
@@ -110,7 +110,7 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
         </div>
 
         {/*Navigation Links*/}
-        <div className="w-10/12 border-t border-color-border-secondary px-2 py-3 mt-16 flex flex-col gap-3">
+        <div className="w-10/12 border-t border-color-border-secondary px-2 py-3 mt-16 flex flex-col gap-1">
           <NavLink
             to={"/"}
             className={({ isActive }) =>

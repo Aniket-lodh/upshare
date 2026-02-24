@@ -34,6 +34,7 @@ const PinDetails = () => {
   const [error, setError] = useState(null);
   const [deleting, setDeleting] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
+  const [likedAnimating, setLikedAnimating] = useState(false);
   const { user } = useUser();
   const navigate = useNavigate();
   const { pinId } = useParams();
@@ -103,6 +104,8 @@ const PinDetails = () => {
 
     const wasSaved = pinSaved;
     setSavedPin(!wasSaved);
+    setLikedAnimating(true);
+    setTimeout(() => setLikedAnimating(false), 120);
     setLikeLoading(true);
     try {
       if (wasSaved) {
@@ -172,7 +175,7 @@ const PinDetails = () => {
   return (
     <>
       <div className="px-2 py-3.5 bg-white">
-        <div className="rounded-xl bg-white shadow-sm border border-gray-200 pb-4 overflow-hidden">
+        <div className="rounded-xl bg-white shadow-sm border border-gray-200 pb-4 overflow-hidden animate-fade-in">
           {/* Post creator headings */}
           <div className="relative w-full flex items-center justify-between px-4 py-2 bg-color-bg-tertiary">
             <Link
@@ -201,7 +204,7 @@ const PinDetails = () => {
                   type="button"
                   onClick={handleDelete}
                   disabled={deleting}
-                  className="bg-red-600 hover:bg-red-700 text-white rounded-lg px-2 py-1 transition disabled:opacity-50"
+                  className="bg-red-600 hover:bg-red-700 text-white rounded-lg px-2 py-1 transition-all duration-150 active:scale-[0.98] disabled:opacity-50"
                 >
                   <RiDeleteBin6Line fontSize={17} />
                 </button>
@@ -272,19 +275,18 @@ const PinDetails = () => {
                 {pinSaved ? (
                   <RiHeartFill
                     fontSize={24}
-                    color="#ef4444"
                     onClick={toggleWishlist}
-                    className={`cursor-pointer ${
-                      likeLoading ? "opacity-50 pointer-events-none" : ""
-                    }`}
+                    className={`cursor-pointer text-red-500 transition-all duration-150 ${
+                      likedAnimating ? "scale-110" : "scale-100"
+                    } ${likeLoading ? "opacity-50 pointer-events-none" : ""}`}
                   />
                 ) : (
                   <RiHeart2Line
                     fontSize={24}
                     onClick={toggleWishlist}
-                    className={`cursor-pointer ${
-                      likeLoading ? "opacity-50 pointer-events-none" : ""
-                    }`}
+                    className={`cursor-pointer text-gray-600 hover:text-red-500 transition-all duration-150 ${
+                      likedAnimating ? "scale-110" : "scale-100"
+                    } ${likeLoading ? "opacity-50 pointer-events-none" : ""}`}
                   />
                 )}
                 <RiShareLine

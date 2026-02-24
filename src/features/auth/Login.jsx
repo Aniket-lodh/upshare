@@ -71,7 +71,7 @@ const Login = () => {
                   Email Address
                 </div>
                 <input
-                  className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500 pl-1"
+                  className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition pl-1"
                   type="email"
                   role="textbox"
                   name="email"
@@ -89,15 +89,15 @@ const Login = () => {
                   <div>
                     <Link
                       to={"/forgot-password"}
-                      className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800
-                                cursor-pointer"
+                      className="text-xs font-display font-semibold text-blue-600 hover:text-blue-800
+                                cursor-pointer transition-colors"
                     >
                       Forgot Password?
                     </Link>
                   </div>
                 </div>
                 <input
-                  className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500 p-1"
+                  className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition p-1"
                   type="password"
                   role="textbox"
                   name="passcode"
@@ -109,8 +109,8 @@ const Login = () => {
               </div>
               <div className="mt-10">
                 <button
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg p-4 w-full transition
-                        focus:outline-none focus:shadow-outline
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg p-4 w-full transition-all duration-150
+                        active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
                         shadow-lg"
                   type="submit"
                 >

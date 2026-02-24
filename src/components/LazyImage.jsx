@@ -1,9 +1,16 @@
 import { useRef, useEffect, useState } from "react";
 
-const LazyImage = (props) => {
+const LazyImage = ({
+  src,
+  alt,
+  id,
+  className = "",
+  placeholderClassName = "",
+}) => {
   // hooks
   const imgRef = useRef();
   const [inView, setInView] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   let callback = (entries, observer) => {
     entries.forEach((entry) => {
@@ -23,12 +30,21 @@ const LazyImage = (props) => {
   }, []);
 
   return inView ? (
-    <img src={props.src} alt={props?.alt} className="w-full h-full object-cover" />
+    <img
+      src={src}
+      alt={alt}
+      className={`image-fade ${loaded ? "loaded" : ""} ${
+        className || "w-full h-full object-cover"
+      }`}
+      onLoad={() => setLoaded(true)}
+    />
   ) : (
     <div
       ref={imgRef}
-      id={props.id}
-      className="object-contain w-full h-full bg-gray-200"
+      id={id}
+      className={
+        placeholderClassName || `object-contain w-full h-full bg-gray-200`
+      }
     />
   );
 };

@@ -93,9 +93,9 @@ const Feed = () => {
       </Helmet>
 
       {/* Feed content */}
-      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 mt-4">
         {loading ? (
-          <div className="grid gap-y-3 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+          <div className="grid gap-6 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
             {Array.from({ length: 6 }).map((_, i) => (
               <SkeletonCard key={i} />
             ))}
@@ -123,14 +123,14 @@ const Feed = () => {
             </p>
             <Link
               to="/create"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
             >
               Create Your First Post
             </Link>
           </div>
         ) : (
           <>
-            <div className="grid gap-y-3 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:overflow-y-auto">
+            <div className="grid gap-6 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:overflow-y-auto">
               {posts.map((item) => (
                 <Pins
                   key={item._id}
@@ -144,7 +144,7 @@ const Feed = () => {
                 <button
                   onClick={loadMore}
                   disabled={loadingMore}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:active:scale-100"
                 >
                   {loadingMore ? <Spinner /> : "Load More"}
                 </button>

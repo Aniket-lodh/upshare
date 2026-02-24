@@ -42,3 +42,16 @@ export const apiRequest = async (config) => {
     throw new Error(err.message || "Unexpected error");
   }
 };
+
+/**
+ * Logout — POST /users/logout
+ * Calls server to invalidate session cookie.
+ * On 401 the user is already logged out, so we swallow the error.
+ */
+export const logoutUser = async () => {
+  try {
+    await api.post("/users/logout");
+  } catch {
+    // 401 or network error — user is effectively logged out either way
+  }
+};

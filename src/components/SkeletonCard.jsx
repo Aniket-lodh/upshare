@@ -1,12 +1,12 @@
 const SkeletonCard = () => {
   return (
-    <div className="grid self-center justify-self-center flex-auto min-w-150 max-w-160 h-fit rounded-lg bg-color-bg-accent overflow-hidden animate-pulse">
-      <div className="w-full max-h-230 flex flex-col gap-1.5 items-start justify-start py-2 px-2">
-        {/* Image placeholder */}
-        <div className="w-full min-h-140 rounded-md bg-gray-200" />
-        {/* Profile row */}
-        <div className="w-full ml-1 flex gap-1.5 items-center">
-          <div className="w-7 h-7 rounded-full bg-gray-200" />
+    <div className="grid self-center justify-self-center flex-auto min-w-150 max-w-160 h-fit rounded-xl bg-white shadow-sm border border-gray-200 overflow-hidden animate-pulse">
+      <div className="w-full flex flex-col items-start justify-start">
+        {/* Image placeholder — matches aspect-[4/5] */}
+        <div className="w-full aspect-[4/5] bg-gray-200 rounded-t-xl" />
+        {/* Profile row — matches author row gap-3, w-8 h-8 */}
+        <div className="w-full px-4 py-3 flex items-center gap-3">
+          <div className="w-8 h-8 flex-shrink-0 rounded-full bg-gray-200" />
           <div className="flex-1 flex flex-col gap-1">
             <div className="h-3 w-24 rounded bg-gray-200" />
             <div className="h-2.5 w-16 rounded bg-gray-200" />
