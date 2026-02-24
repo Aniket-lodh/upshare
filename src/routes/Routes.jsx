@@ -5,6 +5,7 @@ import PinDetails from "../features/feed/PinDetails.jsx";
 import CreatePost from "../features/feed/CreatePost.jsx";
 import EditProfile from "../features/profile/EditProfile.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import PublicOnlyRoute from "./PublicOnlyRoute.jsx";
 import NotFound from "../components/NotFound.jsx";
 
 const Home = React.lazy(() => import("../pages/Home"));
@@ -71,12 +72,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <PublicOnlyRoute>
+        <Login />
+      </PublicOnlyRoute>
+    ),
     errorElement: <ErrorBoundary />,
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: (
+      <PublicOnlyRoute>
+        <Signup />
+      </PublicOnlyRoute>
+    ),
     errorElement: <ErrorBoundary />,
   },
   {

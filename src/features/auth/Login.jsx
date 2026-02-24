@@ -1,17 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.svg";
 import loginTemp from "../../assets/images/login-temp.svg";
 import { loginWithPasscode } from "../../api/userProfile";
 import { Spinner } from "../../helpers/Loader";
-import UserContext from "../../store/userContext";
+import { useUser } from "../../store/userContext";
 import { useToast } from "../../components/Toast.jsx";
 
 const Login = () => {
   const [inputs, setInputs] = useState({ email: "", passcode: "" });
   const [isLoading, SetLoading] = useState(false);
   const [error, setError] = useState(null);
-  const userCtx = useContext(UserContext);
+  const { addUser } = useUser();
   const navigate = useNavigate();
   const showToast = useToast();
 
@@ -30,7 +30,7 @@ const Login = () => {
     setError(null);
     try {
       const user = await loginWithPasscode(inputs);
-      userCtx.addUser(user);
+      addUser(user);
       showToast("Login successful", "success");
       navigate("/", { replace: true });
     } catch (err) {

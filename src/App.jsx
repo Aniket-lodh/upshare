@@ -1,28 +1,45 @@
 import { RouterProvider } from "react-router-dom";
-import React, { Suspense, useContext, useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import routes from "./routes/Routes";
 import "./global.css";
 import { Loader } from "./helpers/Loader.jsx";
-import { UserContextProvider } from "./store/userContext";
+import { UserContextProvider, useUser } from "./store/userContext";
 import { ToastProvider, useToast } from "./components/Toast.jsx";
-import UserContext from "./store/userContext";
 import { getMe } from "./api/userProfile";
 
 function AuthValidator({ children }) {
-  const { user, addUser, removeUser } = useContext(UserContext);
+  const { addUser, removeUser, setAuthLoading } = useUser();
   const showToast = useToast();
 
-  // Validate stored session on mount
+  // Deterministic boot validation
   useEffect(() => {
-    if (!user) return;
-    getMe()
-      .then((data) => {
-        if (data) addUser(data);
-      })
-      .catch(() => {
-        removeUser();
-      });
+    let isMounted = true;
+
+    const validateSession = async () => {
+      try {
+        const stored = localStorage.getItem("curUser");
+
+        if (!stored) {
+          if (isMounted) setAuthLoading(false);
+          return;
+        }
+
+        const user = await getMe();
+
+        if (isMounted) addUser(user);
+      } catch {
+        if (isMounted) removeUser();
+      } finally {
+        if (isMounted) setAuthLoading(false);
+      }
+    };
+
+    validateSession();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Listen for 401 unauthorized events from axios interceptor

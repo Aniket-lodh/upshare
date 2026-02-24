@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiOutlineMapPin, HiUserCircle } from "react-icons/hi2";
 import { MdOutlineCancel } from "react-icons/md";
 import {
@@ -11,7 +11,7 @@ import { Link, Outlet, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import LazyImage from "../../components/LazyImage.jsx";
 import { followUser, unFollowUser, getProfile } from "../../api/userProfile.js";
-import UserContext from "../../store/userContext.jsx";
+import { useUser } from "../../store/userContext.jsx";
 import { Spinner } from "../../helpers/Loader.jsx";
 
 const UserProfile = () => {
@@ -23,16 +23,20 @@ const UserProfile = () => {
 
   // Hooks
   const { userId } = useParams();
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
   const [activeTabText, setActiveTavText] = useState("all-pins");
   const [EditModalState, setEditModalState] = useState(false);
   const [userObj, setUserObj] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   async function fetchUser() {
-    const user = await getProfile(userId);
-    if (user && (user.code === 200 || user.data || user._id)) {
-      setUserObj(user.data || user);
+    try {
+      const profile = await getProfile(userId);
+      if (profile) {
+        setUserObj(profile);
+      }
+    } catch {
+      // handled by ErrorState or toast
     }
   }
 
@@ -90,7 +94,7 @@ const UserProfile = () => {
                     <HiUserCircle fontSize={120} className="text-gray-300" />
                   )}
                 </div>
-                {userObj && userObj._id === user.data._id && (
+                {userObj && userObj._id === user?._id && (
                   <span className="absolute bottom-0 right-0 bg-white p-1.5 rounded-full">
                     <RiEdit2Line
                       fontSize={14}
@@ -119,7 +123,7 @@ const UserProfile = () => {
                 </div>
                 {/*CTA buttons*/}
                 <div className="max-w-125 font-fira font-normal flex flex-col items-end justify-end gap-2">
-                  {userObj?._id === user.data._id && (
+                  {userObj?._id === user?._id && (
                     <Link
                       to={"edit"}
                       role="button"
@@ -130,8 +134,8 @@ const UserProfile = () => {
                     </Link>
                   )}
                   {userObj &&
-                    userObj._id !== user.data._id &&
-                    userObj.followers.indexOf(user.data._id) < 0 && (
+                    userObj._id !== user?._id &&
+                    userObj.followers.indexOf(user?._id) < 0 && (
                       <button
                         role="button"
                         title="edit profile"
@@ -142,8 +146,8 @@ const UserProfile = () => {
                       </button>
                     )}
                   {userObj &&
-                    userObj._id !== user.data._id &&
-                    userObj.followers.indexOf(user.data._id) >= 0 && (
+                    userObj._id !== user?._id &&
+                    userObj.followers.indexOf(user?._id) >= 0 && (
                       <button
                         role="button"
                         title="edit profile"

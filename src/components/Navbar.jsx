@@ -6,15 +6,15 @@ import {
   RiLogoutBoxRLine,
 } from "react-icons/ri";
 import { AiOutlinePlus } from "react-icons/ai";
-import React, { useContext } from "react";
+import React from "react";
 import { Link, useMatch, useNavigate } from "react-router-dom";
-import UserContext from "../store/userContext.jsx";
+import { useUser } from "../store/userContext.jsx";
 
 const Navbar = ({ toggleSidebar, setToggleSidebar }) => {
   //Hooks
   const searchMatch = useMatch("/search/*");
   const navigate = useNavigate();
-  const { user, removeUser } = useContext(UserContext);
+  const { user, removeUser } = useUser();
 
   const handleLogout = () => {
     removeUser();

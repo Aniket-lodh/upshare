@@ -1,18 +1,16 @@
-import { useContext } from "react";
-
 import { HiOutlineHome } from "react-icons/hi";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { RiHeart2Line, RiChat1Line, RiEyeCloseLine } from "react-icons/ri";
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import UserContext from "../store/userContext.jsx";
+import { useUser } from "../store/userContext.jsx";
 
 const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
   //Hooks
   const closeSidebarOnOutsideClick = useRef(null);
   const [ActiveUser, setActiveUser] = useState(null);
 
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
 
   //Variables
   const ActiveNavStyle =
@@ -22,7 +20,7 @@ const Sidebar = ({ toggleSidebar, setToggleSidebar }) => {
 
   //Setting user data
   useEffect(() => {
-    setActiveUser(user?.data);
+    setActiveUser(user);
   }, [user]);
 
   useEffect(() => {

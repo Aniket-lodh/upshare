@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   HiOutlineGlobeAlt,
@@ -7,14 +7,14 @@ import {
 } from "react-icons/hi";
 import { UpdateProfile, UploadImages, getMe } from "../../api/userProfile";
 import { Spinner } from "../../helpers/Loader";
-import UserContext from "../../store/userContext";
+import { useUser } from "../../store/userContext";
 import { useToast } from "../../components/Toast.jsx";
 
 const EditProfile = () => {
   const [isLoading, SetLoading] = useState(false);
   const [prefilling, setPrefilling] = useState(true);
   const navigate = useNavigate();
-  const userCtx = useContext(UserContext);
+  const { user, addUser } = useUser();
   const showToast = useToast();
   const userFiles = new FormData();
 
@@ -86,7 +86,7 @@ const EditProfile = () => {
 
       if (updatedProfile.code === 200) {
         const curUpdatedUser = await getMe();
-        userCtx.addUser(curUpdatedUser);
+        addUser(curUpdatedUser);
         showToast("Profile updated successfully!");
         navigate(-1);
       } else {

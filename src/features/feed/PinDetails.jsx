@@ -4,7 +4,7 @@ import {
   useParams,
   useNavigate,
 } from "react-router-dom";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   RiCloseCircleLine,
   RiHeart2Line,
@@ -21,7 +21,7 @@ import {
   unlikePost,
   deletePost,
 } from "../../api/post.js";
-import UserContext from "../../store/userContext.jsx";
+import { useUser } from "../../store/userContext.jsx";
 import { SkeletonPostDetail } from "../../components/SkeletonCard.jsx";
 import { useToast } from "../../components/Toast.jsx";
 import ErrorState from "../../components/ErrorState.jsx";
@@ -34,7 +34,7 @@ const PinDetails = () => {
   const [error, setError] = useState(null);
   const [deleting, setDeleting] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user } = useUser();
   const navigate = useNavigate();
   const { pinId } = useParams();
   const showToast = useToast();

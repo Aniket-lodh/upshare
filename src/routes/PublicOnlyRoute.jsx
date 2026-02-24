@@ -2,18 +2,18 @@ import { Navigate } from "react-router-dom";
 import { useUser } from "../store/userContext.jsx";
 import { Loader } from "../helpers/Loader.jsx";
 
-const ProtectedRoute = ({ children }) => {
+const PublicOnlyRoute = ({ children }) => {
   const { user, authLoading } = useUser();
 
   if (authLoading) {
     return <Loader />;
   }
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  if (user) {
+    return <Navigate to="/" replace />;
   }
 
   return children;
 };
 
-export default ProtectedRoute;
+export default PublicOnlyRoute;
