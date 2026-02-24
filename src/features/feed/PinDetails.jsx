@@ -43,10 +43,10 @@ const PinDetails = () => {
       try {
         setLoading(true);
         setError(null);
+        setRenderPostDetails(true);
         const data = await getPostById(pinId);
         const postData = data?.data || data;
         setPin(postData);
-        setRenderPostDetails(true);
         if (postData && user?.data?._id) {
           const liked = (postData.likedBy || []).some(
             (item) => (item._id || item) === user.data._id

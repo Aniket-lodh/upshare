@@ -7,6 +7,7 @@ if (!import.meta.env.VITE_SERVER) {
 const api = axios.create({
   baseURL: import.meta.env.VITE_SERVER,
   withCredentials: true,
+  timeout: 10000,
   headers: {
     Accept: "application/json",
   },
@@ -17,7 +18,11 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      window.dispatchEvent(new Event("unauthorized"));
+      window.dispatchEvent(
+        new CustomEvent("unauthorized", {
+          detail: { message: "Session expired. Please login again." },
+        })
+      );
     }
     return Promise.reject(error);
   }

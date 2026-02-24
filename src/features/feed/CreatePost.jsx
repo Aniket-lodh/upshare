@@ -34,7 +34,19 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!image || !caption.trim() || loading) return;
+    if (loading) return;
+
+    // Client-side validation — surface messages, don't silently block
+    if (!image) {
+      setError("An image is required.");
+      showToast("An image is required.", "error");
+      return;
+    }
+    if (!caption.trim()) {
+      setError("Caption is required.");
+      showToast("Caption is required.", "error");
+      return;
+    }
 
     try {
       setLoading(true);
@@ -58,8 +70,6 @@ const CreatePost = () => {
       setLoading(false);
     }
   };
-
-  const isValid = image && caption.trim().length > 0;
 
   return (
     <div className="max-w-lg mx-auto px-4 py-6">
@@ -150,9 +160,9 @@ const CreatePost = () => {
         {/* Submit */}
         <button
           type="submit"
-          disabled={!isValid || loading}
+          disabled={loading}
           className={`w-full py-2.5 rounded-lg font-medium text-white transition-opacity ${
-            isValid && !loading
+            !loading
               ? "bg-color-primary-blue hover:opacity-90 cursor-pointer"
               : "bg-gray-300 cursor-not-allowed"
           }`}

@@ -5,12 +5,13 @@ import routes from "./routes/Routes";
 import "./global.css";
 import { Loader } from "./helpers/Loader.jsx";
 import { UserContextProvider } from "./store/userContext";
-import { ToastProvider } from "./components/Toast.jsx";
+import { ToastProvider, useToast } from "./components/Toast.jsx";
 import UserContext from "./store/userContext";
 import { getMe } from "./api/userProfile";
 
 function AuthValidator({ children }) {
   const { user, addUser, removeUser } = useContext(UserContext);
+  const showToast = useToast();
 
   // Validate stored session on mount
   useEffect(() => {
@@ -26,7 +27,10 @@ function AuthValidator({ children }) {
 
   // Listen for 401 unauthorized events from axios interceptor
   useEffect(() => {
-    const handler = () => removeUser();
+    const handler = (e) => {
+      removeUser();
+      showToast(e.detail?.message || "Session expired", "error");
+    };
     window.addEventListener("unauthorized", handler);
     return () => window.removeEventListener("unauthorized", handler);
   }, []);

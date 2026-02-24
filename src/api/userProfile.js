@@ -1,24 +1,22 @@
 import { apiRequest } from "./client.js";
 
-export const loginWithPasscode = async function (inputs) {
-  await apiRequest({
+export const loginWithPasscode = async (inputs) => {
+  return await apiRequest({
     method: "POST",
     url: "/users/login",
     data: inputs,
   });
-  return await getMe();
 };
 
-export const SignupWithPasscode = async function (inputs) {
-  await apiRequest({
+export const SignupWithPasscode = async (inputs) => {
+  return await apiRequest({
     method: "POST",
     url: "/users/signup",
     data: inputs,
   });
-  return await getMe();
 };
 
-export const UpdateProfile = async function (userInputs) {
+export const UpdateProfile = async (userInputs) => {
   return await apiRequest({
     method: "PATCH",
     url: "/users/profile/edit",
@@ -50,14 +48,14 @@ export const getProfile = async (userId) => {
   });
 };
 
-export const followUser = async function (id) {
+export const followUser = async (id) => {
   return await apiRequest({
     method: "POST",
     url: `/users/profile/follow/${id}`,
   });
 };
 
-export const unFollowUser = async function (id) {
+export const unFollowUser = async (id) => {
   return await apiRequest({
     method: "POST",
     url: `/users/profile/unfollow/${id}`,
