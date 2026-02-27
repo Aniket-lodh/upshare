@@ -18,11 +18,11 @@ export const createPost = async (formData, onProgress) => {
 };
 
 export const getFeed = async (page = 1, signal) => {
-  return await apiRequest({
-    method: "GET",
-    url: `/posts/feed?page=${page}`,
-    signal,
-  });
+  const res = await api.get(`/posts/feed?page=${page}`, { signal });
+  return {
+    posts: res.data?.data || [],
+    pagination: res.data?.pagination || { page: 1, pages: 0 },
+  };
 };
 
 export const getPostById = async (id, signal) => {

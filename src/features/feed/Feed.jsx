@@ -16,11 +16,12 @@ const Feed = () => {
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
   const [renderChildren, setRenderChildren] = useState(false);
   const checkHomeRoute = useMatch("/");
   const location = useLocation();
   const abortRef = useRef(null);
+  const observerRef = useRef(null);
 
   useEffect(() => {
     if (checkHomeRoute) {
@@ -28,51 +29,70 @@ const Feed = () => {
     }
   }, [checkHomeRoute]);
 
-  // Fetch feed from API with AbortController
+  const fetchFeed = async (pageNumber = 1, signal) => {
+    try {
+      if (pageNumber === 1) setLoading(true);
+      setError(null);
+      const res = await getFeed(pageNumber, signal);
+      if (signal?.aborted) return;
+
+      const { posts: newPosts, pagination } = res;
+      const items = Array.isArray(newPosts) ? newPosts : [];
+
+      if (pageNumber === 1) {
+        setPosts(items);
+      } else {
+        setPosts((prev) => [...prev, ...items]);
+      }
+
+      setHasMore(pageNumber < pagination.pages);
+    } catch (err) {
+      if (err.name === "CanceledError" || signal?.aborted) return;
+      setError(err?.message || "Failed to load feed.");
+    } finally {
+      if (pageNumber === 1 && !signal?.aborted) setLoading(false);
+    }
+  };
+
+  // Initial load
   useEffect(() => {
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
 
-    const fetchFeed = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await getFeed(1, controller.signal);
-        if (controller.signal.aborted) return;
-        const items = Array.isArray(data) ? data : [];
-        setPosts(items);
-        setHasMore(items.length >= 10);
-        setPage(1);
-      } catch (err) {
-        if (err.name === "CanceledError" || controller.signal.aborted) return;
-        setError(err?.message || "Failed to load feed.");
-      } finally {
-        if (!controller.signal.aborted) setLoading(false);
-      }
-    };
-    fetchFeed();
+    fetchFeed(1, controller.signal);
+    setPage(1);
 
     return () => controller.abort();
   }, []);
 
-  // Load more pages
-  const loadMore = async () => {
-    if (loadingMore || !hasMore) return;
-    try {
-      setLoadingMore(true);
-      const nextPage = page + 1;
-      const data = await getFeed(nextPage);
-      const items = Array.isArray(data) ? data : [];
-      setPosts((prev) => [...prev, ...items]);
-      setPage(nextPage);
-      setHasMore(items.length >= 10);
-    } catch (err) {
-      setError(err?.message || "Failed to load more.");
-    } finally {
-      setLoadingMore(false);
+  // Intersection Observer for Infinite Scroll
+  useEffect(() => {
+    if (!hasMore || isFetchingMore) return;
+
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsFetchingMore(true);
+          const nextPage = page + 1;
+          await fetchFeed(nextPage);
+          setPage(nextPage);
+          setIsFetchingMore(false);
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
     }
-  };
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [page, hasMore, isFetchingMore]);
 
   // Optimistic feed update — prepend new post passed via navigation state
   useEffect(() => {
@@ -136,17 +156,17 @@ const Feed = () => {
                 />
               ))}
             </div>
-            {hasMore && (
-              <div className="flex justify-center py-4">
-                <button
-                  onClick={loadMore}
-                  disabled={loadingMore}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:active:scale-100"
-                >
-                  {loadingMore ? <Spinner /> : "Load More"}
-                </button>
+
+            {/* Observer sentinel and loading skeleton */}
+            {isFetchingMore && (
+              <div className="grid gap-6 py-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 mt-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <FeedCardSkeleton key={`loading-${i}`} />
+                ))}
               </div>
             )}
+
+            {hasMore && <div ref={observerRef} className="h-10 w-full" />}
           </>
         )}
       </div>
