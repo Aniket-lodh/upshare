@@ -12,7 +12,8 @@ const CreatePost = () => {
   const [preview, setPreview] = useState(null);
   const [caption, setCaption] = useState("");
   const [tags, setTags] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState(null);
   const fileRef = useRef(null);
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (loading) return;
+    if (isUploading) return;
 
     // Client-side validation — surface messages, don't silently block
     if (!image) {
@@ -49,7 +50,8 @@ const CreatePost = () => {
     }
 
     try {
-      setLoading(true);
+      setIsUploading(true);
+      setUploadProgress(0);
       setError(null);
       const formData = new FormData();
       formData.append("image", image);
@@ -58,16 +60,16 @@ const CreatePost = () => {
         const tagsArray = tags.split(",").map((t) => t.trim());
         formData.append("tags", JSON.stringify(tagsArray));
       }
-      const result = await createPost(formData);
-      showToast("Post created successfully!");
-      const newPost = result?.data || result;
+      const result = await createPost(formData, setUploadProgress);
+      showToast("Post created successfully!", "success");
+      const newPost = result?.data || result || {}; // Handle direct data or full response fallback
       navigate("/", { replace: true, state: { newPost } });
     } catch (err) {
       const msg = err?.message || "Failed to create post. Please try again.";
       setError(msg);
       showToast(msg, "error");
     } finally {
-      setLoading(false);
+      setIsUploading(false);
     }
   };
 
@@ -158,17 +160,27 @@ const CreatePost = () => {
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
         {/* Submit */}
-        <button
-          type="submit"
-          disabled={loading}
-          className={`w-full py-2.5 rounded-lg font-medium text-white transition-all duration-150 ${
-            !loading
-              ? "bg-blue-600 hover:bg-blue-700 cursor-pointer active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
-        >
-          {loading ? <Spinner /> : "Share Post"}
-        </button>
+        <div className="flex flex-col gap-2 relative">
+          <button
+            type="submit"
+            disabled={isUploading}
+            className={`w-full py-2.5 rounded-lg font-medium text-white transition-all duration-150 ${
+              !isUploading
+                ? "bg-blue-600 hover:bg-blue-700 cursor-pointer active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                : "bg-gray-300 cursor-not-allowed"
+            }`}
+          >
+            {isUploading ? <Spinner /> : "Share Post"}
+          </button>
+          {isUploading && (
+            <div className="w-full bg-gray-200 rounded h-2 mt-2 absolute -bottom-4">
+              <div
+                className="bg-blue-600 h-2 rounded transition-all duration-300"
+                style={{ width: `${uploadProgress}%` }}
+              />
+            </div>
+          )}
+        </div>
       </form>
     </div>
   );

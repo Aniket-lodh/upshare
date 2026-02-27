@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { getFeed } from "../../api/post.js";
 import Pins from "../../components/Pins";
-import SkeletonCard from "../../components/SkeletonCard.jsx";
+import FeedCardSkeleton from "../../components/skeleton/FeedCardSkeleton.jsx";
 import { Spinner } from "../../helpers/Loader.jsx";
 import ErrorState from "../../components/ErrorState.jsx";
 
@@ -95,9 +95,9 @@ const Feed = () => {
       {/* Feed content */}
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 mt-4">
         {loading ? (
-          <div className="grid gap-6 py-2 grid-cols-2 auto-cols-min auto-rows-min sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <SkeletonCard key={i} />
+          <div className="space-y-6">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <FeedCardSkeleton key={i} />
             ))}
           </div>
         ) : error ? (

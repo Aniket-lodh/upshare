@@ -1,12 +1,20 @@
 import { apiRequest } from "./client.js";
+import api from "./axios.js";
 
-export const createPost = async (formData) => {
-  return await apiRequest({
-    method: "POST",
-    url: "/posts",
-    data: formData,
+export const createPost = async (formData, onProgress) => {
+  const res = await api.post("/posts", formData, {
     headers: { "Content-Type": "multipart/form-data" },
+    onUploadProgress: (progressEvent) => {
+      if (onProgress && progressEvent.total) {
+        const percent = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        onProgress(percent);
+      }
+    },
   });
+
+  return res.data.data; // because backend returns { success, message, data }
 };
 
 export const getFeed = async (page = 1, signal) => {

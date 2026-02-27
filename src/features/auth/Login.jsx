@@ -26,6 +26,10 @@ const Login = () => {
 
   const HandleOnSubmit = async (e) => {
     e.preventDefault();
+    if (!inputs.email || !inputs.passcode) {
+      showToast("Email and password required", "error");
+      return;
+    }
     SetLoading(true);
     setError(null);
     try {

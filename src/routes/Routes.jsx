@@ -1,5 +1,11 @@
-import React from "react";
-import { createBrowserRouter, useRouteError, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  createBrowserRouter,
+  useRouteError,
+  Link,
+  Outlet,
+  useNavigate,
+} from "react-router-dom";
 
 import PinDetails from "../features/feed/PinDetails.jsx";
 import CreatePost from "../features/feed/CreatePost.jsx";
@@ -7,6 +13,8 @@ import EditProfile from "../features/profile/EditProfile.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import PublicOnlyRoute from "./PublicOnlyRoute.jsx";
 import NotFound from "../components/NotFound.jsx";
+import { useUser } from "../store/userContext";
+import { useToast } from "../components/Toast.jsx";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const Feed = React.lazy(() => import("../features/feed/Feed"));
@@ -17,80 +25,104 @@ const Search = React.lazy(() => import("../pages/Search"));
 const Login = React.lazy(() => import("../features/auth/Login"));
 const Signup = React.lazy(() => import("../features/auth/Signup"));
 
+function AuthListener() {
+  const { removeUser } = useUser();
+  const navigate = useNavigate();
+  const showToast = useToast();
+
+  useEffect(() => {
+    const handleUnauthorized = (e) => {
+      removeUser();
+      showToast(e.detail?.message || "Session expired", "error");
+      navigate("/login", { replace: true });
+    };
+
+    window.addEventListener("unauthorized", handleUnauthorized);
+
+    return () => {
+      window.removeEventListener("unauthorized", handleUnauthorized);
+    };
+  }, [removeUser, navigate, showToast]);
+
+  return <Outlet />;
+}
+
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />,
-    errorElement: <ErrorBoundary />,
+    element: <AuthListener />,
     children: [
+      // Protected Routes Layout
       {
-        path: "/",
-        element: <Feed />,
-        errorElement: <ErrorBoundary />,
+        element: <ProtectedRoute />,
         children: [
           {
-            path: "pins/:pinId",
-            element: <PinDetails />,
+            path: "/",
+            element: <Home />,
+            errorElement: <ErrorBoundary />,
+            children: [
+              {
+                path: "/",
+                element: <Feed />,
+                errorElement: <ErrorBoundary />,
+                children: [
+                  {
+                    path: "pins/:pinId",
+                    element: <PinDetails />,
+                    errorElement: <ErrorBoundary />,
+                  },
+                ],
+              },
+              {
+                path: "/search",
+                element: <Search />,
+                errorElement: <ErrorBoundary />,
+              },
+              {
+                path: "/create",
+                element: <CreatePost />,
+                errorElement: <ErrorBoundary />,
+              },
+              {
+                path: "/user",
+                children: [
+                  {
+                    path: "profile/:userId",
+                    element: <UserProfile />,
+                    errorElement: <ErrorBoundary />,
+                  },
+                  {
+                    path: "profile/:userId/edit",
+                    element: <EditProfile />,
+                    errorElement: <ErrorBoundary />,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      // Public Only Routes Layout
+      {
+        element: <PublicOnlyRoute />,
+        children: [
+          {
+            path: "/login",
+            element: <Login />,
+            errorElement: <ErrorBoundary />,
+          },
+          {
+            path: "/signup",
+            element: <Signup />,
             errorElement: <ErrorBoundary />,
           },
         ],
       },
+      // Catch All
       {
-        path: "/search",
-        element: <Search />,
-        errorElement: <ErrorBoundary />,
-      },
-      {
-        path: "/create",
-        element: (
-          <ProtectedRoute>
-            <CreatePost />
-          </ProtectedRoute>
-        ),
-        errorElement: <ErrorBoundary />,
-      },
-      {
-        path: "/user",
-        children: [
-          {
-            path: "profile/:userId",
-            element: <UserProfile />,
-            errorElement: <ErrorBoundary />,
-          },
-          {
-            path: "profile/:userId/edit",
-            element: (
-              <ProtectedRoute>
-                <EditProfile />
-              </ProtectedRoute>
-            ),
-            errorElement: <ErrorBoundary />,
-          },
-        ],
+        path: "*",
+        element: <NotFound />,
       },
     ],
-  },
-  {
-    path: "/login",
-    element: (
-      <PublicOnlyRoute>
-        <Login />
-      </PublicOnlyRoute>
-    ),
-    errorElement: <ErrorBoundary />,
-  },
-  {
-    path: "/signup",
-    element: (
-      <PublicOnlyRoute>
-        <Signup />
-      </PublicOnlyRoute>
-    ),
-    errorElement: <ErrorBoundary />,
-  },
-  {
-    path: "*",
-    element: <NotFound />,
   },
 ]);
 

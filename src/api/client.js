@@ -8,30 +8,24 @@ export const apiRequest = async (config) => {
       throw new Error("Empty server response");
     }
 
-    const { status, message, data } = res.data;
+    const { success, message, data } = res.data;
 
-    // Strict response type guard
-    if (typeof status !== "string") {
+    if (typeof success !== "boolean") {
       throw new Error("Invalid server response format");
     }
 
-    if (status !== "success") {
+    if (!success) {
       throw new Error(message || "Request failed");
     }
 
     return data;
   } catch (err) {
-    // Timeout handling
     if (err.code === "ECONNABORTED") {
-      throw new Error("Request timeout. Please try again.");
+      throw new Error("Server is waking up. Please try again.");
     }
 
     if (err.response) {
-      const backendMessage =
-        err.response.data?.message ||
-        err.response.data?.error ||
-        "Server error";
-
+      const backendMessage = err.response.data?.message || "Server error";
       throw new Error(backendMessage);
     }
 
@@ -43,15 +37,10 @@ export const apiRequest = async (config) => {
   }
 };
 
-/**
- * Logout — POST /users/logout
- * Calls server to invalidate session cookie.
- * On 401 the user is already logged out, so we swallow the error.
- */
 export const logoutUser = async () => {
   try {
     await api.post("/users/logout");
   } catch {
-    // 401 or network error — user is effectively logged out either way
+    // Ignore errors — logout should always clear client state
   }
 };

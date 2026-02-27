@@ -1,19 +1,23 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useUser } from "../store/userContext.jsx";
 import { Loader } from "../helpers/Loader.jsx";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = () => {
   const { user, authLoading } = useUser();
 
   if (authLoading) {
-    return <Loader />;
+    return (
+      <div className="flex justify-center items-center fixed inset-0 z-50 bg-white/50 backdrop-blur-sm">
+        <Loader />
+      </div>
+    );
   }
 
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

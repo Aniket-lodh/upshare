@@ -28,6 +28,25 @@ api.interceptors.response.use(
   }
 );
 
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const config = error.config;
+
+    if (!config || config.__retry) {
+      return Promise.reject(error);
+    }
+
+    if (!error.response) {
+      config.__retry = true;
+      await new Promise((r) => setTimeout(r, 1500));
+      return api(config);
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 // Dev API console inspector — controlled via VITE_DEBUG_API flag
 if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_API === "true") {
   api.interceptors.request.use((config) => {

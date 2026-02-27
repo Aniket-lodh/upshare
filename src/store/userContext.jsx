@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const UserContext = createContext(null);
 
@@ -11,6 +11,14 @@ export function useUser() {
 export function UserContextProvider({ children }) {
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("curUser");
+    if (stored) {
+      setUser(JSON.parse(stored));
+    }
+    setAuthLoading(false);
+  }, []);
 
   function addUser(userData) {
     setUser(userData);

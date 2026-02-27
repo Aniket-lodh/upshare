@@ -34,15 +34,7 @@ function AuthValidator({ children }) {
     };
   }, []);
 
-  // Listen for 401 unauthorized events from axios interceptor
-  useEffect(() => {
-    const handler = (e) => {
-      removeUser();
-      showToast(e.detail?.message || "Session expired", "error");
-    };
-    window.addEventListener("unauthorized", handler);
-    return () => window.removeEventListener("unauthorized", handler);
-  }, []);
+  // Listener removed since AuthListener handles it globally
 
   return children;
 }
