@@ -16,7 +16,7 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const { user, addUser } = useUser();
   const showToast = useToast();
-  const userFiles = new FormData();
+  const [selectedFiles, setSelectedFiles] = useState({});
 
   const [userInputs, setuserInputs] = useState({
     username: "",
@@ -70,7 +70,12 @@ const EditProfile = () => {
         [name]: value,
       }));
     } else {
-      userFiles.append("images", files[0]);
+      if (files.length > 0) {
+        setSelectedFiles((prev) => ({
+          ...prev,
+          [name]: files[0],
+        }));
+      }
     }
   };
 
@@ -79,7 +84,11 @@ const EditProfile = () => {
     SetLoading(true);
 
     try {
-      if (!!!userFiles.entries().next().done) {
+      if (Object.keys(selectedFiles).length > 0) {
+        const userFiles = new FormData();
+        Object.entries(selectedFiles).forEach(([key, file]) => {
+          userFiles.append(key, file);
+        });
         await UploadImages(userFiles);
       }
       const updatedProfile = await UpdateProfile(userInputs);

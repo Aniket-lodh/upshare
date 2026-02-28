@@ -12,10 +12,16 @@ import {
 import { Link, Outlet, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import LazyImage from "../../components/LazyImage.jsx";
-import { followUser, unFollowUser, getProfile } from "../../api/userProfile.js";
+import {
+  followUser,
+  unFollowUser,
+  getProfile,
+  UploadImages,
+} from "../../api/userProfile.js";
 import { useUser } from "../../store/userContext.jsx";
 import { Spinner } from "../../helpers/Loader.jsx";
 import ProfileSkeleton from "../../components/skeleton/ProfileSkeleton.jsx";
+import { useToast } from "../../components/Toast.jsx";
 
 const UserProfile = () => {
   // Variable
@@ -32,6 +38,8 @@ const UserProfile = () => {
   const [userObj, setUserObj] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // only for follow buttons
   const [isPageLoading, setIsPageLoading] = useState(true);
+  const [isUploading, setIsUploading] = useState(false);
+  const showToast = useToast();
 
   async function fetchUser() {
     try {
@@ -63,6 +71,26 @@ const UserProfile = () => {
     await unFollowUser(userObj._id);
     await fetchUser();
     setIsLoading(false);
+  };
+
+  const HandleProfilePhotoChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      setIsUploading(true);
+      const userFiles = new FormData();
+      userFiles.append("profilephoto", file);
+
+      await UploadImages(userFiles);
+      await fetchUser();
+      setEditModalState(false);
+      showToast("Profile picture updated successfully!");
+    } catch (err) {
+      showToast("Failed to update profile picture.", "error");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -410,7 +438,7 @@ const UserProfile = () => {
                           htmlFor="changeprofileviadevice"
                           className="inline-flex w-full justify-center rounded-lg bg-blue-600 hover:bg-blue-700 px-4 py-2 text-sm font-medium text-white transition-all duration-150 active:scale-[0.98] sm:ml-3 sm:w-auto"
                         >
-                          Choose from device
+                          {isUploading ? <Spinner /> : "Choose from device"}
                         </label>
                         <input
                           id="changeprofileviadevice"
@@ -418,6 +446,8 @@ const UserProfile = () => {
                           accept=".jpg, .png, .jpeg"
                           capture="user"
                           className="hidden"
+                          onChange={HandleProfilePhotoChange}
+                          disabled={isUploading}
                         />
                         <button
                           role="button"
