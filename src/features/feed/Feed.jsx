@@ -132,8 +132,8 @@ const Feed = () => {
       {/* Feed content */}
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 mt-4">
         {loading ? (
-          <div className="space-y-6">
-            {Array.from({ length: 5 }).map((_, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {Array.from({ length: 10 }).map((_, i) => (
               <FeedCardSkeleton key={i} />
             ))}
           </div>
@@ -164,7 +164,7 @@ const Feed = () => {
           </div>
         ) : (
           <>
-            <div className="grid gap-6 py-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 lg:overflow-y-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:overflow-y-auto">
               {posts.map((item) => (
                 <Pins
                   key={item._id}
@@ -176,7 +176,7 @@ const Feed = () => {
 
             {/* Observer sentinel and loading skeleton */}
             {isFetchingMore && (
-              <div className="grid gap-6 py-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 mt-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <FeedCardSkeleton key={`loading-${i}`} />
                 ))}

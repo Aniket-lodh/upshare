@@ -30,7 +30,7 @@ const Pins = React.memo(({ pin, setRenderChildren }) => {
     <>
       {/* Step 1 — Card depth hierarchy with hover lift */}
       <div
-        className={`flex-auto w-full max-w-sm mx-auto h-fit rounded-xl bg-white shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-[2px] ${
+        className={`w-full rounded-xl bg-white shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-[1px] ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -54,7 +54,7 @@ const Pins = React.memo(({ pin, setRenderChildren }) => {
           {pin?.pinCreator && typeof pin.pinCreator === "object" && (
             <Link
               to={`/user/profile/${pin.pinCreator._id}`}
-              className="w-full px-4 py-3 flex items-center gap-3"
+              className="p-4 flex items-center gap-3"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
