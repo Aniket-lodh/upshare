@@ -106,7 +106,7 @@ const PinDetails = () => {
     const wasSaved = pinSaved;
     setSavedPin(!wasSaved);
     setLikedAnimating(true);
-    setTimeout(() => setLikedAnimating(false), 120);
+    setTimeout(() => setLikedAnimating(false), 100);
     setLikeLoading(true);
     try {
       if (wasSaved) {
@@ -297,8 +297,8 @@ const PinDetails = () => {
                   >
                     <RiHeartFill
                       fontSize={24}
-                      className={`text-rose-500 transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
-                        likedAnimating ? "scale-110" : "scale-100"
+                      className={`text-rose-500 transition-all duration-200 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
+                        likedAnimating ? "scale-105" : "scale-100"
                       }`}
                     />
                   </button>
@@ -312,10 +312,8 @@ const PinDetails = () => {
                   >
                     <RiHeart2Line
                       fontSize={24}
-                      className={`text-gray-500 hover:text-rose-500 transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
-                        likedAnimating
-                          ? "scale-90 opacity-80"
-                          : "scale-100 opacity-100"
+                      className={`text-gray-500 hover:text-rose-500 transition-all duration-200 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
+                        likedAnimating ? "scale-95" : "scale-100"
                       }`}
                     />
                   </button>
@@ -323,7 +321,7 @@ const PinDetails = () => {
                 <button
                   type="button"
                   onClick={handleSaveToggle}
-                  className={`min-h-[40px] px-4 font-medium text-sm flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
+                  className={`min-h-[40px] px-4 font-medium text-sm flex items-center justify-center rounded-full transition-all duration-200 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
                     isSaved
                       ? "bg-gray-900 text-white -translate-y-[1px] shadow-sm"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
