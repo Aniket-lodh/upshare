@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Outlet, useMatch, useLocation } from "react-router-dom";
 import { AiOutlinePlus } from "react-icons/ai";
 import { RiImageAddLine } from "react-icons/ri";
@@ -22,12 +22,23 @@ const Feed = () => {
   const location = useLocation();
   const abortRef = useRef(null);
   const observerRef = useRef(null);
+  const pageRef = useRef(1);
+  const hasMoreRef = useRef(true);
+  const isFetchingMoreRef = useRef(false);
 
   useEffect(() => {
     if (checkHomeRoute) {
       setRenderChildren(false);
     }
   }, [checkHomeRoute]);
+
+  useEffect(() => {
+    hasMoreRef.current = hasMore;
+  }, [hasMore]);
+
+  useEffect(() => {
+    isFetchingMoreRef.current = isFetchingMore;
+  }, [isFetchingMore]);
 
   const fetchFeed = async (pageNumber = 1, signal) => {
     try {
@@ -61,38 +72,44 @@ const Feed = () => {
     abortRef.current = controller;
 
     fetchFeed(1, controller.signal);
+    pageRef.current = 1;
     setPage(1);
 
     return () => controller.abort();
   }, []);
 
   // Intersection Observer for Infinite Scroll
-  useEffect(() => {
-    if (!hasMore || isFetchingMore) return;
+  const setSentinel = useCallback((node) => {
+    if (!node) return;
 
-    const observer = new IntersectionObserver(
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+    }
+
+    observerRef.current = new IntersectionObserver(
       async ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsFetchingMore(true);
-          const nextPage = page + 1;
-          await fetchFeed(nextPage);
-          setPage(nextPage);
-          setIsFetchingMore(false);
-        }
+        if (!entry.isIntersecting) return;
+        if (!hasMoreRef.current) return;
+        if (isFetchingMoreRef.current) return;
+
+        isFetchingMoreRef.current = true;
+        setIsFetchingMore(true);
+
+        const nextPage = pageRef.current + 1;
+
+        await fetchFeed(nextPage);
+
+        pageRef.current = nextPage;
+        setPage(nextPage);
+
+        isFetchingMoreRef.current = false;
+        setIsFetchingMore(false);
       },
       { threshold: 1 }
     );
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
-      }
-    };
-  }, [page, hasMore, isFetchingMore]);
+    observerRef.current.observe(node);
+  }, []);
 
   // Optimistic feed update — prepend new post passed via navigation state
   useEffect(() => {
@@ -166,7 +183,7 @@ const Feed = () => {
               </div>
             )}
 
-            {hasMore && <div ref={observerRef} className="h-10 w-full" />}
+            {hasMore && <div ref={setSentinel} className="h-10 w-full" />}
           </>
         )}
       </div>
