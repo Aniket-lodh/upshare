@@ -84,10 +84,10 @@ const EditProfile = () => {
       }
       const updatedProfile = await UpdateProfile(userInputs);
 
-      if (updatedProfile?.success === true) {
-        if (updatedProfile.data) {
-          addUser(updatedProfile.data);
-        }
+      // apiRequest interceptor returns the `data` payload directly.
+      // If it reaches here without throwing, the request was successful.
+      if (updatedProfile) {
+        addUser(updatedProfile);
         showToast("Profile updated successfully!");
         navigate(-1);
       } else {

@@ -16,3 +16,18 @@ body {
   background-color: #f9fafb;
   color: #111827;
 }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.25s ease-out forwards;
+}

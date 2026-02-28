@@ -7,6 +7,7 @@ import {
   RiGridFill,
   RiEdit2Line,
   RiImageAddLine,
+  RiLinksLine,
 } from "react-icons/ri";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -63,6 +64,7 @@ const UserProfile = () => {
     await fetchUser();
     setIsLoading(false);
   };
+
   return (
     <>
       {user ? (
@@ -72,219 +74,285 @@ const UserProfile = () => {
             <ProfileSkeleton />
           </div>
         ) : (
-          <section className="h-full">
+          <section className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pb-12 pt-4 sm:pt-8 w-full">
             <Helmet>
               <title>
                 {userObj?.name || userObj?.username || "Profile"} — UpShare
               </title>
             </Helmet>
-            <div className="relative w-full">
-              {/* cover-image*/}
-              <div className="min-h-fit h-230 max-h-240 w-full overflow-hidden background-cover-clip bg-color-shades-accent">
-                <div className="object-cover w-full h-full max-h-240">
-                  {userObj && userObj.coverphoto ? (
-                    <LazyImage
-                      src={userObj?.coverphoto}
-                      alt={`${userObj?.username}-cover-picture`}
-                    />
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
-              </div>
-              <div className="absolute left-0 bottom-0 w-full px-4 translate-y-1/2 flex flex-col items-start ">
-                {/*profile-image*/}
-                <div className="relative w-28 h-28 border-4 border-white rounded-full drop-shadow-lg bg-color-shades-accent">
-                  <div className="w-full h-full flex items-center justify-center object-cover drop-shadow-sm overflow-hidden rounded-full ">
-                    {userObj && userObj.profilephoto ? (
-                      <LazyImage
-                        src={userObj?.profilephoto}
-                        alt={`${userObj?.username}-profile-picture`}
-                      />
-                    ) : (
-                      <HiUserCircle fontSize={120} className="text-gray-300" />
-                    )}
-                  </div>
-                  {userObj && userObj._id === user?._id && (
-                    <span className="absolute bottom-0 right-0 bg-white p-1.5 rounded-full">
-                      <RiEdit2Line
-                        fontSize={14}
-                        className="text-color-primary-blue"
-                        onClick={() => setEditModalState(true)}
-                      />
-                    </span>
-                  )}
-                </div>
-                {/*user-headings*/}
-                <div className="flex items-center justify-between w-full">
-                  <div className="font-fira ml-2 ">
-                    <h2 className="capitalize font-semibold text-xl lg:text-2xl text-gray-900 tracking-tight">
-                      {userObj?.name}
-                    </h2>
-                    <p className="text-gray-500 font-normal text-sm">
-                      @{userObj?.username}
-                    </p>
-                    <p className="capitalize font-medium text-sm text-gray-900 mt-0.5 border-b border-gray-300 inline">
-                      {userObj?.profession}
-                    </p>
-                    <p className="font-normal text-xs text-gray-400 mt-2 flex items-start gap-2">
-                      <RiCalendarTodoFill className="inline" fontSize={15} />
-                      Joined on {userObj?._createdAt}
-                    </p>
-                  </div>
-                  {/*CTA buttons*/}
-                  <div className="max-w-125 font-fira font-normal flex flex-col items-end justify-end gap-2">
-                    {userObj?._id === user?._id && (
-                      <Link
-                        to={"edit"}
-                        role="button"
-                        title="edit profile"
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-                      >
-                        Edit Profile
-                      </Link>
-                    )}
-                    {userObj &&
-                      userObj._id !== user?._id &&
-                      userObj.followers.indexOf(user?._id) < 0 && (
-                        <button
-                          role="button"
-                          title="edit profile"
-                          onClick={() => HandleFollowClick()}
-                          className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-                        >
-                          {isLoading ? <Spinner /> : "Follow"}
-                        </button>
-                      )}
-                    {userObj &&
-                      userObj._id !== user?._id &&
-                      userObj.followers.indexOf(user?._id) >= 0 && (
-                        <button
-                          role="button"
-                          title="edit profile"
-                          onClick={() => HandleUnFollowClick()}
-                          className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-4 py-2 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-                        >
-                          {isLoading ? <Spinner /> : "Following"}
-                        </button>
-                      )}
 
-                    <div className="w-full capitalize text-xs text-gray-400 font-medium flex items-start justify-end gap-2">
-                      <HiOutlineMapPin className="inline" fontSize={15} />
-                      <p className=" truncate ">{userObj?.location}</p>
+            <div className="max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex-col flex animate-fadeInUp w-full">
+              <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 w-full">
+                {/* Left Column (Profile Identity 2/3) */}
+                <div className="xl:col-span-2 flex flex-col gap-6 w-full">
+                  {/* Profile Header Card */}
+                  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative flex flex-col w-full">
+                    {/* Cover Image */}
+                    <div className="h-48 sm:h-64 w-full overflow-hidden bg-gradient-to-b from-gray-100 via-gray-50 to-white shadow-inner flex-shrink-0 relative">
+                      {userObj && userObj.coverphoto ? (
+                        <LazyImage
+                          src={userObj?.coverphoto}
+                          className="w-full h-full object-cover"
+                          alt={`${userObj?.username}-cover-picture`}
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-color-shades-accent"></div>
+                      )}
+                    </div>
+
+                    <div className="px-4 sm:px-8 pb-4 relative bg-white w-full">
+                      {/* Header Row (Avatar + Buttons) */}
+                      <div className="flex justify-between items-end -mt-12 sm:-mt-16 w-full mb-4 relative z-10">
+                        {/* Avatar */}
+                        <div className="relative w-28 h-28 sm:w-36 sm:h-36 border-4 border-white rounded-full bg-white flex-shrink-0 ring-2 ring-blue-100 ring-offset-2 shadow-sm">
+                          <div className="w-full h-full rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                            {userObj && userObj.profilephoto ? (
+                              <LazyImage
+                                src={userObj?.profilephoto}
+                                className="w-full h-full object-cover"
+                                alt={`${userObj?.username}-profile-picture`}
+                              />
+                            ) : (
+                              <HiUserCircle className="text-gray-300 w-full h-full" />
+                            )}
+                          </div>
+                          {userObj && userObj._id === user?._id && (
+                            <button
+                              className="absolute bottom-0 right-0 bg-white p-1.5 rounded-full shadow-sm border border-gray-100 hover:bg-gray-50 transition-colors focus:ring-2 focus:ring-blue-500/40"
+                              onClick={() => setEditModalState(true)}
+                              title="Change profile picture"
+                            >
+                              <RiEdit2Line
+                                fontSize={16}
+                                className="text-gray-700"
+                              />
+                            </button>
+                          )}
+                        </div>
+
+                        {/* CTA Buttons */}
+                        <div className="flex items-center gap-3 font-fira pb-2 sm:pb-4">
+                          {userObj?._id === user?._id && (
+                            <Link
+                              to={"edit"}
+                              className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 hover:text-gray-900 font-medium rounded-lg px-4 py-2 transition-colors focus:ring-2 focus:ring-blue-500/40 focus:ring-offset-2 text-sm shadow-sm"
+                            >
+                              Edit Profile
+                            </Link>
+                          )}
+                          {userObj &&
+                            userObj._id !== user?._id &&
+                            userObj.followers.indexOf(user?._id) < 0 && (
+                              <button
+                                onClick={HandleFollowClick}
+                                className="bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-lg px-5 py-2 transition-colors active:scale-[0.98] focus:ring-2 focus:ring-gray-900/40 focus:ring-offset-2 text-sm shadow-sm"
+                              >
+                                {isLoading ? <Spinner /> : "Follow"}
+                              </button>
+                            )}
+                          {userObj &&
+                            userObj._id !== user?._id &&
+                            userObj.followers.indexOf(user?._id) >= 0 && (
+                              <button
+                                onClick={HandleUnFollowClick}
+                                className="bg-gray-100 border border-gray-200 hover:bg-gray-200 text-gray-900 font-medium rounded-lg px-5 py-2 transition-colors active:scale-[0.98] focus:ring-2 focus:ring-gray-500/40 focus:ring-offset-2 text-sm shadow-sm"
+                              >
+                                {isLoading ? <Spinner /> : "Following"}
+                              </button>
+                            )}
+                        </div>
+                      </div>
+
+                      {/* Identity Metadata */}
+                      <div className="flex flex-col items-start w-full">
+                        <div className="flex flex-col gap-0 w-full">
+                          <h2 className="capitalize font-bold text-2xl lg:text-3xl text-gray-900 tracking-tight leading-none">
+                            {userObj?.name}
+                          </h2>
+                          <p className="text-gray-500 font-medium mt-1 text-base leading-snug">
+                            @{userObj?.username}
+                          </p>
+                        </div>
+
+                        {/* Metadata Identity Row */}
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600 mt-3 font-fira">
+                          {userObj?.profession && (
+                            <span className="capitalize font-medium text-gray-900">
+                              {userObj.profession}
+                            </span>
+                          )}
+                          {userObj?.country && userObj?.state && (
+                            <span className="flex items-center gap-1 capitalize">
+                              <HiOutlineMapPin
+                                size={16}
+                                className="text-gray-400"
+                              />
+                              {userObj.country}, {userObj.state}
+                            </span>
+                          )}
+                          {userObj?.website && (
+                            <a
+                              href={
+                                userObj.website.startsWith("http")
+                                  ? userObj.website
+                                  : `https://${userObj.website}`
+                              }
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-blue-600 hover:text-blue-700 hover:underline"
+                            >
+                              <RiLinksLine
+                                size={15}
+                                className="text-blue-500"
+                              />
+                              {userObj.website
+                                .replace(/^https?:\/\//, "")
+                                .replace(/\/$/, "")}
+                            </a>
+                          )}
+                          {userObj?._createdAt && (
+                            <span className="flex items-center gap-1 text-gray-400">
+                              <RiCalendarTodoFill size={15} />
+                              Joined {userObj._createdAt}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Bio */}
+                        {userObj?.bio && (
+                          <p className="mt-4 break-words tracking-tight font-normal text-base text-gray-700 max-w-2xl leading-relaxed">
+                            {userObj.bio}
+                          </p>
+                        )}
+
+                        {/* Interactive Stats Card */}
+                        <div className="w-full max-w-md mt-6 font-fira bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-gray-200 flex items-center justify-between py-1 divide-x hover:shadow-md transition-shadow duration-200">
+                          <button className="flex-1 flex flex-col items-center justify-center hover:bg-gray-50 transition-colors rounded-l-xl py-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500/40">
+                            <span className="text-lg font-semibold text-gray-900">
+                              {userObj?.followers?.length || 0}
+                            </span>
+                            <span className="text-xs text-gray-500 uppercase tracking-wide font-medium mt-0.5">
+                              Followers
+                            </span>
+                          </button>
+                          <button className="flex-1 flex flex-col items-center justify-center hover:bg-gray-50 transition-colors py-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500/40">
+                            <span className="text-lg font-semibold text-gray-900">
+                              {userObj?.following?.length || 0}
+                            </span>
+                            <span className="text-xs text-gray-500 uppercase tracking-wide font-medium mt-0.5">
+                              Following
+                            </span>
+                          </button>
+                          <button className="flex-1 flex flex-col items-center justify-center hover:bg-gray-50 transition-colors rounded-r-xl py-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500/40">
+                            <span className="text-lg font-semibold text-gray-900">
+                              {userObj?.likes?.length || 0}
+                            </span>
+                            <span className="text-xs text-gray-500 uppercase tracking-wide font-medium mt-0.5">
+                              Likes
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Structural Divider */}
+                      <div className="border-t border-gray-200 mt-8 pt-2"></div>
+
+                      {/*user action-tab-slider*/}
+                      <div className="select-none w-full h-10 pt-2 border-b flex items-end justify-start gap-8 mt-4">
+                        <div className="flex flex-col items-center justify-center gap-0.5 transition-all">
+                          <Link
+                            to={`/user/profile/${userId}`}
+                            type="button"
+                            title="all-pins"
+                            className="block"
+                            onClick={(e) => {
+                              setActiveTavText(e.target.title);
+                            }}
+                          >
+                            <RiGridFill
+                              fontSize={20}
+                              className={"pointer-events-none"}
+                            />
+                          </Link>
+                          <div
+                            className={`${
+                              activeTabText === "all-pins"
+                                ? ActiveTabStyles
+                                : NotActiveTabStyles
+                            }`}
+                          ></div>
+                        </div>
+                        <div className="flex flex-col items-center justify-center gap-0.5 transition-all">
+                          <Link
+                            to={"wishlists"}
+                            type="button"
+                            title="wishlisted"
+                            className="block"
+                            onClick={(e) => {
+                              setActiveTavText(e.target.title);
+                            }}
+                          >
+                            <RiHeart2Line
+                              fontSize={20}
+                              className={"pointer-events-none"}
+                            />
+                          </Link>
+                          <div
+                            className={`${
+                              activeTabText === "wishlisted"
+                                ? ActiveTabStyles
+                                : NotActiveTabStyles
+                            }`}
+                          ></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            {/*user bio and other details*/}
-            <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 mt-28 flex items-center justify-center flex-col gap-4">
-              {/*User bio*/}
-              <div className="pl-5 pr-4 flex items-center justify-center flex-col gap-4">
-                <p className="break-words text-left tracking-tight overflow-hidden font-normal text-sm text-gray-500">
-                  {userObj?.bio}
-                </p>
-                {/*User Followers and other details*/}
-                <div className="font-fira font-semibold text-color-font-primary bg-white rounded-xl shadow-sm border border-gray-200 flex items-center justify-center w-full py-5 divide-x">
-                  {/*user-likes*/}
-                  <div className="max-w-110 flex flex-col items-center justify-center cursor-pointer px-4 capitalize">
-                    <h2 className="text-xl">{userObj?.likes?.length}</h2>
-                    <p className="text-sm font-normal">likes</p>
-                  </div>
-                  {/*user-followers*/}
-                  <div className="max-w-110  flex flex-col items-center justify-center cursor-pointer px-4 capitalize">
-                    <h2 className="text-xl">{userObj?.followers?.length}</h2>
-                    <p className="text-sm font-normal">Followers</p>
-                  </div>
-                  {/*user-following*/}
-                  <div className="max-w-110 flex flex-col items-center justify-center cursor-pointer px-4 capitalize">
-                    <h2 className="text-xl">{userObj?.following?.length}</h2>
-                    <p className="text-sm font-normal">Following</p>
-                  </div>
-                </div>
-              </div>
 
-              {/*user action-tab-slider*/}
-              <div className="select-none w-full h-10 pt-2 border-b flex items-end justify-center gap-8">
-                <div className="flex flex-col items-center justify-center gap-0.5 transition-all">
-                  <Link
-                    to={`/user/profile/${userId}`}
-                    type="button"
-                    title="all-pins"
-                    className="block"
-                    onClick={(e) => {
-                      setActiveTavText(e.target.title);
-                    }}
-                  >
-                    <RiGridFill
-                      fontSize={20}
-                      className={"pointer-events-none"}
-                    />
-                  </Link>
-                  <div
-                    className={`${
-                      activeTabText === "all-pins"
-                        ? ActiveTabStyles
-                        : NotActiveTabStyles
-                    }`}
-                  ></div>
+                  {/* Empty state placeholder */}
+                  <div className="flex flex-col items-center justify-center text-center py-12 px-4 shadow-sm bg-white rounded-2xl border border-gray-100 w-full mb-4 mt-2">
+                    <div className="w-14 h-14 rounded-full bg-gray-100 shadow-inner flex items-center justify-center mb-4 ring-1 ring-gray-200">
+                      <RiGridFill className="text-2xl text-gray-400" />
+                    </div>
+                    {user?._id === userId ? (
+                      <>
+                        <h3 className="text-base font-semibold text-gray-900 mb-1">
+                          No posts yet
+                        </h3>
+                        <p className="text-gray-500 text-sm max-w-sm mb-5">
+                          Share your first post and start building your profile.
+                        </p>
+                        <Link
+                          to="/create"
+                          className="bg-blue-50 text-blue-600 hover:bg-blue-100 font-medium rounded-lg px-5 py-2 transition-colors active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 text-sm"
+                        >
+                          Create a Post
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <h3 className="text-base font-semibold text-gray-900 mb-1">
+                          Nothing here yet
+                        </h3>
+                        <p className="text-gray-500 text-sm max-w-xs">
+                          {userObj?.name || "This user"} hasn't shared any posts
+                          yet.
+                        </p>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Rendering the outlet */}
+                  <Outlet context={[userId]} />
                 </div>
-                <div className="flex flex-col items-center justify-center gap-0.5 transition-all">
-                  <Link
-                    to={"wishlists"}
-                    type="button"
-                    title="wishlisted"
-                    className="block"
-                    onClick={(e) => {
-                      setActiveTavText(e.target.title);
-                    }}
-                  >
-                    <RiHeart2Line
-                      fontSize={20}
-                      className={"pointer-events-none"}
-                    />
-                  </Link>
-                  <div
-                    className={`${
-                      activeTabText === "wishlisted"
-                        ? ActiveTabStyles
-                        : NotActiveTabStyles
-                    }`}
-                  ></div>
+
+                {/* Right Column (Placeholder 1/3) */}
+                <div className="hidden xl:block xl:col-span-1">
+                  {/* Future sidebar content / Activity highlights */}
                 </div>
               </div>
             </div>
-            {/* Empty posts placeholder — Step 4 */}
-            <div className="mt-6 flex flex-col items-center justify-center text-center py-12">
-              <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mb-4">
-                <RiImageAddLine className="text-3xl text-gray-300" />
-              </div>
-              {user?._id === userId ? (
-                <>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    No posts yet
-                  </h3>
-                  <p className="text-gray-500 text-sm max-w-xs mb-4">
-                    Share your first post and start building your collection.
-                  </p>
-                  <Link
-                    to="/create"
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg px-5 py-2.5 transition-all duration-150 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-                  >
-                    Create a Post
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    Nothing here yet
-                  </h3>
-                  <p className="text-gray-500 text-sm max-w-xs">
-                    {userObj?.name || "This user"} hasn't shared any posts yet.
-                  </p>
-                </>
-              )}
-            </div>
+
             {/* Change Profile Pic modal */}
             {EditModalState && (
               <div
@@ -365,8 +433,6 @@ const UserProfile = () => {
                 </div>
               </div>
             )}
-            {/* Rendering the outlet */}
-            <Outlet context={[userId]} />
           </section>
         )
       ) : (
