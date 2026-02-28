@@ -53,14 +53,14 @@ const Signup = () => {
           {/* Logo */}
           <div className="flex items-center gap-2 justify-center lg:justify-start">
             <img src={logo} alt="Logo" className="h-8" />
-            <h1 className="text-2xl font-bold tracking-wide">
+            <h1 className="text-2xl lg:text-3xl font-bold tracking-tight text-gray-900">
               Up<span className="text-blue-600">Share</span>
             </h1>
           </div>
 
           {/* Title */}
           <div className="space-y-2 text-center lg:text-left">
-            <h2 className="text-2xl font-semibold text-gray-900">
+            <h2 className="text-xl lg:text-2xl font-semibold text-gray-900">
               Create your account
             </h2>
             <p className="text-sm text-gray-500">

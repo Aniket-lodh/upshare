@@ -118,16 +118,16 @@ const UserProfile = () => {
                 {/*user-headings*/}
                 <div className="flex items-center justify-between w-full">
                   <div className="font-fira ml-2 ">
-                    <h2 className="capitalize font-semibold text-xl text-color-font-primary tracking-tight">
+                    <h2 className="capitalize font-semibold text-xl lg:text-2xl text-gray-900 tracking-tight">
                       {userObj?.name}
                     </h2>
-                    <p className="text-color-font-primary font-light text-xs">
+                    <p className="text-gray-500 font-normal text-sm">
                       @{userObj?.username}
                     </p>
-                    <p className="capitalize font-normal text-sm text-color-font-primary mt-0.5 border-b border-color-border-primary inline">
+                    <p className="capitalize font-medium text-sm text-gray-900 mt-0.5 border-b border-gray-300 inline">
                       {userObj?.profession}
                     </p>
-                    <p className="font-normal text-xs text-color-font-tertiary mt-2 flex items-start gap-2">
+                    <p className="font-normal text-xs text-gray-400 mt-2 flex items-start gap-2">
                       <RiCalendarTodoFill className="inline" fontSize={15} />
                       Joined on {userObj?._createdAt}
                     </p>
@@ -169,7 +169,7 @@ const UserProfile = () => {
                         </button>
                       )}
 
-                    <div className="w-full capitalize text-xs text-color-font-tertiary font-medium flex items-start justify-end gap-2">
+                    <div className="w-full capitalize text-xs text-gray-400 font-medium flex items-start justify-end gap-2">
                       <HiOutlineMapPin className="inline" fontSize={15} />
                       <p className=" truncate ">{userObj?.location}</p>
                     </div>
@@ -181,7 +181,7 @@ const UserProfile = () => {
             <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 mt-28 flex items-center justify-center flex-col gap-4">
               {/*User bio*/}
               <div className="pl-5 pr-4 flex items-center justify-center flex-col gap-4">
-                <p className="break-words text-left tracking-tight overflow-hidden font-normal text-sm text-color-font-secondary">
+                <p className="break-words text-left tracking-tight overflow-hidden font-normal text-sm text-gray-500">
                   {userObj?.bio}
                 </p>
                 {/*User Followers and other details*/}
@@ -373,8 +373,8 @@ const UserProfile = () => {
         // Show redirect to log in and Signup if user not exist
         <>
           <div className="absolute w-4/5  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col flex-wrap">
-            <div className={" font-semibold text-2xl"}>
-              <span className="font-medium text-xl">Welcome Back</span>
+            <div className={"font-semibold text-2xl lg:text-3xl text-gray-900"}>
+              <span className="font-medium">Welcome Back</span>
               <span className="text-color-primary-blue">,</span>
               <br />
               You are not{" "}
@@ -389,14 +389,12 @@ const UserProfile = () => {
                 Login
               </Link>
             </div>
-            <p className="mt-4 font-bold text-lg text-color-font-tertiary">
-              or
-            </p>
-            <div className={"font-semibold text-2xl"}>
-              <span className="font-medium text-lg">Don't have an </span>
-              <span className="text-color-primary-blue text-xl font-semibold">
-                Account
+            <p className="mt-4 font-bold text-lg text-gray-400">or</p>
+            <div className={"font-semibold text-2xl lg:text-3xl text-gray-900"}>
+              <span className="font-medium text-xl lg:text-2xl">
+                Don't have an{" "}
               </span>
+              <span className="text-blue-600">Account</span>
               ?
               <br />
               <Link

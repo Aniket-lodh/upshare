@@ -62,7 +62,7 @@ const Search = () => {
               <div className="w-20 h-20 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
                 <RiSearch2Line className="text-5xl text-blue-400" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
                 Discover something new
               </h3>
               <p className="text-gray-500 text-sm max-w-xs">
@@ -85,7 +85,7 @@ const Search = () => {
               <div className="w-20 h-20 rounded-xl bg-gray-50 flex items-center justify-center mb-4">
                 <RiCompassDiscoverLine className="text-5xl text-gray-400" />
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
                 No results found
               </h3>
               <p className="text-gray-500 text-sm max-w-xs">

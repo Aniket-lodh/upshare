@@ -35,6 +35,7 @@ const PinDetails = () => {
   const [deleting, setDeleting] = useState(false);
   const [likeLoading, setLikeLoading] = useState(false);
   const [likedAnimating, setLikedAnimating] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const { user } = useUser();
   const navigate = useNavigate();
   const { pinId } = useParams();
@@ -119,6 +120,10 @@ const PinDetails = () => {
     } finally {
       setLikeLoading(false);
     }
+  };
+
+  const handleSaveToggle = () => {
+    setIsSaved((prev) => !prev);
   };
 
   // Delete post (owner only)
@@ -286,13 +291,13 @@ const PinDetails = () => {
                   <button
                     type="button"
                     onClick={toggleWishlist}
-                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-red-50 transition-all duration-150 ${
+                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full active:bg-rose-50 transition-colors duration-200 ${
                       likeLoading ? "opacity-50 pointer-events-none" : ""
                     }`}
                   >
                     <RiHeartFill
                       fontSize={24}
-                      className={`text-red-500 transition-transform duration-150 ${
+                      className={`text-rose-500 transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
                         likedAnimating ? "scale-110" : "scale-100"
                       }`}
                     />
@@ -301,22 +306,35 @@ const PinDetails = () => {
                   <button
                     type="button"
                     onClick={toggleWishlist}
-                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-red-50 transition-all duration-150 ${
+                    className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-rose-50/50 active:bg-rose-50 transition-colors duration-200 ${
                       likeLoading ? "opacity-50 pointer-events-none" : ""
                     }`}
                   >
                     <RiHeart2Line
                       fontSize={24}
-                      className={`text-gray-600 hover:text-red-500 transition-all duration-150 ${
-                        likedAnimating ? "scale-110" : "scale-100"
+                      className={`text-gray-500 hover:text-rose-500 transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
+                        likedAnimating
+                          ? "scale-90 opacity-80"
+                          : "scale-100 opacity-100"
                       }`}
                     />
                   </button>
                 )}
                 <button
                   type="button"
+                  onClick={handleSaveToggle}
+                  className={`min-h-[40px] px-4 font-medium text-sm flex items-center justify-center rounded-full transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
+                    isSaved
+                      ? "bg-gray-900 text-white -translate-y-[1px] shadow-sm"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  {isSaved ? "Saved" : "Save"}
+                </button>
+                <button
+                  type="button"
                   onClick={sharePost}
-                  className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg active:bg-gray-100 transition-colors cursor-pointer"
+                  className="p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-gray-600 hover:bg-gray-100 active:bg-gray-200 transition-colors cursor-pointer"
                 >
                   <RiShareLine fontSize={24} />
                 </button>

@@ -149,7 +149,7 @@ const Feed = () => {
             <div className="w-20 h-20 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
               <RiImageAddLine className="text-5xl text-blue-400" />
             </div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
+            <h2 className="text-xl lg:text-2xl font-semibold text-gray-900 mb-2">
               No posts yet
             </h2>
             <p className="text-gray-500 text-sm max-w-sm">

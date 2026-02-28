@@ -70,9 +70,9 @@ const Pins = React.memo(({ pin, setRenderChildren }) => {
                 <h3 className="truncate text-sm font-medium text-gray-900 capitalize">
                   {pin.pinCreator.name}
                 </h3>
-                <small className="truncate text-gray-500 font-fira">
+                <p className="truncate text-xs text-gray-500 font-fira">
                   {pin.pinCreator.profession}
-                </small>
+                </p>
               </div>
             </Link>
           )}
