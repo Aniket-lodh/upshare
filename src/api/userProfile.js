@@ -21,7 +21,6 @@ export const UpdateProfile = async (userInputs) => {
     method: "PATCH",
     url: "/users/profile/edit",
     data: userInputs,
-    headers: { "Content-Type": "multipart/form-data" },
   });
 };
 

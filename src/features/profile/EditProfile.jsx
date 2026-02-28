@@ -84,9 +84,10 @@ const EditProfile = () => {
       }
       const updatedProfile = await UpdateProfile(userInputs);
 
-      if (updatedProfile.code === 200) {
-        const curUpdatedUser = await getMe();
-        addUser(curUpdatedUser);
+      if (updatedProfile?.success === true) {
+        if (updatedProfile.data) {
+          addUser(updatedProfile.data);
+        }
         showToast("Profile updated successfully!");
         navigate(-1);
       } else {
