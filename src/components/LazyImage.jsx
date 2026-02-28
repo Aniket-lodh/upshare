@@ -29,23 +29,36 @@ const LazyImage = ({
     };
   }, []);
 
-  return inView ? (
-    <img
-      src={src}
-      alt={alt}
-      className={`image-fade ${loaded ? "loaded" : ""} ${
-        className || "w-full h-full object-cover"
-      }`}
-      onLoad={() => setLoaded(true)}
-    />
-  ) : (
+  return (
     <div
-      ref={imgRef}
+      ref={!inView ? imgRef : undefined}
       id={id}
-      className={
-        placeholderClassName || `object-contain w-full h-full bg-gray-200`
-      }
-    />
+      className={`relative overflow-hidden ${
+        placeholderClassName || "w-full h-full bg-gray-200"
+      }`}
+    >
+      {/* Background Placeholder Layer */}
+      <div
+        className={`absolute inset-0 bg-gray-200 transition-opacity duration-300 ${
+          loaded ? "opacity-0" : "opacity-100"
+        }`}
+      />
+
+      {/* Actual Image Layer */}
+      {inView && (
+        <img
+          src={src}
+          alt={alt}
+          onLoad={() => setLoaded(true)}
+          className={`w-full h-full object-cover transition-all duration-500 ease-out will-change-transform ${
+            loaded
+              ? "opacity-100 blur-0 scale-100"
+              : "opacity-0 blur-sm scale-102"
+          } ${className}`}
+          style={{ willChange: "transform, opacity" }}
+        />
+      )}
+    </div>
   );
 };
 

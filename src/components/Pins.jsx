@@ -1,12 +1,39 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import LazyImage from "./LazyImage";
+import { getCachedProfile } from "../utils/profileCache";
+import { getProfile } from "../api/userProfile";
 
 const Pins = React.memo(({ pin, setRenderChildren }) => {
+  const hoverTimeoutRef = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const t = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(t);
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (!pin?.pinCreator?._id) return;
+    hoverTimeoutRef.current = setTimeout(() => {
+      getCachedProfile(pin.pinCreator._id, getProfile);
+    }, 150);
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+  };
+
   return (
     <>
       {/* Step 1 — Card depth hierarchy with hover lift */}
-      <div className="flex-auto w-full max-w-sm mx-auto h-fit rounded-xl bg-white shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-md hover:-translate-y-[2px]">
+      <div
+        className={`flex-auto w-full max-w-sm mx-auto h-fit rounded-xl bg-white shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-[2px] ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
+      >
         <div className="w-full flex flex-col items-start justify-start">
           {/* Step 2 — Consistent aspect ratio image */}
           <div className="w-full overflow-hidden">
@@ -28,6 +55,8 @@ const Pins = React.memo(({ pin, setRenderChildren }) => {
             <Link
               to={`/user/profile/${pin.pinCreator._id}`}
               className="w-full px-4 py-3 flex items-center gap-3"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               <div className="w-8 h-8 flex-shrink-0 rounded-full overflow-hidden bg-gray-100">
                 <LazyImage
